@@ -1,4 +1,5 @@
 import React from 'react';
+
 import styles from "./Button.module.scss";
 
 interface IButtonProps {
@@ -6,12 +7,10 @@ interface IButtonProps {
   transparent?: boolean,
 }
 
-const Button = ({children, transparent}: IButtonProps) => {
-  return (
+const Button = ({children, transparent}: IButtonProps) => (
     <button className={`${styles.button} ${transparent ? styles.transparent : ''}`}>
       {children}
     </button>
-  );
-};
+);
 
 export default Button;

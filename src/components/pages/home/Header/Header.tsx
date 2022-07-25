@@ -1,7 +1,9 @@
 import React from 'react';
-import styles from "./Header.module.scss";
+
 import Logo from "../../../common/Logo/Logo";
 import Button from "../../../common/Button/Button";
+
+import styles from "./Header.module.scss";
 
 const Header = () => {
   return (

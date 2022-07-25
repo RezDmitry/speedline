@@ -1,6 +1,8 @@
 import React from 'react';
+
+import { Outlet } from "react-router-dom";
+
 import styles from "./HomeLayout.module.scss";
-import {Outlet} from "react-router-dom";
 
 const HomeLayout = () => {
   return (
