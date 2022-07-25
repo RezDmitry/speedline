@@ -1,0 +1,22 @@
+@use '/src/styles/tools' as *;
+
+.header {
+  padding: 25px 12px;
+  @include flexbox(space-between, center);
+  nav {
+    list-style-type: none;
+    display: inline-flex;
+    flex: 1 1 auto;
+    margin-left: 120px;
+    column-gap: 40px;
+    & li {
+      color: rgba(62, 76, 89, 0.7);
+      font-size: 14px;
+      line-height: 14px;
+    }
+  }
+}
+
+.buttonGroup {
+  @include flexbox();
+}

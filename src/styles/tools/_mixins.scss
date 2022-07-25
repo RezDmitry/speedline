@@ -1,0 +1,16 @@
+@mixin flexbox($jc : flex-start,$ai : stretch,$fd : row) {
+  display: flex;
+  justify-content: $jc;
+  align-items: $ai;
+  flex-direction: $fd;
+}
+
+@mixin transition($s: 0.5s, $d: 0s) {
+  transition: $s all ease-in-out $d;
+}
+
+@mixin media($width) {
+  @media (max-width: $width) {
+    @content;
+  }
+}

@@ -1,0 +1,6 @@
+@use '/src/styles/tools' as *;
+
+.start {
+  @include flexbox(space-between, _, column);
+  flex: 1 1 auto;
+}
