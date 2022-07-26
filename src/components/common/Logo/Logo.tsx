@@ -1,11 +1,14 @@
 import React from 'react';
 
+import styles from './Logo.module.scss';
 import { ReactComponent as Logotype } from '../../../content/images/logo.svg';
 
-import styles from './Logo.module.scss';
+interface ILogoProps {
+  className?: string,
+}
 
-const Logo = () => (
-  <div className={styles.logo}>
+const Logo = ({ className }: ILogoProps) => (
+  <div className={`${styles.logo} ${className}`}>
     <Logotype />
     <p>Speedline</p>
   </div>

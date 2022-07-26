@@ -7,10 +7,11 @@
 }
 
 .container {
-  @include flexbox(_, _, _);
+  @include flexbox(space-between, _, column);
   flex: 1 1 auto;
   margin: 0 200px;
-  @include media($lg) {
+  padding: 0 32px;
+  @include media($xl) {
     margin: 0;
   }
 }
@@ -24,10 +25,20 @@
   z-index: -1;
   @include flexbox(_, _, _);
   & div:first-child {
-    flex: 1 1 62%;
+    flex: 1 1 76%;
+    @include media($xxl) {
+      flex: 1 1 62%;
+    }
   }
   & div:last-child {
-    flex: 1 1 38%;
+    flex: 1 1 24%;
     background: #E4EEF8;
+    @include media($xxl) {
+      flex: 1 1 38%;
+    }
+    @include media($lg) {
+      display: none;
+    }
   }
+
 }
