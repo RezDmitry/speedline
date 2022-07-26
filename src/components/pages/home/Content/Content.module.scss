@@ -1,0 +1,7 @@
+@use '/src/styles/tools' as *;
+
+.content {
+  @include flexbox(_, _, _);
+  flex: 1 1 auto;
+  position: relative;
+}

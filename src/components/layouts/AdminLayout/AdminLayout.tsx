@@ -1,13 +1,9 @@
 import React from 'react';
 
-import styles from "./AdminLayout.module.scss";
+import styles from './AdminLayout.module.scss';
 
-const AdminLayout = () => {
-  return (
-    <div className={styles.container}>
-      
-    </div>
-  );
-};
+const AdminLayout = () => (
+  <div className={styles.container} />
+);
 
 export default AdminLayout;
