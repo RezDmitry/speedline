@@ -1,5 +1,14 @@
+//palette
 $main: #EE950F;
 $white: #FFFFFF;
 
-$grey: #3E4C59;
-$grey70: transparentize($grey, 0.3);
+//text
+$text: #3E4C59;
+$text40: transparentize($text, 0.6);
+$text70: transparentize($text, 0.3);
+
+$text-alt: #152739;
+$text-scroll: transparentize(#0F2031, 0.3);
+
+//grey
+$light-gray: #F3F3F3;

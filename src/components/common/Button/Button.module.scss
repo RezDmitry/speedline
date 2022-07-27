@@ -8,9 +8,31 @@
   background: $main;
   color: $white;
   border-radius: 3px;
+  cursor: pointer;
+  @include transition(0.2s, 0s);
+  &:hover {
+    background: darken($main, 10%);
+  }
+  &:active {
+    background: darken($main, 20%);
+  }
 }
 
 .transparent {
   background: transparent;
   color: $main;
+
+  &:hover {
+    color: $white;
+    background: transparent;
+  }
+
+  &:active {
+    color: $white;
+    background: transparent;
+  }
+}
+
+.large {
+  padding: 22px 40px;
 }

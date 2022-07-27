@@ -10,13 +10,76 @@
     margin-left: 120px;
     column-gap: 40px;
     & li {
-      color: $grey70;
+      color: $text70;
       font-size: 14px;
       line-height: 14px;
+      cursor: pointer;
+      &:hover, &:active {
+        color: $main;
+        @include transition(0.2s, 0s);
+      }
+      @include media($lg) {
+        font-size: 32px;
+        line-height: 32px;
+        color: $white;
+      }
+    }
+    @include media($lg) {
+      margin-left: 0px;
+      flex: 0 0 auto;
+      @include flexbox(center, center, column);
+      row-gap: 32px;
+    }
+  }
+}
+
+.logo {
+  z-index: 9999;
+  @include transition(0.5s, 0s);
+  &.active {
+    @include media($lg) {
+      color: $white;
+    }
+  }
+}
+
+.menu {
+  @include flexbox(space-between, center);
+  flex: 1 1 auto;
+  @include media($lg) {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: translateY(-100%);
+    overflow: auto;
+    background-color: $text;
+    z-index: 999;
+    @include transition(0.5s, 0s);
+    &.active {
+      @include flexbox(flex-start, center, column);
+      padding-top: 200px;
+      transform: translateY(0);
+      @include media($md) {
+        padding-top: 120px;
+      }
     }
   }
 }
 
 .buttonGroup {
   @include flexbox();
+  @include media($lg) {
+    margin-top: 64px;
+    @include flexbox(_, _, column);
+    row-gap: 16px;
+  }
+}
+
+.burger {
+  display: none;
+  @include media($lg) {
+    display: block;
+  }
 }
