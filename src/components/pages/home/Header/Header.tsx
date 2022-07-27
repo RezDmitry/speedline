@@ -1,28 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Logo from '../../../common/Logo/Logo';
 import Button from '../../../common/Button/Button';
 import BurgerButton from '../../../common/BurgerButton/BurgerButton';
+import Login from '../../../common/modals/Login/Login';
+import { useModal } from '../../../../hooks/useModal';
+import { useBurger } from '../../../../hooks/useBurger';
 
 import styles from './Header.module.scss';
 
 const Header = () => {
-  const [active, setActive] = useState<boolean>(false);
-
-  const clickHandler = (): void => {
-    setActive(!active);
-  };
-
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLSpanElement>): void => {
-    if (e.code === 'Enter') {
-      setActive(!active);
-    }
-  };
+  const [isOpened, toggleModal] = useModal();
+  const [isMenuActive, openMenu, closeMenu] = useBurger();
 
   return (
     <header className={styles.header}>
-      <Logo className={active ? `${styles.logo} ${styles.active}` : styles.logo} />
-      <div className={active ? `${styles.menu} ${styles.active}` : styles.menu}>
+      <Logo className={isMenuActive ? `${styles.logo} ${styles.active}` : styles.logo} />
+      <div className={isMenuActive ? `${styles.menu} ${styles.active}` : styles.menu}>
         <nav>
           <li>Home</li>
           <li>Service</li>
@@ -30,16 +24,24 @@ const Header = () => {
           <li>Contact</li>
         </nav>
         <div className={styles.buttonGroup}>
-          <Button transparent>Log in</Button>
-          <Button>Sign up</Button>
+          <Button
+            transparent
+            click={toggleModal}
+          >
+            Log in
+          </Button>
+          <Button>
+            Sign up
+          </Button>
         </div>
       </div>
       <BurgerButton
         className={styles.burger}
-        active={active}
-        click={clickHandler}
-        keyDown={keyDownHandler}
+        active={isMenuActive}
+        click={openMenu}
+        keyDown={closeMenu}
       />
+      <Login isOpened={isOpened} close={toggleModal} />
     </header>
   );
 };

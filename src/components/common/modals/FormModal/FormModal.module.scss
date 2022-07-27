@@ -1,0 +1,64 @@
+@use '/src/styles/tools' as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparentize($black, 0.2);
+  z-index: 9999999;
+  display: none;
+  &.opened {
+    @include flexbox(center, center);
+  }
+}
+
+.window {
+  background-color: $white;
+  border-radius: 3px;
+  position: relative;
+}
+
+.container {
+  padding: 80px 162px;
+  & h2 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 48px;
+    text-align: center;
+  }
+}
+
+.content {
+  margin: 0 auto;
+  margin-top: 44px;
+}
+
+.button {
+  text-align: center;
+  margin-top: 48px;
+  & button {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+.description {
+  margin-top: 32px;
+  font-size: 14px;
+  line-height: 12px;
+}
+
+.close {
+  position: absolute;
+  top: 26px;
+  right: 26px;
+  cursor: pointer;
+  @include transition(0.2s, 0s);
+  &:hover {
+    & * {
+      fill: $main;
+    }
+  }
+}
