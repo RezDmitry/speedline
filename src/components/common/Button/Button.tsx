@@ -11,17 +11,18 @@ interface IButtonProps {
   click?: () => void,
   // eslint-disable-next-line no-unused-vars
   keyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void,
+  type?: 'submit' | 'reset' | 'button',
 }
 
 const Button = ({
-  children, className, transparent, fullWidth, large, click, keyDown,
+  children, className, transparent, fullWidth, large, click, keyDown, type = 'button',
 }: IButtonProps) => {
   const tp = transparent ? styles.transparent : '';
   const lg = large ? styles.large : '';
   const fw = fullWidth ? styles.fullWidth : '';
   return (
     <button
-      type="button"
+      type={type}
       className={`${styles.button} ${tp} ${lg} ${fw} ${className}`}
       onClick={click}
       onKeyDown={keyDown}

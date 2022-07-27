@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
+// eslint-disable-next-line no-unused-vars
 export const useModal = (): [boolean, () => void] => {
   const [isModalOpened, setIsModalOpened] = useState<boolean>(false);
-  const toggleModal = () => {
+  const toggleClickModal = () => {
     setIsModalOpened(!isModalOpened);
   };
-  return [isModalOpened, toggleModal];
+  return [isModalOpened, toggleClickModal];
 };

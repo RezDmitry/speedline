@@ -4,32 +4,32 @@ import { Field, Form, Formik } from 'formik';
 import FormModal from '../FormModal/FormModal';
 import ModalButton from '../ModalButton/ModalButton';
 
-import styles from './Login.module.scss';
+import styles from './SignUp.module.scss';
 
-interface ILoginProps {
+interface ISignUpProps {
   isOpened: boolean,
   close: () => void,
-  openSignUp: () => void,
+  openLogin: () => void,
 }
 
-const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
+const SignUp = ({ isOpened, close, openLogin }: ISignUpProps) => {
   const openAnotherModal = () => {
     close();
-    openSignUp();
+    openLogin();
   };
   const openAnotherModalByKey = (e: any) => {
     if (e.code === 'Enter') {
       close();
-      openSignUp();
+      openLogin();
     }
   };
   return (
     <FormModal
       isOpened={isOpened}
-      title="Log in"
+      title="Sign up"
       description={(
         <>
-          No account?&nbsp;
+          Already have an account?&nbsp;
           <span
             className={styles.signUp}
             onClick={openAnotherModal}
@@ -37,7 +37,7 @@ const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
             tabIndex={0}
             role="button"
           >
-            Create one
+            Log in
           </span>
         </>
       )}
@@ -70,4 +70,4 @@ const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
   );
 };
 
-export default Login;
+export default SignUp;
