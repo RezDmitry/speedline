@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
@@ -24,6 +25,7 @@ const SignUpSchema = yup.object().shape({
 });
 
 const SignUp = ({ close, openLogin }: ISignUpProps) => {
+  const navigate = useNavigate();
   const openAnotherModal = () => {
     close();
     openLogin();
@@ -59,7 +61,9 @@ const SignUp = ({ close, openLogin }: ISignUpProps) => {
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });
-          alert(JSON.stringify(values, null, 2));
+          localStorage.setItem('email', values.email);
+          localStorage.setItem('password', values.password);
+          navigate('/admin');
         }}
         validationSchema={SignUpSchema}
       >

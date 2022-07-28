@@ -1,5 +1,6 @@
 import React from 'react';
 import { createPortal } from 'react-dom';
+import { NavLink } from 'react-router-dom';
 
 import Logo from '../../../common/Logo/Logo';
 import Button from '../../../common/Button/Button';
@@ -22,10 +23,38 @@ const Header = () => {
       <Logo className={isMenuActive ? `${styles.logo} ${styles.active}` : styles.logo} />
       <div className={isMenuActive ? `${styles.menu} ${styles.active}` : styles.menu}>
         <nav>
-          <li>Home</li>
-          <li>Service</li>
-          <li>Clients</li>
-          <li>Contact</li>
+          <li>
+            <NavLink
+              to="/"
+              className={({ isActive }) => (isActive ? styles.activeLink : styles.inActiveLink)}
+            >
+              Tasks
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/service"
+              className={({ isActive }) => (isActive ? styles.activeLink : styles.inActiveLink)}
+            >
+              Service
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/clients"
+              className={({ isActive }) => (isActive ? styles.activeLink : styles.inActiveLink)}
+            >
+              Clients
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/contact"
+              className={({ isActive }) => (isActive ? styles.activeLink : styles.inActiveLink)}
+            >
+              Contact
+            </NavLink>
+          </li>
         </nav>
         <div className={styles.buttonGroup}>
           <Button
