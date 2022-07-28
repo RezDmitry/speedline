@@ -8,10 +8,7 @@
   height: 100vh;
   background-color: transparentize($black, 0.2);
   z-index: 9;
-  display: none;
-  &.opened {
-    @include flexbox(center, center);
-  }
+  @include flexbox(center, center);
 }
 
 .window {

@@ -1,5 +1,8 @@
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
+import {
+  ErrorMessage, Field, Form, Formik,
+} from 'formik';
+import * as yup from 'yup';
 
 import FormModal from '../FormModal/FormModal';
 import ModalButton from '../ModalButton/ModalButton';
@@ -7,12 +10,19 @@ import ModalButton from '../ModalButton/ModalButton';
 import styles from './Login.module.scss';
 
 interface ILoginProps {
-  isOpened: boolean,
   close: () => void,
   openSignUp: () => void,
 }
 
-const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
+const LoginSchema = yup.object().shape({
+  email: yup.string()
+    .email('Invalid email address')
+    .required('Required'),
+  password: yup.string()
+    .required('Required'),
+});
+
+const Login = ({ close, openSignUp }: ILoginProps) => {
   const openAnotherModal = () => {
     close();
     openSignUp();
@@ -25,7 +35,6 @@ const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
   };
   return (
     <FormModal
-      isOpened={isOpened}
       title="Log in"
       description={(
         <>
@@ -51,20 +60,45 @@ const Login = ({ isOpened, close, openSignUp }: ILoginProps) => {
           });
           alert(JSON.stringify(values, null, 2));
         }}
+        validationSchema={LoginSchema}
       >
-        <Form className="modal-form">
-          <label htmlFor="email">
-            Email
-            <Field id="email" name="email" type="email" placeholder="Enter a email" />
-          </label>
-          <label htmlFor="password">
-            Password
-            <Field id="password" name="password" type="password" placeholder="Enter a password" />
-          </label>
-          <ModalButton>
-            Log in
-          </ModalButton>
-        </Form>
+        {({ errors }) => (
+          <Form className="modal-form">
+            <label htmlFor="email">
+              Email
+              <Field
+                id="email"
+                name="email"
+                type="email"
+                placeholder="Enter a email"
+                className={`${errors.email && 'modal-form__input_error'} modal-form__input`}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="modal-form__error"
+              />
+            </label>
+            <label htmlFor="password">
+              Password
+              <Field
+                id="password"
+                name="password"
+                type="password"
+                placeholder="Enter a password"
+                className={`${errors.password && 'modal-form__input_error'} modal-form__input`}
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="modal-form__error"
+              />
+            </label>
+            <ModalButton>
+              Log in
+            </ModalButton>
+          </Form>
+        )}
       </Formik>
     </FormModal>
   );

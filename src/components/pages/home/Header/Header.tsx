@@ -1,4 +1,5 @@
 import React from 'react';
+import { createPortal } from 'react-dom';
 
 import Logo from '../../../common/Logo/Logo';
 import Button from '../../../common/Button/Button';
@@ -46,8 +47,14 @@ const Header = () => {
         click={openMenu}
         keyDown={closeMenu}
       />
-      <Login isOpened={isLoginModalOpened} close={toggleLoginModal} openSignUp={toggleSignUpModal} />
-      <SignUp isOpened={isSignUpModalOpened} close={toggleSignUpModal} openLogin={toggleLoginModal} />
+      {isLoginModalOpened && createPortal(
+        <Login close={toggleLoginModal} openSignUp={toggleSignUpModal} />,
+        document.getElementById('root')!,
+      )}
+      {isSignUpModalOpened && createPortal(
+        <SignUp close={toggleSignUpModal} openLogin={toggleLoginModal} />,
+        document.getElementById('root')!,
+      )}
     </header>
   );
 };

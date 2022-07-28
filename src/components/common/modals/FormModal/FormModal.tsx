@@ -8,14 +8,13 @@ import { useOutside } from '../../../../hooks/useClickOutside';
 
 interface IFormModalProps {
   children: React.ReactNode,
-  isOpened: boolean,
   title: string,
   description?: React.ReactNode,
   close: () => void,
 }
 
 const FormModal = ({
-  children, isOpened, title, description, close,
+  children, title, description, close,
 }: IFormModalProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const closeByKey = (e: any) => {
@@ -23,10 +22,10 @@ const FormModal = ({
       close();
     }
   };
-  useCloseModal(isOpened, close);
-  useOutside(isOpened, wrapperRef, close);
+  useCloseModal(close);
+  useOutside(wrapperRef, close);
   return (
-    <div className={`${styles.modal} ${isOpened ? styles.opened : ''}`} ref={wrapperRef}>
+    <div className={styles.modal} ref={wrapperRef}>
       <div className={styles.window}>
         <div className={styles.container}>
           <h2>{title}</h2>

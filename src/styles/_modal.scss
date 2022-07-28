@@ -10,7 +10,7 @@
     font-size: 12px;
     line-height: 12px;
   }
-  & input {
+  &__input {
     margin-top: 8px;
     padding: 18px;
     width: 300px;
@@ -24,5 +24,12 @@
     @include media($sm) {
       width: 100%;
     }
+    &_error {
+      border: 1px solid $error;
+    }
+  }
+  &__error {
+    color: $error;
+    margin-top: 8px;
   }
 }
