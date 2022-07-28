@@ -1,6 +1,8 @@
 //palette
 $main: #EE950F;
 $white: #FFFFFF;
+$black: #000000;
+$error: #ce0e0e;
 
 //text
 $text: #3E4C59;
@@ -10,5 +12,6 @@ $text70: transparentize($text, 0.3);
 $text-alt: #152739;
 $text-scroll: transparentize(#0F2031, 0.3);
 
-//grey
+//gray
 $light-gray: #F3F3F3;
+$input-border-gray: #E6E8EA;

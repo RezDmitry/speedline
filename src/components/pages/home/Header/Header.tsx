@@ -1,28 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { createPortal } from 'react-dom';
 
 import Logo from '../../../common/Logo/Logo';
 import Button from '../../../common/Button/Button';
 import BurgerButton from '../../../common/BurgerButton/BurgerButton';
+import Login from '../../../common/modals/Login/Login';
+import SignUp from '../../../common/modals/SignUp/SignUp';
 
 import styles from './Header.module.scss';
 
+import { useModal } from '../../../../hooks/useModal';
+import { useMenu } from '../../../../hooks/useMenu';
+
 const Header = () => {
-  const [active, setActive] = useState<boolean>(false);
-
-  const clickHandler = (): void => {
-    setActive(!active);
-  };
-
-  const keyDownHandler = (e: React.KeyboardEvent<HTMLSpanElement>): void => {
-    if (e.code === 'Enter') {
-      setActive(!active);
-    }
-  };
+  const [isLoginModalOpened, toggleLoginModal] = useModal();
+  const [isSignUpModalOpened, toggleSignUpModal] = useModal();
+  const [isMenuActive, openMenu, closeMenu] = useMenu();
 
   return (
     <header className={styles.header}>
-      <Logo className={active ? `${styles.logo} ${styles.active}` : styles.logo} />
-      <div className={active ? `${styles.menu} ${styles.active}` : styles.menu}>
+      <Logo className={isMenuActive ? `${styles.logo} ${styles.active}` : styles.logo} />
+      <div className={isMenuActive ? `${styles.menu} ${styles.active}` : styles.menu}>
         <nav>
           <li>Home</li>
           <li>Service</li>
@@ -30,16 +28,33 @@ const Header = () => {
           <li>Contact</li>
         </nav>
         <div className={styles.buttonGroup}>
-          <Button transparent>Log in</Button>
-          <Button>Sign up</Button>
+          <Button
+            transparent
+            click={toggleLoginModal}
+          >
+            Log in
+          </Button>
+          <Button
+            click={toggleSignUpModal}
+          >
+            Sign up
+          </Button>
         </div>
       </div>
       <BurgerButton
         className={styles.burger}
-        active={active}
-        click={clickHandler}
-        keyDown={keyDownHandler}
+        active={isMenuActive}
+        click={openMenu}
+        keyDown={closeMenu}
       />
+      {isLoginModalOpened && createPortal(
+        <Login close={toggleLoginModal} openSignUp={toggleSignUpModal} />,
+        document.getElementById('root')!,
+      )}
+      {isSignUpModalOpened && createPortal(
+        <SignUp close={toggleSignUpModal} openLogin={toggleLoginModal} />,
+        document.getElementById('root')!,
+      )}
     </header>
   );
 };
