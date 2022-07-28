@@ -1,7 +1,9 @@
 import React from 'react';
 
 const AdminHome = () => (
-  <div />
+  <div>
+    Hello, Admin!
+  </div>
 );
 
 export default AdminHome;

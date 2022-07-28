@@ -1,0 +1,15 @@
+@use '/src/styles/tools' as *;
+
+.input {
+  padding: 18px 8px 18px 41px;
+  width: 281px;
+  border: 1px solid $input-border-gray;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 12px;
+  &::placeholder {
+    color: $text40;
+    font-size: 12px;
+    line-height: 12px;
+  }
+}

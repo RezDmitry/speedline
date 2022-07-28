@@ -1,0 +1,15 @@
+@use '/src/styles/tools' as *;
+
+.header {
+  border-bottom: 1px solid $admin-blocks-gray;
+}
+
+.content {
+  flex: 1 1 auto;
+  margin: 32px 0px 32px 0px;
+  @include flexbox(space-between, center);
+  & ul {
+    @include flexbox(space-between, center);
+    column-gap: 40px;
+  }
+}

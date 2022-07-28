@@ -1,0 +1,7 @@
+@use '/src/styles/tools' as *;
+
+.container {
+  @include flexbox();
+  flex: 1 1 auto;
+  padding: 0px 64px 0px 48px;
+}
