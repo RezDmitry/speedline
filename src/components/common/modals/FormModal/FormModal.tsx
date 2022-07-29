@@ -26,9 +26,9 @@ const FormModal = ({
   useCloseModal(close);
   useOutside(wrapperRef, close);
   return (
-    <div className={styles.modal} ref={wrapperRef}>
+    <div className={styles.modal}>
       <div className={styles.window}>
-        <div className={styles.container}>
+        <div className={styles.container} ref={wrapperRef}>
           <h2>{title}</h2>
           <div className={styles.content}>
             {children}

@@ -8,6 +8,7 @@ $error: #ce0e0e;
 $text: #3E4C59;
 $text40: transparentize($text, 0.6);
 $text70: transparentize($text, 0.3);
+$text85: transparentize($text, 0.15);
 
 $text-alt: #152739;
 $text-scroll: transparentize(#0F2031, 0.3);
@@ -17,3 +18,4 @@ $light-gray: #F3F3F3;
 $input-border-gray: #E6E8EA;
 $admin-blocks-gray: #ECEFF2;
 $workplace-gray: #FBFBFB;
+$option-gray: #F7F9FC;

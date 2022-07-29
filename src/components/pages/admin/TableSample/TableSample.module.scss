@@ -1,0 +1,24 @@
+@use '/src/styles/tools' as *;
+
+.layout {
+  flex: 1 1 auto;
+  @include flexbox(_,_,column);
+}
+
+.header {
+  @include flexbox(space-between, center);
+  flex: 1 1 auto;
+  & h1 {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 36px;
+  }
+}
+
+.control {
+  @include flexbox();
+  column-gap: 24px;
+  & select {
+    width: 190px;
+  }
+}

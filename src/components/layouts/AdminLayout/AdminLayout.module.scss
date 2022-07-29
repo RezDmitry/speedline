@@ -16,4 +16,6 @@
 
 .content {
   margin-top: 72px;
+  flex: 1 1 auto;
+  @include flexbox();
 }

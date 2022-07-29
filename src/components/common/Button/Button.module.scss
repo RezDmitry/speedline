@@ -9,6 +9,8 @@
   color: $white;
   border-radius: 3px;
   cursor: pointer;
+  @include flexbox(center, center);
+  column-gap: 16px;
   @include transition(0.2s, 0s);
   &:hover {
     background: darken($main, 10%);
@@ -35,6 +37,12 @@
 
 .fullWidth {
   width: 100%;
+}
+
+.small {
+  padding: 16px 24px;
+  font-size: 12px;
+  line-height: 12px;
 }
 
 .large {

@@ -7,7 +7,7 @@
   color: $text;
 }
 
-input {
+input, select {
   padding: 18px;
   border: 1px solid $input-border-gray;
   border-radius: 3px;
@@ -20,4 +20,8 @@ input {
   &:hover, &:active, &:focus {
     border: 1px solid $main;
   }
+}
+
+button {
+  font-family: 'Inter', sans-serif;
 }
