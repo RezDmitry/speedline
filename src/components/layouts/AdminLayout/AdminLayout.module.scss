@@ -1,1 +1,19 @@
 @use '/src/styles/tools' as *;
+
+.layout {
+  @include flexbox(_, _, _);
+  flex: 1 1 auto;
+}
+
+.workplace {
+  flex: 1 1 auto;
+  @include flexbox(_, _, column);
+  & main {
+    background-color: $workplace-gray;
+    flex: 1 1 auto;
+  }
+}
+
+.content {
+  margin-top: 72px;
+}

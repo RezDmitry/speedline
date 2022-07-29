@@ -83,3 +83,13 @@
     display: block;
   }
 }
+
+.activeLink {
+  color: $main;
+  text-decoration: none;
+}
+
+.inActiveLink {
+  text-decoration: none;
+  color: inherit;
+}

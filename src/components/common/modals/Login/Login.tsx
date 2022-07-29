@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
@@ -23,6 +24,8 @@ const LoginSchema = yup.object().shape({
 });
 
 const Login = ({ close, openSignUp }: ILoginProps) => {
+  const [loginError, showLoginError] = useState(false);
+  const navigate = useNavigate();
   const openAnotherModal = () => {
     close();
     openSignUp();
@@ -58,12 +61,20 @@ const Login = ({ close, openSignUp }: ILoginProps) => {
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });
-          alert(JSON.stringify(values, null, 2));
+          const emailCheck = localStorage.getItem('email') === values.email;
+          const passCheck = localStorage.getItem('password') === values.password;
+          if (emailCheck && passCheck) {
+            navigate('/admin');
+          } else {
+            showLoginError(true);
+            setTimeout(() => showLoginError(false), 2000);
+          }
         }}
         validationSchema={LoginSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
+            {loginError && <div className="modal-form__error">Incorrect email or password</div>}
             <label htmlFor="email">
               Email
               <Field
