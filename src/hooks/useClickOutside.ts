@@ -6,7 +6,7 @@ export const useOutside = (
 ) => {
   useEffect(() => {
     const handleClickOutside = (e: any) => {
-      if (e.target !== ref.current) {
+      if (ref.current && !ref.current.contains(e.target)) {
         close();
       }
     };

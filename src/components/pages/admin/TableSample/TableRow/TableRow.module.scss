@@ -1,0 +1,25 @@
+@use '/src/styles/tools' as *;
+
+.row {
+  display: grid;
+  grid-template-columns: auto repeat(5, 1fr);
+  padding: 24px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 12px;
+  border-bottom: 1px solid $admin-blocks-gray;
+  &:hover {
+    background-color: $option-gray;
+  }
+  & div {
+    @include flexbox(_, center);
+    &:first-child {
+      padding-right: 8px;
+    }
+  }
+  & input {
+    &:checked {
+      background-color: $main;
+    }
+  }
+}

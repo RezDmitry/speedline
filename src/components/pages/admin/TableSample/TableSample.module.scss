@@ -3,11 +3,11 @@
 .layout {
   flex: 1 1 auto;
   @include flexbox(_,_,column);
+  row-gap: 32px;
 }
 
 .header {
   @include flexbox(space-between, center);
-  flex: 1 1 auto;
   & h1 {
     font-weight: 600;
     font-size: 36px;
@@ -21,4 +21,10 @@
   & select {
     width: 190px;
   }
+}
+
+.table {
+  background-color: $white;
+  flex: 1 1 100px;
+  overflow: auto;
 }

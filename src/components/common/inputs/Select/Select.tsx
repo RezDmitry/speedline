@@ -16,7 +16,7 @@ interface ISelectProps {
 const Select = ({ list, value, click }: ISelectProps) => {
   const [active, setActive] = useState<boolean>(false);
   const wrappedRef = useRef(null);
-  const clickOption = (e: React.MouseEvent<HTMLDivElement>) => {
+  const clickOption = (e: React.MouseEvent<HTMLLabelElement>) => {
     setActive(false);
     e.stopPropagation();
   };
@@ -32,11 +32,21 @@ const Select = ({ list, value, click }: ISelectProps) => {
       {value}
       <div
         className={`${styles.list} ${active ? styles.active : ''}`}
-        onClick={clickOption}
       >
         {list.map((elem) => (
-          <label key={elem} htmlFor={elem} className={styles.option}>
-            <input name="filter" type="radio" id={elem} value={elem} onClick={click} />
+          <label
+            key={elem}
+            htmlFor={elem}
+            className={styles.option}
+            onClick={clickOption}
+          >
+            <input
+              name="filter"
+              type="radio"
+              id={elem}
+              value={elem}
+              onClick={click}
+            />
             {elem}
           </label>
         ))}

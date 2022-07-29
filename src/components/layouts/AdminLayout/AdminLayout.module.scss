@@ -1,7 +1,7 @@
 @use '/src/styles/tools' as *;
 
 .layout {
-  @include flexbox(_, _, _);
+  @include flexbox();
   flex: 1 1 auto;
 }
 
@@ -11,6 +11,7 @@
   & main {
     background-color: $workplace-gray;
     flex: 1 1 auto;
+    @include flexbox();
   }
 }
 
