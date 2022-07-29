@@ -13,3 +13,21 @@
     column-gap: 40px;
   }
 }
+
+.controlPanel {
+  & li {
+    position: relative;
+    cursor: pointer;
+    &:hover, &:active, &:focus {
+      & * {
+        stroke: $main;
+      }
+    }
+  }
+}
+
+.sticker {
+  position: absolute;
+  top: 0;
+  right: 4px;
+}

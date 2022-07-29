@@ -1,23 +1,29 @@
 import React from 'react';
 
-import styles from './Header.module.scss';
 import AdminContainer from '../AdminContainer/AdminContainer';
 import SearchInput from '../../../common/inputs/SearchInput/SearchInput';
+
+import styles from './Header.module.scss';
+import { ReactComponent as ProfileIcon } from '../../../../content/icons/profile.svg';
+import { ReactComponent as SettingsIcon } from '../../../../content/icons/settings.svg';
+import { ReactComponent as NotificationIcon } from '../../../../content/icons/notification.svg';
+import { ReactComponent as StickerIcon } from '../../../../content/icons/sticker.svg';
 
 const Header = () => (
   <header className={styles.header}>
     <AdminContainer>
       <div className={styles.content}>
         <SearchInput />
-        <ul>
+        <ul className={styles.controlPanel}>
           <li>
-            <span>x</span>
+            <ProfileIcon />
           </li>
           <li>
-            <span>x</span>
+            <SettingsIcon />
           </li>
           <li>
-            <span>x</span>
+            <NotificationIcon />
+            <StickerIcon className={styles.sticker} />
           </li>
         </ul>
       </div>
