@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './Logo.module.scss';
+
 import { ReactComponent as Logotype } from '../../../content/images/logo.svg';
 
 interface ILogoProps {

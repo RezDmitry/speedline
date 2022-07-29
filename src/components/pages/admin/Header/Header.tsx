@@ -4,6 +4,7 @@ import AdminContainer from '../AdminContainer/AdminContainer';
 import SearchInput from '../../../common/inputs/SearchInput/SearchInput';
 
 import styles from './Header.module.scss';
+
 import { ReactComponent as ProfileIcon } from '../../../../content/icons/profile.svg';
 import { ReactComponent as SettingsIcon } from '../../../../content/icons/settings.svg';
 import { ReactComponent as NotificationIcon } from '../../../../content/icons/notification.svg';
