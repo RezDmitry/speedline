@@ -9,7 +9,6 @@ import { useMenu } from '../../../hooks/useMenu';
 import styles from './AdminLayout.module.scss';
 
 const AdminLayout = () => {
-  // eslint-disable-next-line no-unused-vars
   const [isMenuActive, toggleMenu, toggleMenuByKey] = useMenu();
   return (
     <div className={styles.layout}>
