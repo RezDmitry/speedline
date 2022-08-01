@@ -19,4 +19,7 @@
   margin-top: 72px;
   flex: 1 1 auto;
   @include flexbox();
+  @include media($lg) {
+    margin-top: 32px;
+  }
 }

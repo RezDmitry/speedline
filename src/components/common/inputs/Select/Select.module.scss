@@ -27,6 +27,7 @@
   overflow: auto;
   background-color: $white;
   @include transition();
+  z-index: 5;
 
   &.active {
     opacity: 1;

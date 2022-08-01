@@ -3,17 +3,39 @@
 .navBar {
   width: 240px;
   border: 1px solid $admin-blocks-gray;
+  background-color: $white;
   @include flexbox(_,_,column);
   & ul {
     margin-top: 166px;
     @include flexbox(_,_,column);
     row-gap: 18px;
+    @include media($lg) {
+      margin-top: 64px;
+    }
+  }
+  @include media($lg) {
+    position: absolute;
+    transform: translateX(-100%);
+    z-index: 3;
+    @include transition(0.2s, 0s);
+  }
+}
+
+.isOpened {
+  @include media($lg) {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    transform: translateX(0);
+    @include transition(0.2s, 0s);
   }
 }
 
 .logo {
   margin-top: 32px;
-  padding: 0px 8px 8px 32px;
+  padding: 0px 32px 8px 32px;
 }
 
 .item {

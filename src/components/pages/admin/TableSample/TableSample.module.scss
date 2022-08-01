@@ -2,24 +2,38 @@
 
 .layout {
   flex: 1 1 auto;
-  @include flexbox(_,_,column);
+  @include flexbox(_,center,column);
   row-gap: 32px;
 }
 
 .header {
   @include flexbox(space-between, center);
+  flex-wrap: wrap;
+  row-gap: 16px;
+  width: 100%;
   & h1 {
     font-weight: 600;
     font-size: 36px;
     line-height: 36px;
+  }
+  @include media($lg) {
+    @include flexbox(center, center, column);
   }
 }
 
 .control {
   @include flexbox();
   column-gap: 24px;
+  row-gap: 24px;
   & select {
     width: 190px;
+  }
+  @include media($sm) {
+    @include flexbox(center, center, column);
+    width: 100%;
+    button, &>div {
+      width: 100%;
+    }
   }
 }
 
@@ -27,4 +41,14 @@
   background-color: $white;
   flex: 1 1 100px;
   overflow: auto;
+  width: 100%;
+  &>div:nth-of-type(1) {
+    background-color: $white;
+    z-index: 2;
+    position: sticky;
+    top: 0;
+  }
+  @include media($lg) {
+    width: 90vw;
+  }
 }

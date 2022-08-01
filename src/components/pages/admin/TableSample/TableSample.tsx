@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Button from '../../../common/Button/Button';
+import Select from '../../../common/inputs/Select/Select';
 
 import styles from './TableSample.module.scss';
 
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
-import Select from '../../../common/inputs/Select/Select';
 
 interface ITableSampleProps {
   children: React.ReactNode,

@@ -7,10 +7,34 @@
 .content {
   flex: 1 1 auto;
   margin: 32px 0px 32px 0px;
+  column-gap: 16px;
   @include flexbox(space-between, center);
   & ul {
     @include flexbox(space-between, center);
     column-gap: 40px;
+    @include media($md) {
+      column-gap: 24px;
+    }
+  }
+}
+
+.left {
+  @include flexbox(_, center);
+  column-gap: 16px;
+}
+
+.input {
+  & input {
+    @include media($md) {
+      width: 100%;
+    }
+  }
+}
+
+.burger {
+  display: none;
+  @include media($lg) {
+    display: block;
   }
 }
 

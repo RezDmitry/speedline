@@ -16,7 +16,7 @@ import { useMenu } from '../../../../hooks/useMenu';
 const Header = () => {
   const [isLoginModalOpened, toggleLoginModal] = useModal();
   const [isSignUpModalOpened, toggleSignUpModal] = useModal();
-  const [isMenuActive, openMenu, closeMenu] = useMenu();
+  const [isMenuActive, toggleMenu, toggleMenuByKey] = useMenu();
 
   return (
     <header className={styles.header}>
@@ -73,8 +73,8 @@ const Header = () => {
       <BurgerButton
         className={styles.burger}
         active={isMenuActive}
-        click={openMenu}
-        keyDown={closeMenu}
+        click={toggleMenu}
+        keyDown={toggleMenuByKey}
       />
       {isLoginModalOpened && createPortal(
         <Login close={toggleLoginModal} openSignUp={toggleSignUpModal} />,
