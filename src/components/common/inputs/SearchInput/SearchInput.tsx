@@ -1,7 +1,6 @@
 import React from 'react';
 
 import styles from './SearchInput.module.scss';
-
 import { ReactComponent as SearchIcon } from '../../../../content/icons/search.svg';
 
 interface ISearchInputProps {

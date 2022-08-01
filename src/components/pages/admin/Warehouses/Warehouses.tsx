@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import TableSample from '../TableSample/TableSample';
 import TableRow from '../TableSample/TableRow/TableRow';
-
 import { mockData, tableHeaders } from './data';
 
 const Warehouses = () => {

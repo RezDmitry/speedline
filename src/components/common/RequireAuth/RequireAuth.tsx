@@ -1,5 +1,5 @@
-import { Navigate, useLocation } from 'react-router-dom';
 import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
 
 interface IRequireAuthProps {
   // eslint-disable-next-line no-undef

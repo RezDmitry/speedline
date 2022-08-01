@@ -6,7 +6,7 @@
 
 .content {
   flex: 1 1 auto;
-  margin: 32px 0px 32px 0px;
+  margin: 32px 0;
   column-gap: 16px;
   @include flexbox(space-between, center);
   & ul {

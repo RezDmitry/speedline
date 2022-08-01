@@ -1,10 +1,9 @@
 import React, { useRef, useState } from 'react';
 
-import styles from './Select.module.scss';
-
-import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
-
 import { useOutside } from '../../../../hooks/useClickOutside';
+
+import styles from './Select.module.scss';
+import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
 
 interface ISelectProps {
   list: string [],

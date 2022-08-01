@@ -2,11 +2,10 @@ import React, { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Logo from '../../../common/Logo/Logo';
+import { useOutside } from '../../../../hooks/useClickOutside';
+import { menuList } from './menu-list';
 
 import styles from './NavBar.module.scss';
-
-import { menuList } from './menu-list';
-import { useOutside } from '../../../../hooks/useClickOutside';
 
 interface INavBarProps {
   isOpened: boolean,

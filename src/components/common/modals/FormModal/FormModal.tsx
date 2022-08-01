@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
 
-import styles from './FormModal.module.scss';
-
-import { ReactComponent as Cross } from '../../../../content/icons/cross.svg';
-
 import { useCloseModal } from '../../../../hooks/useCloseModal';
 import { useOutside } from '../../../../hooks/useClickOutside';
+
+import styles from './FormModal.module.scss';
+import { ReactComponent as Cross } from '../../../../content/icons/cross.svg';
 
 interface IFormModalProps {
   children: React.ReactNode,

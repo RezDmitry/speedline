@@ -7,7 +7,6 @@ export const useOutside = (
   useEffect(() => {
     const handleClickOutside = (e: any) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        console.log('click');
         close();
         e.stopPropagation();
       }
@@ -17,5 +16,5 @@ export const useOutside = (
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [ref.current]);
+  }, [ref, close]);
 };

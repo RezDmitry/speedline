@@ -7,11 +7,10 @@ import Button from '../../../common/Button/Button';
 import BurgerButton from '../../../common/BurgerButton/BurgerButton';
 import Login from '../../../common/modals/Login/Login';
 import SignUp from '../../../common/modals/SignUp/SignUp';
-
-import styles from './Header.module.scss';
-
 import { useModal } from '../../../../hooks/useModal';
 import { useMenu } from '../../../../hooks/useMenu';
+
+import styles from './Header.module.scss';
 
 const Header = () => {
   const [isLoginModalOpened, toggleLoginModal] = useModal();
