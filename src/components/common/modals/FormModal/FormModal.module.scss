@@ -15,18 +15,35 @@
   background-color: $white;
   border-radius: 3px;
   position: relative;
-}
-
-.container {
-  padding: 80px 162px;
-  & h2 {
+  h2 {
     font-weight: 700;
     font-size: 36px;
     line-height: 48px;
     text-align: center;
+    padding-top: 80px;
+    @include media($sm) {
+      font-size: 23px;
+      line-height: 24px;
+      padding-top: 60px;
+    }
   }
+  &>svg {
+    padding-top: 80px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.withPic {
+  padding-top: 52px;
+  width: 300px;
+  margin: 0 auto;
+}
+
+.container {
+  padding: 40px 162px 80px 162px ;
   @include media($sm) {
-    padding: 80px;
+    padding: 40px;
   }
 }
 

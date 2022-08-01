@@ -9,12 +9,13 @@ import { ReactComponent as Cross } from '../../../../content/icons/cross.svg';
 interface IFormModalProps {
   children: React.ReactNode,
   title: string,
+  pic?: React.ReactNode,
   description?: React.ReactNode,
   close: () => void,
 }
 
 const FormModal = ({
-  children, title, description, close,
+  children, title, pic, description, close,
 }: IFormModalProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const closeByKey = (e: any) => {
@@ -27,8 +28,9 @@ const FormModal = ({
   return (
     <div className={styles.modal}>
       <div className={styles.window}>
+        {pic}
+        <h2 className={`${pic ? styles.withPic : ''}`}>{title}</h2>
         <div className={styles.container} ref={wrapperRef}>
-          <h2>{title}</h2>
           <div className={styles.content}>
             {children}
           </div>
