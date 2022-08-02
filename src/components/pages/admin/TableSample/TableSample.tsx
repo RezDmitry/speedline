@@ -9,7 +9,7 @@ import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
 
 interface ITableSampleProps {
   children: React.ReactNode,
-  title: string
+  title: string,
   filterList: string [],
   buttonText: string,
   filterValue: string,

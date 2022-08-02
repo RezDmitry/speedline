@@ -56,3 +56,14 @@ input:checked + .row::before {
 input:checked + .row {
   background-color: $option-gray;
 }
+
+.link {
+  &:hover, &:active, &:focus {
+    color: $main;
+  }
+}
+
+.withPic {
+  @include flexbox(center, center);
+  column-gap: 9px;
+}

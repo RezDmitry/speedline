@@ -16,6 +16,7 @@ import Accounts from '../pages/admin/Accounts/Accounts';
 import Cards from '../pages/admin/Cards/Cards';
 
 import styles from './App.module.scss';
+import Warehouse from '../pages/admin/Warehouses/Warehouse/Warehouse';
 
 const App = () => (
   <div className={styles.app}>
@@ -36,6 +37,7 @@ const App = () => (
       >
         <Route index element={<AdminHome />} />
         <Route path="warehouses" element={<Warehouses />} />
+        <Route path="warehouses/:id" element={<Warehouse />} />
         <Route path="accounts" element={<Accounts />} />
         <Route path="cards" element={<Cards />} />
         <Route path="contacts" element={<Contacts />} />

@@ -35,7 +35,14 @@ const Warehouses = () => {
       <TableRow array={tableHeaders} id="-1" />
       {
         prepareData(array)
-          .map((item) => <TableRow array={Object.values(item)} key={item.id} id={item.id.toString()} />)
+          .map((item) => (
+            <TableRow
+              array={Object.values(item)}
+              key={item.id}
+              id={item.id.toString()}
+              link={item.warehouse}
+            />
+          ))
       }
     </TableSample>
   );

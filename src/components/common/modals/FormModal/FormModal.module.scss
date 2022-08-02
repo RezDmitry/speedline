@@ -26,6 +26,11 @@
       line-height: 24px;
       padding-top: 60px;
     }
+    &.withPic {
+      padding-top: 52px;
+      width: 300px;
+      margin: 0 auto;
+    }
   }
   &>svg {
     padding-top: 80px;
@@ -34,14 +39,12 @@
   }
 }
 
-.withPic {
-  padding-top: 52px;
-  width: 300px;
-  margin: 0 auto;
+.stepper {
+  margin-top: 40px;
 }
 
 .container {
-  padding: 40px 162px 80px 162px ;
+  padding: 0 162px 80px 162px;
   @include media($sm) {
     padding: 40px;
   }
@@ -50,6 +53,9 @@
 .content {
   margin: 0 auto;
   margin-top: 44px;
+  & form {
+    margin-top: 56px;
+  }
 }
 
 .description {
