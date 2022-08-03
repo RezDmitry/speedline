@@ -60,6 +60,10 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });
+          if (!products.every((product) => (
+            warehouses.find((item) => warehouseFrom === item.name)!.products.some((item) => item.id === product.id)))) {
+            return;
+          }
           const newItems = products.map((item) => ({ ...item, ...values }));
           await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
           toggleSuccess(true);
@@ -72,6 +76,10 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             {step === 1
               && (
                 <div className={styles.warehouses}>
+                  {!products.every((product) => (
+                    warehouses.find((item) => warehouseFrom === item.name)!.products
+                      .some((item) => item.id === product.id)))
+                    && <div className="modal-form__error">No products on warehouse</div>}
                   <label htmlFor="warehouseFrom">
                     From
                     <Select
