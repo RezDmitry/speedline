@@ -9,13 +9,25 @@ interface ITableRowProps {
   array: any [],
   id: string,
   link?: string,
+  selectRow?: () => void,
+  // eslint-disable-next-line no-unused-vars
+  selectAllRows?: (e: React.ChangeEvent<HTMLInputElement>) => void,
+  isSelected?: boolean,
 }
 
-const TableRow = ({ array, id, link }: ITableRowProps) => {
+const TableRow = ({
+  array, id, link, selectRow, isSelected, selectAllRows,
+}: ITableRowProps) => {
   const navigate = useNavigate();
   return (
     <div className={styles.wrapper}>
-      <input id={id} type="checkbox" className={styles.checkbox} />
+      <input
+        id={id}
+        type="checkbox"
+        className={styles.checkbox}
+        checked={isSelected}
+        onChange={selectAllRows || selectRow}
+      />
       <label className={styles.row} style={{ gridTemplateColumns: `repeat(${array.length - 1}, 1fr)` }} htmlFor={id}>
         {array.map((elem, i) => (i !== 0) && (
           (i === 1 && link)

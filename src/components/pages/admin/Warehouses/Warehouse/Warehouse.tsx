@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import TableRow from '../../TableSample/TableRow/TableRow';
@@ -11,14 +11,36 @@ const Warehouse = () => {
   const { id } = useParams();
   const [shipment, setShipment] = useState<string>('Filter by');
   const [array, setArray] = useState<any []>(mockData);
+  const [selected, setSelected] = useState<any []>([]);
   const [isModalOpened, toggleModal] = useModal();
-  const prepareData = (arr: any []) => {
-    if (shipment === 'Filter by') return arr;
-    return arr.filter((elem) => elem.method === shipment);
+  const prepareData = () => {
+    if (shipment === 'Filter by') {
+      setArray(mockData);
+    } else {
+      setArray((prev) => prev.filter((elem) => elem.method === shipment));
+    }
   };
   const addProduct = (value: any) => {
     setArray((prev) => prev.concat(value));
   };
+  const changeSelect = (item: any) => {
+    if (selected.some((elem) => item.id === elem.id)) {
+      setSelected((prev) => prev.filter((elem) => item.id !== elem.id));
+    } else {
+      setSelected((prev) => prev.concat(item));
+    }
+  };
+  const selectAllRows = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.currentTarget.checked) {
+      setSelected([]);
+    } else {
+      setSelected(array);
+    }
+  };
+  const checkSelection = (item: any) => selected.some((elem: any) => item.id === elem.id);
+  useEffect(() => {
+    prepareData();
+  }, [shipment]);
   return (
     <TableSample
       title={id!}
@@ -29,11 +51,19 @@ const Warehouse = () => {
       modal={<AddProduct close={toggleModal} addProduct={addProduct} />}
       toggleModal={toggleModal}
       isModalOpened={isModalOpened}
+      selected={selected}
     >
-      <TableRow array={tableHeaders} id="-1" />
+      <TableRow array={tableHeaders} id="-1" selectAllRows={selectAllRows} />
       {
-        prepareData(array)
-          .map((item) => <TableRow array={Object.values(item)} key={item.id} id={item.id.toString()} />)
+        array.map((item) => (
+          <TableRow
+            selectRow={() => changeSelect(item)}
+            array={Object.values(item)}
+            key={item.id}
+            id={item.id.toString()}
+            isSelected={checkSelection(item)}
+          />
+        ))
       }
     </TableSample>
   );

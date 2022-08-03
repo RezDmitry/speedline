@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 
 import Button from '../../../common/Button/Button';
 import Select from '../../../common/inputs/Select/Select';
+import SnackBar from '../SnackBar/SnackBar';
 
 import styles from './TableSample.module.scss';
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
@@ -18,10 +19,11 @@ interface ITableSampleProps {
   toggleModal?: () => void,
   modal?: React.ReactNode,
   isModalOpened?: boolean,
+  selected?: any [],
 }
 
 const TableSample = ({
-  children, title, filterList, buttonText, filterValue, clickFilter, toggleModal, modal, isModalOpened,
+  children, title, filterList, buttonText, filterValue, clickFilter, toggleModal, modal, isModalOpened, selected,
 }: ITableSampleProps) => (
   <div className={styles.layout}>
     <div className={styles.header}>
@@ -38,6 +40,10 @@ const TableSample = ({
     </div>
     {isModalOpened && createPortal(
       modal,
+      document.getElementById('root')!,
+    )}
+    {selected && createPortal(
+      <SnackBar selected={selected} />,
       document.getElementById('root')!,
     )}
   </div>
