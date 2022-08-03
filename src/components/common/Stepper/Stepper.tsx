@@ -15,16 +15,15 @@ const Stepper = ({
 }: IStepperProps) => (
   <div className={`${styles.wrapper}`}>
     <div className={`${styles.stepper} ${className}`}>
-      {arr
-        .map((elem, i) => (
-          <div
-            className={`${(step === i + 1) && styles.active}`}
-            onClick={() => changeStep(elem)}
-            key={elem}
-          >
-            {elem}
-          </div>
-        ))}
+      {arr.map((elem, i) => (
+        <div
+          className={`${(step === i + 1) && styles.active}`}
+          onClick={() => changeStep(elem)}
+          key={elem}
+        >
+          {elem}
+        </div>
+      ))}
       <span />
     </div>
   </div>
