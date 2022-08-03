@@ -5,6 +5,7 @@ import { useOutside } from '../../../../hooks/useClickOutside';
 
 import styles from './FormModal.module.scss';
 import { ReactComponent as Cross } from '../../../../content/icons/cross.svg';
+import Stepper from '../../Stepper/Stepper';
 
 interface IFormModalProps {
   children: React.ReactNode,
@@ -12,10 +13,14 @@ interface IFormModalProps {
   pic?: React.ReactNode,
   description?: React.ReactNode,
   close: () => void,
+  step?: number,
+  stepArray?: any [],
+  // eslint-disable-next-line no-unused-vars
+  changeStep?: (elem: any) => void,
 }
 
 const FormModal = ({
-  children, title, pic, description, close,
+  children, title, pic, description, close, step, stepArray, changeStep,
 }: IFormModalProps) => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const closeByKey = (e: any) => {
@@ -27,11 +32,12 @@ const FormModal = ({
   useOutside(wrapperRef, close);
   return (
     <div className={styles.modal}>
-      <div className={styles.window}>
+      <div className={styles.window} ref={wrapperRef}>
         {pic}
         <h2 className={`${pic ? styles.withPic : ''}`}>{title}</h2>
-        <div className={styles.container} ref={wrapperRef}>
+        <div className={styles.container}>
           <div className={styles.content}>
+            {step && <Stepper className={styles.stepper} step={step} arr={stepArray!} changeStep={changeStep!} />}
             {children}
           </div>
           {description && <p className={styles.description}>{description}</p>}
