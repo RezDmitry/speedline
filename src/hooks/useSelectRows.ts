@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 
-export const useSelectRows = (array: any [], filter: string, prepareData: () => void) => {
+export const useSelectRows = (array: any [], filter: string, prepareData: () => void): [
+  // eslint-disable-next-line no-unused-vars
+  any [], (item: any) => void, (e: React.ChangeEvent<HTMLInputElement>) => void, (item: any) => boolean,
+] => {
   const [selected, setSelected] = useState<any []>([]);
   const changeSelect = (item: any) => {
     if (selected.some((elem) => item.id === elem.id)) {
@@ -19,10 +22,6 @@ export const useSelectRows = (array: any [], filter: string, prepareData: () => 
   const checkSelection = (item: any) => selected.some((elem: any) => item.id === elem.id);
   useEffect(() => {
     prepareData();
-  }, [filter]);
-  return [
-    changeSelect,
-    selectAllRows,
-    checkSelection,
-  ];
+  }, [filter, prepareData]);
+  return [selected, changeSelect, selectAllRows, checkSelection];
 };
