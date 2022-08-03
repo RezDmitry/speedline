@@ -8,14 +8,15 @@ import FormModal from '../FormModal/FormModal';
 import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
 import { helper, paymentOptions, shipmentOptions } from './helper';
 import Select from '../../inputs/Select/Select';
-import { warehouses } from '../../../pages/admin/Warehouses/data';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
 
 import styles from './MoveProduct.module.scss';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
+import { replaceProduct } from '../../../../store/slices/WarehouseSlice';
 
 interface IMoveProductProps {
   close: () => void,
-  moveProduct: (value: any) => void
+  products: any [],
 }
 
 const MoveProductSchema = yup.object().shape({
@@ -25,8 +26,10 @@ const MoveProductSchema = yup.object().shape({
     .required('Required'),
 });
 
-const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
+const MoveProduct = ({ close, products }: IMoveProductProps) => {
   const { id } = useParams();
+  const warehouses = useAppSelector((state) => state.warehouseReducer);
+  const dispatch = useAppDispatch();
   const [
     warehouseFrom, setWarehouseFrom,
   ] = useState<string>(warehouses.find((item) => item.name === id)!.name);
@@ -37,10 +40,6 @@ const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
   const changeWarehouses = () => {
     setWarehouseIn(warehouseFrom);
     setWarehouseFrom(warehouseIn);
-  };
-  const setWarehouse = (e: React.MouseEvent<HTMLInputElement>, func: any) => {
-    func(e.currentTarget.value);
-    console.log(e.currentTarget.value);
   };
   if (success) {
     return <SuccessMoveProduct close={close} />;
@@ -61,7 +60,8 @@ const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });
-          moveProduct({ id: Date.now(), ...values });
+          const newItems = products.map((item) => ({ ...item, ...values }));
+          await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
           toggleSuccess(true);
         }}
         validationSchema={MoveProductSchema}
@@ -77,7 +77,7 @@ const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseFrom"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouse(e, setWarehouseFrom)}
+                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseFrom(e.currentTarget.value)}
                       value={warehouseFrom}
                       className={styles.select}
                     />
@@ -85,6 +85,7 @@ const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
                   <button
                     className={styles.changeButton}
                     onClick={changeWarehouses}
+                    type="button"
                   >
                     <ChangeIcon />
                   </button>
@@ -93,11 +94,12 @@ const MoveProduct = ({ close, moveProduct }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseIn"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouse(e, setWarehouseIn)}
+                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseIn(e.currentTarget.value)}
                       value={warehouseIn}
                       className={styles.select}
                     />
                   </label>
+                  <div>{errors.method}</div>
                 </div>
               )}
             {step === 2

@@ -3,12 +3,15 @@ import React, { useState } from 'react';
 import TableSample from '../TableSample/TableSample';
 import TableRow from '../TableSample/TableRow/TableRow';
 import AddWarehouse from '../../../common/modals/AddWarehouse/AddWarehouse';
-import { warehouses, tableHeaders } from './data';
+import { tableHeaders } from './data';
 import { useModal } from '../../../../hooks/useModal';
+import { useAppSelector } from '../../../../hooks/useStore';
+import { IWarehouse } from '../../../../typings/Warehouse';
 
 const Warehouses = () => {
   const [weight, setWeight] = useState<string>('Filter by');
-  const [array, setArray] = useState<any []>(warehouses);
+  const warehouses = useAppSelector((state) => state.warehouseReducer);
+  const [array, setArray] = useState<IWarehouse []>(warehouses);
   const [isOpened, toggleOpened] = useModal();
   const prepareData = (arr: any []) => {
     if (weight === 'Lower height') {

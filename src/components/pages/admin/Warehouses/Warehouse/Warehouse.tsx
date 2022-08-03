@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useAppSelector } from '../../../../../hooks/useStore';
 import TableRow from '../../TableSample/TableRow/TableRow';
 import TableSample from '../../TableSample/TableSample';
 import { useModal } from '../../../../../hooks/useModal';
@@ -8,10 +9,10 @@ import { tableHeaders } from './data';
 import AddProduct from '../../../../common/modals/AddProduct/AddProduct';
 import { useSelectRows } from '../../../../../hooks/useSelectRows';
 import MoveProduct from '../../../../common/modals/MoveProduct/MoveProduct';
-import { warehouses } from '../data';
 
 const Warehouse = () => {
   const { id } = useParams();
+  const warehouses = useAppSelector((state) => state.warehouseReducer);
   const [shipment, setShipment] = useState<string>('Filter by');
   const [array, setArray] = useState<any []>(warehouses.find((item) => item.name === id)!.products);
   const [cashArray, setCashArray] = useState<any []>([]);
@@ -50,7 +51,7 @@ const Warehouse = () => {
       }}
       moveItemModal={{
         toggleOpened: toggleOpenedMove,
-        content: <MoveProduct close={toggleOpenedMove} moveProduct={addProduct} />,
+        content: <MoveProduct close={toggleOpenedMove} products={selected} />,
         isOpened: isOpenedMove,
       }}
       selected={selected}
