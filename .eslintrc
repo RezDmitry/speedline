@@ -57,6 +57,8 @@
       "LabeledStatement",
       "WithStatement"
     ],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"],
     "func-style": ["error", "expression"],
     "prefer-destructuring": ["error", {
       "VariableDeclarator": {
