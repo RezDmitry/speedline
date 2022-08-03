@@ -15,7 +15,6 @@ interface IFormModalProps {
   close: () => void,
   step?: number,
   stepArray?: any [],
-  // eslint-disable-next-line no-unused-vars
   changeStep?: (elem: any) => void,
 }
 

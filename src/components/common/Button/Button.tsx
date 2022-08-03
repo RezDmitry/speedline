@@ -12,7 +12,6 @@ interface IButtonProps {
   outlined?: boolean,
   error?: boolean,
   click?: () => void,
-  // eslint-disable-next-line no-unused-vars
   keyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void,
   type?: 'submit' | 'reset' | 'button',
   icon?: React.ReactNode,

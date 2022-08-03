@@ -4,26 +4,38 @@ import { useParams } from 'react-router-dom';
 import TableRow from '../../TableSample/TableRow/TableRow';
 import TableSample from '../../TableSample/TableSample';
 import { useModal } from '../../../../../hooks/useModal';
-import { mockData, tableHeaders } from './data';
+import { tableHeaders } from './data';
 import AddProduct from '../../../../common/modals/AddProduct/AddProduct';
 import { useSelectRows } from '../../../../../hooks/useSelectRows';
+import MoveProduct from '../../../../common/modals/MoveProduct/MoveProduct';
+import { warehouses } from '../data';
 
 const Warehouse = () => {
   const { id } = useParams();
   const [shipment, setShipment] = useState<string>('Filter by');
-  const [array, setArray] = useState<any []>(mockData);
-  const [isModalOpened, toggleModal] = useModal();
+  const [array, setArray] = useState<any []>(warehouses.find((item) => item.name === id)!.products);
+  const [cashArray, setCashArray] = useState<any []>([]);
+  const [isOpened, toggleOpened] = useModal();
+  const [isOpenedMove, toggleOpenedMove] = useModal();
   const prepareData = () => {
     if (shipment === 'Filter by') {
-      setArray(mockData);
+      setArray(cashArray.concat(array));
     } else {
       setArray((prev) => prev.filter((elem) => elem.method === shipment));
+      setCashArray(array.filter((elem) => elem.method !== shipment));
     }
   };
   const addProduct = (value: any) => {
     setArray((prev) => prev.concat(value));
   };
-  const [selected, changeSelect, selectAllRows, checkSelection] = useSelectRows(array, shipment, prepareData);
+  const [
+    selected, changeSelect, selectAllRows, checkSelection, clearSelect,
+  ] = useSelectRows(array, shipment, prepareData);
+  const deleteProducts = () => {
+    setArray((prev) => prev.filter((elem) => !selected.some((item) => item.id === elem.id)));
+    clearSelect();
+    changeSelect({ id: '-1' });
+  };
   return (
     <TableSample
       title={id!}
@@ -31,10 +43,18 @@ const Warehouse = () => {
       buttonText="Add cargo"
       filterValue={shipment}
       clickFilter={(e: React.MouseEvent<HTMLInputElement>) => setShipment(e.currentTarget.value)}
-      modal={<AddProduct close={toggleModal} addProduct={addProduct} />}
-      toggleModal={toggleModal}
-      isModalOpened={isModalOpened}
+      addItemModal={{
+        toggleOpened,
+        content: <AddProduct close={toggleOpened} addProduct={addProduct} />,
+        isOpened,
+      }}
+      moveItemModal={{
+        toggleOpened: toggleOpenedMove,
+        content: <MoveProduct close={toggleOpenedMove} moveProduct={addProduct} />,
+        isOpened: isOpenedMove,
+      }}
       selected={selected}
+      deleteItems={deleteProducts}
     >
       <TableRow array={tableHeaders} id="-1" selectAllRows={selectAllRows} />
       {

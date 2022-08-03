@@ -10,7 +10,6 @@ import styles from './NavBar.module.scss';
 interface INavBarProps {
   isOpened: boolean,
   toggleMenu: () => void,
-  // eslint-disable-next-line no-unused-vars
   toggleMenuByKey: (e: React.KeyboardEvent<HTMLSpanElement>) => void,
 }
 

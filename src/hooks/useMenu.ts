@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-// eslint-disable-next-line no-unused-vars
 export const useMenu = (): [boolean, () => void, (e: React.KeyboardEvent<HTMLSpanElement>) => void] => {
   const [active, setActive] = useState<boolean>(false);
 

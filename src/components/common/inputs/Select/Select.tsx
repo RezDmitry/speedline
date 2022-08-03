@@ -6,13 +6,16 @@ import styles from './Select.module.scss';
 import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
 
 interface ISelectProps {
-  list: string [],
+  list: any [],
+  name: string,
   value: string,
-  // eslint-disable-next-line no-unused-vars
   click: (e: React.MouseEvent<HTMLInputElement>) => void,
+  className?: string,
 }
 
-const Select = ({ list, value, click }: ISelectProps) => {
+const Select = ({
+  list, name, value, click, className,
+}: ISelectProps) => {
   const [active, setActive] = useState<boolean>(false);
   const wrappedRef = useRef(null);
   const clickOption = (e: React.MouseEvent<HTMLLabelElement>) => {
@@ -22,7 +25,7 @@ const Select = ({ list, value, click }: ISelectProps) => {
   useOutside(wrappedRef, () => setActive(false));
   return (
     <div
-      className={styles.select}
+      className={`${styles.select} ${className}`}
       onClick={() => setActive(!active)}
       tabIndex={0}
       role="button"
@@ -35,14 +38,14 @@ const Select = ({ list, value, click }: ISelectProps) => {
         {list.map((elem) => (
           <label
             key={elem}
-            htmlFor={elem}
+            htmlFor={elem + name}
             className={styles.option}
             onClick={clickOption}
           >
             <input
-              name="filter"
+              name={name}
               type="radio"
-              id={elem}
+              id={elem + name}
               value={elem}
               onClick={click}
             />

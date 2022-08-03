@@ -6,7 +6,6 @@ interface IStepperProps {
   className?: string,
   step: number,
   arr: any [],
-  // eslint-disable-next-line no-unused-vars
   changeStep: (elem: any) => void,
 }
 

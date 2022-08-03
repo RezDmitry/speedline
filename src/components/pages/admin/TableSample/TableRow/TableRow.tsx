@@ -10,7 +10,6 @@ interface ITableRowProps {
   id: string,
   link?: string,
   selectRow?: () => void,
-  // eslint-disable-next-line no-unused-vars
   selectAllRows?: (e: React.ChangeEvent<HTMLInputElement>) => void,
   isSelected?: boolean,
 }
