@@ -3,13 +3,16 @@ import React, { useState } from 'react';
 import TableSample from '../TableSample/TableSample';
 import TableRow from '../TableSample/TableRow/TableRow';
 import AddWarehouse from '../../../common/modals/AddWarehouse/AddWarehouse';
-import { mockData, tableHeaders } from './data';
+import { tableHeaders } from './data';
 import { useModal } from '../../../../hooks/useModal';
+import { useAppSelector } from '../../../../hooks/useStore';
+import { IWarehouse } from '../../../../typings/Warehouse';
 
 const Warehouses = () => {
   const [weight, setWeight] = useState<string>('Filter by');
-  const [array, setArray] = useState<any []>(mockData);
-  const [isModalOpened, toggleModal] = useModal();
+  const warehouses = useAppSelector((state) => state.warehouseReducer);
+  const [array, setArray] = useState<IWarehouse []>(warehouses);
+  const [isOpened, toggleOpened] = useModal();
   const prepareData = (arr: any []) => {
     if (weight === 'Lower height') {
       return arr.sort((a, b) => a.height - b.height);
@@ -28,19 +31,21 @@ const Warehouses = () => {
       buttonText="Add a warehouse"
       filterValue={weight}
       clickFilter={(e: React.MouseEvent<HTMLInputElement>) => setWeight(e.currentTarget.value)}
-      modal={<AddWarehouse close={toggleModal} addWarehouse={addWarehouse} />}
-      toggleModal={toggleModal}
-      isModalOpened={isModalOpened}
+      addItemModal={{
+        toggleOpened,
+        content: <AddWarehouse close={toggleOpened} addWarehouse={addWarehouse} />,
+        isOpened,
+      }}
     >
       <TableRow array={tableHeaders} id="-1" />
       {
         prepareData(array)
           .map((item) => (
             <TableRow
-              array={Object.values(item)}
+              array={Object.values(item).filter((elem) => !Array.isArray(elem))}
               key={item.id}
               id={item.id.toString()}
-              link={item.warehouse}
+              link={item.name}
             />
           ))
       }

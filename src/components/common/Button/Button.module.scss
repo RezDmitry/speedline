@@ -11,6 +11,7 @@
   cursor: pointer;
   @include flexbox(center, center);
   column-gap: 16px;
+  border: 1px solid $main;
   @include transition(0.2s, 0s);
   &:hover {
     background: darken($main, 10%);
@@ -47,4 +48,20 @@
 
 .large {
   padding: 22px 40px;
+}
+
+.outlined {
+  background-color: transparent;
+  color: $main;
+  &.error {
+    color: $error;
+    border: 1px solid $error;
+    &:hover {
+      background: darken($error, 10%);
+      color: $white;
+    }
+    &:active {
+      background: darken($error, 20%);
+    }
+  }
 }

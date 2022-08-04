@@ -1,0 +1,33 @@
+@use '/src/styles/tools' as *;
+
+.warehouses {
+  &>label {
+    margin-top: 32px;
+    font-size: 12px;
+    line-height: 12px;
+    &:last-child {
+      margin-top: 12px;
+    }
+  }
+}
+
+.select {
+  margin-top: 8px;
+  width: 300px;
+}
+
+.changeButton {
+  display: block;
+  background-color: $white;
+  margin: 32px auto 0 auto;
+  cursor: pointer;
+  transform: scale(1.1);
+  & * {
+    stroke: $text;
+  }
+  &:hover {
+    & * {
+      stroke: $main;
+    }
+  }
+}

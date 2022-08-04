@@ -11,7 +11,6 @@ import { helper, paymentOptions, shipmentOptions } from './helper';
 
 interface IAddProductProps {
   close: () => void,
-  // eslint-disable-next-line no-unused-vars
   addProduct: (value: any) => void
 }
 
@@ -56,7 +55,6 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
           name: '', manufacturer: '', number: '', technology: 'A', method: '', payment: '',
         }}
         onSubmit={async (values) => {
-          console.log(values);
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });

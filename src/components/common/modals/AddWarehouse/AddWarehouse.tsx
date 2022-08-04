@@ -10,7 +10,6 @@ import SuccessAddWarehouse from './SuccessAddWarehouse/SuccessAddWarehouse';
 
 interface IAddWarehouseProps {
   close: () => void,
-  // eslint-disable-next-line no-unused-vars
   addWarehouse: (value: any) => void
 }
 

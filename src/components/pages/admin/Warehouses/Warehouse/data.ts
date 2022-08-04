@@ -2,10 +2,10 @@ export const tableHeaders = [
   'id', 'All products', 'Manufacturer', 'Item number', 'Purchasing technology', 'Shipment method', 'Payment method',
 ];
 
-export const mockData = [
+export const productsW1 = [
   {
-    id: 1,
-    name: 'CC0603FRNPO',
+    id: '1',
+    name: 'CC0603FR33NPO',
     manufacturer: 'YAG',
     number: 'C88918',
     technology: 'S',
@@ -13,8 +13,8 @@ export const mockData = [
     payment: 'Visa, Mastercard',
   },
   {
-    id: 2,
-    name: 'CC0603FRNPO',
+    id: '2',
+    name: 'CC0603FRNP11O',
     manufacturer: 'YAG',
     number: 'C88918',
     technology: 'S',
@@ -22,8 +22,8 @@ export const mockData = [
     payment: 'Visa, Mastercard',
   },
   {
-    id: 3,
-    name: 'CC0603FRNPO',
+    id: '3',
+    name: 'CC0603FRNP222O',
     manufacturer: 'YAG',
     number: 'C88918',
     technology: 'S',
@@ -31,8 +31,8 @@ export const mockData = [
     payment: 'Visa, Mastercard',
   },
   {
-    id: 4,
-    name: 'CC0603FRNPO',
+    id: '4',
+    name: 'CC060231',
     manufacturer: 'YAG',
     number: 'C88918',
     technology: 'S',
@@ -40,8 +40,56 @@ export const mockData = [
     payment: 'Visa, Mastercard',
   },
   {
-    id: 5,
-    name: 'CC0603FRNPO',
+    id: '5',
+    name: 'CC060332',
+    manufacturer: 'YAG',
+    number: 'C88918',
+    technology: 'S',
+    method: 'TRUCK',
+    payment: 'Visa, Mastercard',
+  },
+];
+
+export const productsW2 = [
+  {
+    id: '11',
+    name: 'CC1',
+    manufacturer: 'YAG',
+    number: 'C88918',
+    technology: 'S',
+    method: 'AIR',
+    payment: 'Visa, Mastercard',
+  },
+  {
+    id: '22',
+    name: 'CC2',
+    manufacturer: 'YAG',
+    number: 'C88918',
+    technology: 'S',
+    method: 'AIR',
+    payment: 'Visa, Mastercard',
+  },
+  {
+    id: '32',
+    name: 'CC3',
+    manufacturer: 'YAG',
+    number: 'C88918',
+    technology: 'S',
+    method: 'SEA',
+    payment: 'Visa, Mastercard',
+  },
+  {
+    id: '42',
+    name: 'CC4',
+    manufacturer: 'YAG',
+    number: 'C88918',
+    technology: 'S',
+    method: 'SEA',
+    payment: 'Visa, Mastercard',
+  },
+  {
+    id: '522',
+    name: 'CC5',
     manufacturer: 'YAG',
     number: 'C88918',
     technology: 'S',

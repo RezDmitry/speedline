@@ -6,7 +6,6 @@ interface IBurgerButtonProps {
   active?: boolean,
   className?: string,
   click: () => void,
-  // eslint-disable-next-line no-unused-vars
   keyDown: (e: React.KeyboardEvent<HTMLSpanElement>) => void,
 }
 

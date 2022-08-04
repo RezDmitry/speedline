@@ -3,6 +3,8 @@ import { createPortal } from 'react-dom';
 
 import Button from '../../../common/Button/Button';
 import Select from '../../../common/inputs/Select/Select';
+import SnackBar from '../SnackBar/SnackBar';
+import { IModalType } from '../../../../typings/modalType';
 
 import styles from './TableSample.module.scss';
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
@@ -13,22 +15,23 @@ interface ITableSampleProps {
   filterList: string [],
   buttonText: string,
   filterValue: string,
-  // eslint-disable-next-line no-unused-vars
   clickFilter: (e: React.MouseEvent<HTMLInputElement>) => void,
-  toggleModal?: () => void,
-  modal?: React.ReactNode,
-  isModalOpened?: boolean,
+  addItemModal?: IModalType,
+  moveItemModal?: IModalType,
+  selected?: any [],
+  deleteItems?: () => void,
 }
 
 const TableSample = ({
-  children, title, filterList, buttonText, filterValue, clickFilter, toggleModal, modal, isModalOpened,
+  children, title, filterList, buttonText, filterValue,
+  clickFilter, addItemModal, moveItemModal, selected, deleteItems,
 }: ITableSampleProps) => (
   <div className={styles.layout}>
     <div className={styles.header}>
       <h1>{title}</h1>
       <div className={styles.control}>
-        <Select list={filterList} value={filterValue} click={clickFilter} />
-        <Button small icon={<PlusIcon />} click={toggleModal}>
+        <Select list={filterList} value={filterValue} click={clickFilter} name="filter" />
+        <Button small icon={<PlusIcon />} click={addItemModal?.toggleOpened}>
           {buttonText}
         </Button>
       </div>
@@ -36,8 +39,16 @@ const TableSample = ({
     <div className={styles.table}>
       {children}
     </div>
-    {isModalOpened && createPortal(
-      modal,
+    {addItemModal?.isOpened && createPortal(
+      addItemModal.content,
+      document.getElementById('root')!,
+    )}
+    {moveItemModal?.isOpened && createPortal(
+      moveItemModal.content,
+      document.getElementById('root')!,
+    )}
+    {!!selected?.length && createPortal(
+      <SnackBar selected={selected} deleteAction={deleteItems!} openModal={moveItemModal?.toggleOpened!} />,
       document.getElementById('root')!,
     )}
   </div>

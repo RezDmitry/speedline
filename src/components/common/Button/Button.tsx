@@ -9,24 +9,27 @@ interface IButtonProps {
   fullWidth?: boolean,
   small?: boolean,
   large?: boolean,
+  outlined?: boolean,
+  error?: boolean,
   click?: () => void,
-  // eslint-disable-next-line no-unused-vars
   keyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void,
   type?: 'submit' | 'reset' | 'button',
   icon?: React.ReactNode,
 }
 
 const Button = ({
-  children, className, transparent, fullWidth, small, large, click, keyDown, type = 'button', icon,
+  children, className, transparent, fullWidth, small, large, outlined, error, click, keyDown, type = 'button', icon,
 }: IButtonProps) => {
   const tp = transparent ? styles.transparent : '';
+  const fw = fullWidth ? styles.fullWidth : '';
   const sm = small ? styles.small : '';
   const lg = large ? styles.large : '';
-  const fw = fullWidth ? styles.fullWidth : '';
+  const ol = outlined ? styles.outlined : '';
+  const er = error ? styles.error : '';
   return (
     <button
       type={type}
-      className={`${styles.button} ${tp} ${sm} ${lg} ${fw} ${className}`}
+      className={`${styles.button} ${tp} ${fw} ${sm} ${lg} ${ol} ${er} ${className}`}
       onClick={click}
       onKeyDown={keyDown}
     >

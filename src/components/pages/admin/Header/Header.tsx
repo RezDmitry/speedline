@@ -12,7 +12,6 @@ import { ReactComponent as StickerIcon } from '../../../../content/icons/sticker
 
 interface IHeaderProps {
   toggleMenu: () => void,
-  // eslint-disable-next-line no-unused-vars
   toggleMenuByKey: (e: React.KeyboardEvent<HTMLSpanElement>) => void,
 }
 
