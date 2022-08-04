@@ -30,10 +30,15 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
   const { id } = useParams();
   const warehouses = useAppSelector((state) => state.warehouseReducer);
   const dispatch = useAppDispatch();
+  const baseWarehouse = useMemo(() => warehouses.find((item) => item.name === id)!.name, [warehouses, id]);
   const [
     warehouseFrom, setWarehouseFrom,
-  ] = useState<string>(warehouses.find((item) => item.name === id)!.name);
+  ] = useState<string>(baseWarehouse);
   const [warehouseIn, setWarehouseIn] = useState<string>(warehouses[0].name);
+  const hasWarehouseFromProducts = useMemo(() => products.every((product) => (
+    warehouses
+      .find((item) => warehouseFrom === item.name)!.products
+      .some((item) => item.id === product.id))), [warehouses, warehouseFrom, products]);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => helper(step), [step]);
@@ -60,10 +65,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
           await new Promise((resolve) => {
             setTimeout(resolve, 500);
           });
-          if (!products.every((product) => (
-            warehouses.find((item) => warehouseFrom === item.name)!.products.some((item) => item.id === product.id)))) {
-            return;
-          }
+          if (!hasWarehouseFromProducts) return;
           const newItems = products.map((item) => ({ ...item, ...values }));
           await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
           toggleSuccess(true);
@@ -76,10 +78,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             {step === 1
               && (
                 <div className={styles.warehouses}>
-                  {!products.every((product) => (
-                    warehouses.find((item) => warehouseFrom === item.name)!.products
-                      .some((item) => item.id === product.id)))
-                    && <div className="modal-form__error">No products on warehouse</div>}
+                  {!hasWarehouseFromProducts && <div className="modal-form__error">No products on warehouse</div>}
                   <label htmlFor="warehouseFrom">
                     From
                     <Select
