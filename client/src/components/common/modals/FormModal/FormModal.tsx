@@ -2,10 +2,10 @@ import React, { useRef } from 'react';
 
 import { useCloseModal } from '../../../../hooks/useCloseModal';
 import { useOutside } from '../../../../hooks/useClickOutside';
+import Stepper from '../../Stepper/Stepper';
 
 import styles from './FormModal.module.scss';
 import { ReactComponent as Cross } from '../../../../content/icons/cross.svg';
-import Stepper from '../../Stepper/Stepper';
 
 interface IFormModalProps {
   children: React.ReactNode,
