@@ -1,0 +1,33 @@
+@use '/client/src/styles/tools/index' as *;
+
+.wrapper {
+  position: relative;
+}
+
+.input {
+  padding-left: 41px;
+  width: 281px;
+  border: 1px solid $input-border-gray;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 12px;
+  &::placeholder {
+    color: $text40;
+    font-size: 12px;
+    line-height: 12px;
+  }
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    background-image: url('../../../../content/icons/cross.svg');
+    width: 16px;
+    height: 16px;
+    background-size: contain;
+    cursor: pointer;
+  }
+}
+
+.icon {
+  position: absolute;
+  top: calc(50% - 8px);
+  left: 18px;
+}

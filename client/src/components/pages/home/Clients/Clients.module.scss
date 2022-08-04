@@ -1,0 +1,70 @@
+@use '/client/src/styles/tools/index' as *;
+
+.start {
+  flex: 1 1 auto;
+  @include flexbox();
+  position: relative;
+  & div:first-child {
+    flex: 0 0 50%;
+    margin-top: 210px;
+    @include media($lg) {
+      flex: 1 1 auto;
+    }
+    @include media($md) {
+      margin-top: 150px;
+    }
+    @include media($md) {
+      margin-top: 110px;
+    }
+  }
+  & img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    transform: translateX(232px);
+    @include media($xl) {
+      transform: translateX(32px);
+      height: 70%;
+      top: 15%;
+    }
+    @include media($lg) {
+      display: none;
+    }
+  }
+  button {
+    margin-top: 40px;
+  }
+  @include media($lg) {
+    text-align: center;
+  }
+}
+
+.target {
+  font-weight: 700;
+  font-size: 72px;
+  line-height: 87px;
+  color: $text;
+  @include media($md) {
+    font-size: 52px;
+    line-height: 52px;
+  }
+  @include media($sm) {
+    font-size: 40px;
+    line-height: 40px;
+  }
+}
+
+.mission {
+  margin-top: 32px;
+  font-size: 16px;
+  line-height: 24px;
+  color: $text40;
+  width: 58%;
+  @include media($lg) {
+    margin: 32px auto 0 auto;
+  }
+  @include media($md) {
+    width: 100%;
+  }
+}

@@ -1,0 +1,27 @@
+@use "tools/index" as *;
+
+#root {
+  @include flexbox(_, _, column);
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: $text;
+}
+
+input, select {
+  padding: 18px;
+  border: 1px solid $input-border-gray;
+  border-radius: 3px;
+  color: $text;
+  &::placeholder {
+    color: $text40;
+    font-size: 14px;
+    line-height: 14px;
+  }
+  &:hover, &:active, &:focus {
+    border: 1px solid $main;
+  }
+}
+
+button {
+  font-family: 'Inter', sans-serif;
+}

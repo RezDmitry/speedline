@@ -1,0 +1,27 @@
+@use '/client/src/styles/tools/index' as *;
+
+.footer {
+  @include flexbox(_, center);
+  column-gap: 8px;
+  padding: 27px 0 56px 0;
+  cursor: pointer;
+  p {
+    font-size: 14px;
+    line-height: 14px;
+    &:hover {
+      color: $main;
+      @include transition(0.2s, 0s);
+    }
+  }
+  @include media($lg) {
+    @include flexbox(center, center);
+  }
+}
+
+.button {
+  @include flexbox(center, center);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: $light-gray;
+}

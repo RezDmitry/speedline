@@ -1,0 +1,11 @@
+@use '/client/src/styles/tools/index' as *;
+
+.logo {
+  text-transform: uppercase;
+  @include flexbox(_, center);
+  column-gap: 7px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 0.03em;
+}

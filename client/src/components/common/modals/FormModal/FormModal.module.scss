@@ -1,0 +1,82 @@
+@use '/client/src/styles/tools/index' as *;
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: transparentize($black, 0.2);
+  z-index: 9;
+  @include flexbox(center, center);
+}
+
+.window {
+  background-color: $white;
+  border-radius: 3px;
+  position: relative;
+  h2 {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 48px;
+    text-align: center;
+    padding-top: 80px;
+    @include media($sm) {
+      font-size: 23px;
+      line-height: 24px;
+      padding-top: 60px;
+    }
+    &.withPic {
+      padding-top: 52px;
+      width: 300px;
+      margin: 0 auto;
+    }
+  }
+  &>svg {
+    padding-top: 80px;
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+.stepper {
+  margin-top: 40px;
+}
+
+.container {
+  padding: 0 162px 80px 162px;
+  @include media($sm) {
+    padding: 40px;
+  }
+}
+
+.content {
+  margin: 0 auto;
+  margin-top: 44px;
+  & form {
+    margin-top: 56px;
+  }
+}
+
+.description {
+  margin-top: 32px;
+  font-size: 14px;
+  line-height: 12px;
+  text-align: center;
+  @include media($sm) {
+    line-height: 20px;
+  }
+}
+
+.close {
+  position: absolute;
+  top: 26px;
+  right: 26px;
+  cursor: pointer;
+  @include transition(0.2s, 0s);
+  &:hover, &:active, &:focus {
+    & * {
+      fill: $main;
+    }
+  }
+}
