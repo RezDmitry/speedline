@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { IWarehouse } from '../../typings/Warehouse';
 import { productsW1, productsW2 } from '../../components/pages/admin/Warehouses/Warehouse/data';
 

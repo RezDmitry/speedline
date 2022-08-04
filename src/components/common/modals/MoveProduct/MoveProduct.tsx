@@ -9,10 +9,10 @@ import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
 import { helper, paymentOptions, shipmentOptions } from './helper';
 import Select from '../../inputs/Select/Select';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
+import { replaceProduct } from '../../../../store/slices/WarehouseSlice';
 
 import styles from './MoveProduct.module.scss';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
-import { replaceProduct } from '../../../../store/slices/WarehouseSlice';
 
 interface IMoveProductProps {
   close: () => void,
