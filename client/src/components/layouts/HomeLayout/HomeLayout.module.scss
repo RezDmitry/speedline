@@ -1,4 +1,4 @@
-@use '/client/src/styles/tools/index' as *;
+@use '../../../styles/tools/index' as *;
 
 .layout {
   @include flexbox(_, _, _);

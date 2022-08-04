@@ -4,9 +4,9 @@ import { Route, Routes } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout/AdminLayout';
 import HomeLayout from '../layouts/HomeLayout/HomeLayout';
 import RequireAuth from '../common/RequireAuth/RequireAuth';
+import { adminRoutes, homeRoutes } from './routes';
 
 import styles from './App.module.scss';
-import { adminRoutes, homeRoutes } from './routes';
 
 const App = () => (
   <div className={styles.app}>
