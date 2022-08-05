@@ -1,9 +1,12 @@
 const express = require('express');
-const router = express.Router();
+const passport = require('passport');
+
 const controller = require('../controllers/warehouse');
 
+const router = express.Router();
+
 //localhost:5200/api/warehouse
-router.get('/', controller.getAll);
+router.get('/', passport.authenticate('jwt', {session: false}), controller.getAll);
 //localhost:5200/api/warehouse/:id
 router.get('/:id', controller.getById);
 //localhost:5200/api/warehouse
