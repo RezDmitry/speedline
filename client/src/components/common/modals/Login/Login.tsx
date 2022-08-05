@@ -7,6 +7,9 @@ import * as yup from 'yup';
 
 import FormModal from '../FormModal/FormModal';
 import ModalButton from '../ModalButton/ModalButton';
+import { api } from '../../../../api';
+import { API_ROUTES } from '../../../../api/routes';
+import { setCookie } from '../../../../helpers/cookie';
 
 import styles from './Login.module.scss';
 
@@ -24,7 +27,8 @@ const LoginSchema = yup.object().shape({
 });
 
 const Login = ({ close, openSignUp }: ILoginProps) => {
-  const [loginError, showLoginError] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState('');
   const navigate = useNavigate();
   const openAnotherModal = () => {
     close();
@@ -58,23 +62,26 @@ const Login = ({ close, openSignUp }: ILoginProps) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values) => {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 500);
-          });
-          const emailCheck = localStorage.getItem('email') === values.email;
-          const passCheck = localStorage.getItem('password') === values.password;
-          if (emailCheck && passCheck) {
+          const body = { email: values.email, password: values.password };
+          setLoading(true);
+          try {
+            const response = await api.post(API_ROUTES.LOGIN, body);
+            setCookie('token', response.data.token);
+            setLoading(false);
             navigate('/admin');
-          } else {
-            showLoginError(true);
-            setTimeout(() => showLoginError(false), 2000);
+          } catch (e: any) {
+            setLoading(false);
+            if (e.code === 'ERR_NETWORK') {
+              setLoginError('Unhandled error. Try later');
+            }
+            setLoginError(e.response.data.message);
           }
         }}
         validationSchema={LoginSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
-            {loginError && <div className="modal-form__error">Incorrect email or password</div>}
+            {loginError && <div className="modal-form__error">{loginError}</div>}
             <label htmlFor="email">
               Email
               <Field
@@ -105,7 +112,7 @@ const Login = ({ close, openSignUp }: ILoginProps) => {
                 className="modal-form__error"
               />
             </label>
-            <ModalButton>
+            <ModalButton loading={loading}>
               Log in
             </ModalButton>
           </Form>

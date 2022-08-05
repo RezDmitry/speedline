@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ErrorMessage, Field, Form, Formik,
@@ -7,6 +7,9 @@ import * as yup from 'yup';
 
 import FormModal from '../FormModal/FormModal';
 import ModalButton from '../ModalButton/ModalButton';
+import { API_ROUTES } from '../../../../api/routes';
+import { api } from '../../../../api';
+import { setCookie } from '../../../../helpers/cookie';
 
 import styles from './SignUp.module.scss';
 
@@ -25,6 +28,8 @@ const SignUpSchema = yup.object().shape({
 });
 
 const SignUp = ({ close, openLogin }: ISignUpProps) => {
+  const [loginError, setLoginError] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
   const openAnotherModal = () => {
     close();
@@ -58,17 +63,27 @@ const SignUp = ({ close, openLogin }: ISignUpProps) => {
       <Formik
         initialValues={{ email: '', password: '' }}
         onSubmit={async (values) => {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 500);
-          });
-          localStorage.setItem('email', values.email);
-          localStorage.setItem('password', values.password);
-          navigate('/admin');
+          const body = { email: values.email, password: values.password };
+          setLoading(true);
+          try {
+            await api.post(API_ROUTES.REGISTER, body);
+            const response = await api.post(API_ROUTES.LOGIN, body);
+            setCookie('token', response.data.token);
+            setLoading(false);
+            navigate('/admin');
+          } catch (e: any) {
+            setLoading(false);
+            if (e.code === 'ERR_NETWORK') {
+              setLoginError('Unhandled error. Try later');
+            }
+            setLoginError(e.response.data.message);
+          }
         }}
         validationSchema={SignUpSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
+            {loginError && <div className="modal-form__error">{loginError}</div>}
             <label htmlFor="email">
               Email
               <Field
@@ -99,7 +114,7 @@ const SignUp = ({ close, openLogin }: ISignUpProps) => {
                 className="modal-form__error"
               />
             </label>
-            <ModalButton>
+            <ModalButton loading={loading}>
               Log in
             </ModalButton>
           </Form>

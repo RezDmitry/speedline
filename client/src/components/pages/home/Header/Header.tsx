@@ -27,7 +27,7 @@ const Header = () => {
               to="/"
               className={({ isActive }) => (isActive ? styles.activeLink : styles.inActiveLink)}
             >
-              Tasks
+              Home
             </NavLink>
           </li>
           <li>

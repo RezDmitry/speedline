@@ -58,6 +58,8 @@
       "WithStatement"
     ],
     "no-unused-vars": "off",
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
     "@typescript-eslint/no-unused-vars": ["error"],
     "func-style": ["error", "expression"],
     "prefer-destructuring": ["error", {

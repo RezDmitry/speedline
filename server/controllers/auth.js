@@ -16,9 +16,10 @@ module.exports.login = async (req, res) => {
         email: candidate.email,
         userId: candidate._id,
       }, JWT_TOKEN, {expiresIn: 60 * 60});
-      res.status(200).json({
-        token: `Bearer ${token}`,
-      });
+      res.status(200)
+      res
+        .status(200)
+        .json({token});
     } else {
       res.status(401).json({
         message: 'Invalid password',
@@ -47,7 +48,7 @@ module.exports.register = async (req, res) => {
     })
     try {
       await user.save();
-      res.status(201).json(user);
+      res.status(201).json({});
     } catch (e) {
       errorHandler(res, e);
     }

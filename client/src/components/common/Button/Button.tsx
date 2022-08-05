@@ -1,5 +1,7 @@
 import React from 'react';
 
+import Loader from '../Loader/Loader';
+
 import styles from './Button.module.scss';
 
 interface IButtonProps {
@@ -10,6 +12,7 @@ interface IButtonProps {
   small?: boolean,
   large?: boolean,
   outlined?: boolean,
+  loading?: boolean,
   error?: boolean,
   click?: () => void,
   keyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void,
@@ -18,7 +21,8 @@ interface IButtonProps {
 }
 
 const Button = ({
-  children, className, transparent, fullWidth, small, large, outlined, error, click, keyDown, type = 'button', icon,
+  children, className, transparent, fullWidth, small,
+  large, outlined, loading, error, click, keyDown, type = 'button', icon,
 }: IButtonProps) => {
   const tp = transparent ? styles.transparent : '';
   const fw = fullWidth ? styles.fullWidth : '';
@@ -33,8 +37,14 @@ const Button = ({
       onClick={click}
       onKeyDown={keyDown}
     >
-      {children}
-      {icon}
+      {loading
+        ? <Loader />
+        : (
+          <>
+            {children}
+            {icon}
+          </>
+        )}
     </button>
   );
 };
