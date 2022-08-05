@@ -1,0 +1,25 @@
+@use '../../../styles/tools/index' as *;
+
+.layout {
+  @include flexbox();
+  flex: 1 1 auto;
+}
+
+.workplace {
+  flex: 1 1 auto;
+  @include flexbox(_, _, column);
+  & main {
+    background-color: $workplace-gray;
+    flex: 1 1 auto;
+    @include flexbox();
+  }
+}
+
+.content {
+  margin-top: 72px;
+  flex: 1 1 auto;
+  @include flexbox();
+  @include media($lg) {
+    margin-top: 32px;
+  }
+}

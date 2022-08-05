@@ -1,0 +1,7 @@
+@use '../../styles/tools/index' as *;
+
+.app {
+  @include flexbox(_, _, column);
+  flex: 1 1 auto;
+  position: relative;
+}

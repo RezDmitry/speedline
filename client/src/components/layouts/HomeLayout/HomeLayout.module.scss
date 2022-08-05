@@ -1,0 +1,44 @@
+@use '../../../styles/tools/index' as *;
+
+.layout {
+  @include flexbox(_, _, _);
+  flex: 1 1 auto;
+  position: relative;
+}
+
+.container {
+  @include flexbox(space-between, _, column);
+  flex: 1 1 auto;
+  margin: 0 200px;
+  padding: 0 32px;
+  @include media($xl) {
+    margin: 0;
+  }
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  @include flexbox(_, _, _);
+  & div:first-child {
+    flex: 1 1 76%;
+    @include media($xxl) {
+      flex: 1 1 62%;
+    }
+  }
+  & div:last-child {
+    flex: 1 1 24%;
+    background: #E4EEF8;
+    @include media($xxl) {
+      flex: 1 1 38%;
+    }
+    @include media($lg) {
+      display: none;
+    }
+  }
+
+}
