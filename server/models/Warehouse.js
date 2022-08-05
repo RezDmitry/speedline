@@ -7,21 +7,25 @@ const WarehouseSchema = new Schema({
     required: true,
   },
   length: {
-    type: String,
+    type: Number,
     required: true,
   },
   width: {
-    type: String,
+    type: Number,
     required: true,
   },
   height: {
-    type: String,
+    type: Number,
     required: true,
   },
   user: {
     ref: 'users',
     type: Schema.Types.ObjectId,
   },
+  products: {
+    type: Array,
+    default: [],
+  }
 });
 
 module.exports = mongoose.model('warehouses', WarehouseSchema);

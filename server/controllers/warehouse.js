@@ -22,15 +22,14 @@ module.exports.getById = async (req, res) => {
 
 module.exports.create = async (req, res) => {
   try {
-
-  } catch (e) {
-    errorHandler(res, e);
-  }
-}
-
-module.exports.update = async (req, res) => {
-  try {
-
+    const warehouse = await new Warehouse({
+      name: req.body.name,
+      length: req.body.length,
+      width: req.body.width,
+      height: req.body.height,
+      user: req.user.id,
+    }).save();
+    res.status(201).json(warehouse);
   } catch (e) {
     errorHandler(res, e);
   }
