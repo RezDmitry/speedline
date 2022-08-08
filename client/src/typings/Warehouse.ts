@@ -1,9 +1,8 @@
 export interface IWarehouse {
-  id: string,
+  _id: string,
   name: string,
-  number: number,
+  products: string [],
   length: number,
   width: number,
   height: number,
-  products: any [],
 }

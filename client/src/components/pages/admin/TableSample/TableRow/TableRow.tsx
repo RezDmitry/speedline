@@ -27,9 +27,9 @@ const TableRow = ({
         checked={isSelected}
         onChange={selectAllRows || selectRow}
       />
-      <label className={styles.row} style={{ gridTemplateColumns: `repeat(${array.length - 1}, 1fr)` }} htmlFor={id}>
-        {array.map((elem, i) => (i !== 0) && (
-          (i === 1 && link)
+      <label className={styles.row} style={{ gridTemplateColumns: `repeat(${array.length}, 1fr)` }} htmlFor={id}>
+        {array.map((elem, i) => (
+          (i === 0 && link)
             ? <div key={elem + i} onClick={() => navigate(link)} className={styles.link}>{elem.toString()}</div>
             : <div key={elem + i}>{addPic(elem)}</div>))}
       </label>
