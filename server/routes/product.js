@@ -5,7 +5,7 @@ const controller = require('../controllers/product');
 
 const router = express.Router();
 
-//localhost:5200/api/product/?warehouseId=id
+//localhost:5200/api/product/?warehouse=id
 router.get('/', passport.authenticate('jwt', {session: false}), controller.getAll);
 //localhost:5200/api/product
 router.post('/', passport.authenticate('jwt', {session: false}), controller.create);

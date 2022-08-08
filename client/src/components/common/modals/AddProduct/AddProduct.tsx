@@ -8,10 +8,12 @@ import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessAddProduct from './SuccessAddProduct/SuccessAddProduct';
 import { helper, paymentOptions, shipmentOptions } from './helper';
+import { api } from '../../../../api';
+import { API_ROUTES } from '../../../../api/routes';
+import { useAppSelector } from '../../../../hooks/useStore';
 
 interface IAddProductProps {
   close: () => void,
-  addProduct: (value: any) => void
 }
 
 const AddProductSchema = yup.object().shape({
@@ -35,7 +37,10 @@ const AddProductSchema = yup.object().shape({
     .required('Required'),
 });
 
-const AddProduct = ({ close, addProduct }: IAddProductProps) => {
+const AddProduct = ({ close }: IAddProductProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState('');
+  const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => helper(step), [step]);
@@ -52,19 +57,27 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
     >
       <Formik
         initialValues={{
-          name: '', manufacturer: '', number: '', technology: 'A', method: '', payment: '',
+          name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shippingMethod: 'AIR', paymentMethod: '',
         }}
         onSubmit={async (values) => {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 500);
-          });
-          addProduct({ id: Date.now(), ...values });
-          toggleSuccess(true);
+          setLoading(true);
+          try {
+            await api.post(API_ROUTES.PRODUCT, { warehouse: warehouse?._id, ...values });
+            setLoading(false);
+            toggleSuccess(true);
+          } catch (e: any) {
+            setLoading(false);
+            if (e.code === 'ERR_NETWORK') {
+              setLoginError('Unhandled error. Try later');
+            }
+            setLoginError(e.response.data.message);
+          }
         }}
         validationSchema={AddProductSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
+            {loginError && <div className="modal-form__error">{loginError}</div>}
             <div className="modal-form__text">{stage.tip}</div>
             {step === 1
               && (
@@ -114,11 +127,11 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
                     className="modal-form__error"
                   />
                 </label>
-                <div id="technology" className="modal-form__radio-group-title">Purchasing technology</div>
-                <div role="group" className="modal-form__radio-group" aria-labelledby="technology">
+                <div id="purchasingTechnology" className="modal-form__radio-group-title">Purchasing technology</div>
+                <div role="group" className="modal-form__radio-group" aria-labelledby="purchasingTechnology">
                   {['A', 'S', 'D', 'F'].map((elem) => (
                     <div key={elem}>
-                      <Field id={elem} type="radio" name="technology" value={elem} />
+                      <Field id={elem} type="radio" name="purchasingTechnology" value={elem} />
                       <label htmlFor={elem}>
                         {elem}
                       </label>
@@ -130,10 +143,10 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
             {step === 2
               && (
               <div className="modal-form__radio-group-planks">
-                <div role="group" aria-labelledby="method">
+                <div role="group" aria-labelledby="shippingMethod">
                   {shipmentOptions.map((elem: any) => (
                     <div key={elem.value}>
-                      <Field id={elem.desc} type="radio" name="method" value={elem.value} />
+                      <Field id={elem.desc} type="radio" name="shippingMethod" value={elem.value} />
                       <label htmlFor={elem.desc}>
                         <span>
                           {elem.logo}
@@ -148,10 +161,10 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
             {step === 3
               && (
                 <div className="modal-form__radio-group-planks">
-                  <div role="group" aria-labelledby="payment">
+                  <div role="group" aria-labelledby="paymentMethod">
                     {paymentOptions.map((elem: any) => (
                       <div key={elem.value}>
-                        <Field id={elem.value} type="radio" name="payment" value={elem.value} />
+                        <Field id={elem.value} type="radio" name="paymentMethod" value={elem.value} />
                         <label htmlFor={elem.value}>
                           <span>
                             {elem.logo}
@@ -163,7 +176,10 @@ const AddProduct = ({ close, addProduct }: IAddProductProps) => {
                   </div>
                 </div>
               )}
-            <ModalButton action={() => changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}>
+            <ModalButton
+              loading={loading}
+              action={() => changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+            >
               {stage.buttonText}
             </ModalButton>
           </Form>

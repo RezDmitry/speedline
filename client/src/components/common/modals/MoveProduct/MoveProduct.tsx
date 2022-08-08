@@ -11,6 +11,7 @@ import Select from '../../inputs/Select/Select';
 
 import styles from './MoveProduct.module.scss';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface IMoveProductProps {
   close: () => void,
@@ -30,10 +31,8 @@ const warehouses: any [] = [];
 const MoveProduct = ({ close, products }: IMoveProductProps) => {
   const { id } = useParams();
   const baseWarehouse = useMemo(() => warehouses.find((item) => item.name === id)!.name, [warehouses, id]);
-  const [
-    warehouseFrom, setWarehouseFrom,
-  ] = useState<string>(baseWarehouse);
-  const [warehouseIn, setWarehouseIn] = useState<string>(warehouses[0].name);
+  const [warehouseFrom, setWarehouseFrom] = useState<IFilterItem>(baseWarehouse);
+  const [warehouseIn, setWarehouseIn] = useState<IFilterItem>(warehouses[0].name);
   const hasWarehouseFromProducts = useMemo(() => products.every((product) => (
     warehouses
       .find((item) => warehouseFrom === item.name)!.products
@@ -83,7 +82,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseFrom"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseFrom(e.currentTarget.value)}
+                      click={setWarehouseFrom}
                       value={warehouseFrom}
                       className={styles.select}
                     />
@@ -100,7 +99,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseIn"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseIn(e.currentTarget.value)}
+                      click={setWarehouseIn}
                       value={warehouseIn}
                       className={styles.select}
                     />
