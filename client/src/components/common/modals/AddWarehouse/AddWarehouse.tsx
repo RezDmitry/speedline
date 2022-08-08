@@ -17,23 +17,20 @@ const AddWarehouseSchema = yup.object().shape({
   name: yup.string()
     .required('Required')
     .min(2, 'Must be longer than 1 characters')
-    .max(20, 'Must be smaller than 21 characters'),
+    .max(20, 'Must be less than 21 characters'),
   length: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
+    .max(5, 'Must be less than 6 characters')
     .lessThan(10000, 'Must be smaller than 10000')
     .positive('Must be positive'),
   width: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
+    .max(5, 'Must be less than 6 characters')
     .lessThan(10000, 'Must be smaller than 10000')
     .positive('Must be positive'),
   height: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
+    .max(5, 'Must be less than 6 characters')
     .lessThan(10000, 'Must be smaller than 10000')
     .positive('Must be positive'),
 });

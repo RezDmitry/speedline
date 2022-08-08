@@ -20,7 +20,12 @@ module.exports.create = async (req, res) => {
 
 module.exports.update = async (req, res) => {
   try {
-
+    const product = await Product.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: req.body},
+      {new: true},
+    );
+    res.status(200).json(product)
   } catch (e) {
     errorHandler(res, e);
   }

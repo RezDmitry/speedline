@@ -14,7 +14,10 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.getById = async (req, res) => {
   try {
-
+    const warehouse = await Warehouse.findOne({
+      user: req.user.id,
+    })
+    res.status(200).json(warehouse);
   } catch (e) {
     errorHandler(res, e);
   }
