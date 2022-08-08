@@ -14,7 +14,7 @@ module.exports.getAll = async (req, res) => {
 
 module.exports.getById = async (req, res) => {
   try {
-    const warehouse = await Warehouse.findOne({id: req.params.id});
+    const warehouse = await Warehouse.findOne({_id: req.params.id});
     res.status(200).json(warehouse);
   } catch (e) {
     errorHandler(res, e);

@@ -30,7 +30,7 @@ const Warehouse = () => {
   useEffect(() => {
     dispatch(fetchProducts(id!));
     dispatch(fetchWarehouse(id!));
-  }, []);
+  }, [id, isOpened, isOpenedMove]);
   return (
     <TableSample
       title={warehouse?.name || ''}

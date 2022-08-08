@@ -5,10 +5,10 @@ import Button from '../../../common/Button/Button';
 import Select from '../../../common/inputs/Select/Select';
 import SnackBar from '../SnackBar/SnackBar';
 import { IModalType } from '../../../../typings/modalType';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 import styles from './TableSample.module.scss';
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
-import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface ITableSampleProps {
   children: React.ReactNode,

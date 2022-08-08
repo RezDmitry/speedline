@@ -29,11 +29,11 @@ const AddProductSchema = yup.object().shape({
     .required('Required')
     .min(2, 'Must be longer than 1 characters')
     .max(30, 'Must be smaller than 31 characters'),
-  technology: yup.string()
+  purchasingTechnology: yup.string()
     .required('Required'),
-  method: yup.string()
+  shippingMethod: yup.string()
     .required('Required'),
-  payment: yup.string()
+  paymentMethod: yup.string()
     .required('Required'),
 });
 

@@ -8,10 +8,10 @@ import FormModal from '../FormModal/FormModal';
 import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
 import { helper, paymentOptions, shipmentOptions } from './helper';
 import Select from '../../inputs/Select/Select';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 import styles from './MoveProduct.module.scss';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
-import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface IMoveProductProps {
   close: () => void,
