@@ -9,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
 import { IWarehouse } from '../../../../typings/IWarehouse';
 import { fetchWarehouses } from '../../../../store/slices/actionCreators/warehouse';
 import { IFilterItem } from '../../../../typings/IFilterItem';
+import { ignoredFields } from '../../../../helpers/ignoredFields';
 
 const Warehouses = () => {
   const dispatch = useAppDispatch();
@@ -16,7 +17,7 @@ const Warehouses = () => {
   const { warehouses, isLoading, error } = useAppSelector((state) => state.warehouseReducer);
   const [isOpened, toggleOpened] = useModal();
   const prepareRow = (warehouse: IWarehouse) => Object.entries(warehouse)
-    .filter((item) => ((item[0] !== '_id') && (item[0] !== 'user') && (item[0] !== '__v')))
+    .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => ((elem[0] === 'products') ? elem[1].length : elem[1]));
   useEffect(() => {
     dispatch(fetchWarehouses({ height: filter.value }));

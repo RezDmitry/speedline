@@ -4,7 +4,7 @@ export interface IProduct {
   manufacturer: string,
   number: string,
   purchasingTechnology: 'A' | 'S' | 'D' | 'F',
-  shippingMethod: 'AIR' | 'SEA'| 'TRUCK',
+  shipmentMethod: 'AIR' | 'SEA'| 'TRUCK',
   paymentMethod: string,
   warehouse: string,
 }

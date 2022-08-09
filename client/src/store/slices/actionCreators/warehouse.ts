@@ -6,10 +6,7 @@ export const fetchWarehouses = createAsyncThunk(
   'warehouse/fetchAll',
   async (params: any, thunkAPI) => {
     try {
-      const response = await api.get(API_ROUTES.WAREHOUSE, {
-        params:
-          { height: params.height || '-1' },
-      });
+      const response = await api.get(API_ROUTES.WAREHOUSE, { params });
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.response.data.message);

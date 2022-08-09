@@ -11,7 +11,7 @@ interface IStage {
   tip: string,
 }
 
-export const helper = (step: number): IStage => {
+export const setText = (step: number): IStage => {
   switch (step) {
     case (2): {
       return {

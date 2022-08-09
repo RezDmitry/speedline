@@ -4,9 +4,9 @@ import { API_ROUTES } from '../../../api/routes';
 
 export const fetchProducts = createAsyncThunk(
   'product/fetchAll',
-  async (warehouseId: string, thunkAPI) => {
+  async (params: any, thunkAPI) => {
     try {
-      const response = await api.get(`${API_ROUTES.PRODUCT}/?warehouse=${warehouseId}`);
+      const response = await api.get(API_ROUTES.PRODUCT, { params });
       return response.data;
     } catch (e: any) {
       return thunkAPI.rejectWithValue(e.response.data.message);

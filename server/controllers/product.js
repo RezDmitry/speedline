@@ -4,10 +4,12 @@ const Warehouse = require('../models/Warehouse');
 
 module.exports.getAll = async (req, res) => {
   try {
+
     const products = await Product
       .find({
         user: req.user.id,
         warehouse: req.query.warehouse,
+        shipmentMethod: req.query.shipmentMethod || {$in: ['AIR', 'SEA', 'TRUCK']},
       })
     res.status(200).json(products);
   } catch (e) {
@@ -22,7 +24,7 @@ module.exports.create = async (req, res) => {
       manufacturer: req.body.manufacturer,
       number: req.body.number,
       purchasingTechnology: req.body.purchasingTechnology,
-      shippingMethod: req.body.shippingMethod,
+      shipmentMethod: req.body.shipmentMethod,
       paymentMethod: req.body.paymentMethod,
       warehouse: req.body.warehouse,
     }).save();

@@ -30,6 +30,6 @@ const WarehouseSchema = new Schema({
     ref: 'users',
     type: Schema.Types.ObjectId,
   },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('warehouses', WarehouseSchema);

@@ -12,29 +12,30 @@ import { IProduct } from '../../../../../typings/IProduct';
 import { fetchProducts } from '../../../../../store/slices/actionCreators/product';
 import { fetchWarehouse } from '../../../../../store/slices/actionCreators/warehouse';
 import { IFilterItem } from '../../../../../typings/IFilterItem';
+import { ignoredFields } from '../../../../../helpers/ignoredFields';
 
 const Warehouse = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const [shipment, setShipment] = useState<IFilterItem>(filterList[0]);
+  const [shipmentMethod, setShipmentMethod] = useState<IFilterItem>(filterList[0]);
   const [isOpened, toggleOpened] = useModal();
   const [isOpenedMove, toggleOpenedMove] = useModal();
   const { products, isLoading, error } = useAppSelector((state) => state.productReducer);
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   const prepareRow = (product: IProduct) => Object.entries(product)
-    .filter((item) => ((item[0] !== '_id') && (item[0] !== 'warehouse') && (item[0] !== '__v')))
+    .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => elem[1]);
   useEffect(() => {
-    dispatch(fetchProducts(id!));
+    dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod.value }));
     dispatch(fetchWarehouse(id!));
-  }, [id, isOpened, isOpenedMove]);
+  }, [id, shipmentMethod, isOpened, isOpenedMove]);
   return (
     <TableSample
       title={warehouse?.name || ''}
       filterList={filterList}
       buttonText="Add cargo"
-      filterValue={shipment}
-      clickFilter={setShipment}
+      filterValue={shipmentMethod}
+      clickFilter={setShipmentMethod}
       addItemModal={{
         toggleOpened,
         content: <AddProduct close={toggleOpened} />,

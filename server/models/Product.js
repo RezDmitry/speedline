@@ -28,7 +28,7 @@ const ProductSchema = new Schema({
       message: '{VALUE} is not supported',
     }
   },
-  shippingMethod: {
+  shipmentMethod: {
     type: String,
     required: true,
     enum: ['AIR', 'SEA', 'TRUCK'],
@@ -41,6 +41,6 @@ const ProductSchema = new Schema({
     ref: 'warehouses',
     type: Schema.Types.ObjectId,
   }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('products', ProductSchema);

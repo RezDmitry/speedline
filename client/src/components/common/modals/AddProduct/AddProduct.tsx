@@ -7,7 +7,7 @@ import {
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessAddProduct from './SuccessAddProduct/SuccessAddProduct';
-import { helper, paymentOptions, shipmentOptions } from './helper';
+import { setText, paymentOptions, shipmentOptions } from './helper';
 import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
 import { useAppSelector } from '../../../../hooks/useStore';
@@ -31,7 +31,7 @@ const AddProductSchema = yup.object().shape({
     .max(30, 'Must be smaller than 31 characters'),
   purchasingTechnology: yup.string()
     .required('Required'),
-  shippingMethod: yup.string()
+  shipmentMethod: yup.string()
     .required('Required'),
   paymentMethod: yup.string()
     .required('Required'),
@@ -43,7 +43,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
-  const stage = useMemo(() => helper(step), [step]);
+  const stage = useMemo(() => setText(step), [step]);
   if (success) {
     return <SuccessAddProduct close={close} />;
   }
@@ -57,7 +57,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
     >
       <Formik
         initialValues={{
-          name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shippingMethod: 'AIR', paymentMethod: '',
+          name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shipmentMethod: 'AIR', paymentMethod: '',
         }}
         onSubmit={async (values) => {
           setLoading(true);
@@ -143,10 +143,10 @@ const AddProduct = ({ close }: IAddProductProps) => {
             {step === 2
               && (
               <div className="modal-form__radio-group-planks">
-                <div role="group" aria-labelledby="shippingMethod">
+                <div role="group" aria-labelledby="shipmentMethod">
                   {shipmentOptions.map((elem: any) => (
                     <div key={elem.value}>
-                      <Field id={elem.desc} type="radio" name="shippingMethod" value={elem.value} />
+                      <Field id={elem.desc} type="radio" name="shipmentMethod" value={elem.value} />
                       <label htmlFor={elem.desc}>
                         <span>
                           {elem.logo}
