@@ -5,18 +5,26 @@ const WarehouseSchema = new Schema({
   name: {
     type: String,
     required: true,
+    max: [20, 'Must be less than 21 characters, got {VALUE}'],
+  },
+  products: {
+    type: [Schema.Types.ObjectId],
+    default: [],
   },
   length: {
-    type: String,
+    type: Number,
     required: true,
+    max: [9999, 'Must be less than 10000, got {VALUE}'],
   },
   width: {
-    type: String,
+    type: Number,
     required: true,
+    max: [9999, 'Must be less than 10000, got {VALUE}'],
   },
   height: {
-    type: String,
+    type: Number,
     required: true,
+    max: [9999, 'Must be less than 10000, got {VALUE}'],
   },
   user: {
     ref: 'users',

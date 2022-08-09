@@ -7,38 +7,35 @@ import {
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessAddWarehouse from './SuccessAddWarehouse/SuccessAddWarehouse';
+import { api } from '../../../../api';
+import { API_ROUTES } from '../../../../api/routes';
 
 interface IAddWarehouseProps {
   close: () => void,
-  addWarehouse: (value: any) => void
 }
 
 const AddWarehouseSchema = yup.object().shape({
   name: yup.string()
     .required('Required')
     .min(2, 'Must be longer than 1 characters')
-    .max(20, 'Must be smaller than 21 characters'),
+    .max(20, 'Must be less than 21 characters'),
   length: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
-    .lessThan(10000, 'Must be smaller than 10000')
+    .lessThan(9999, 'Must be smaller than 10000')
     .positive('Must be positive'),
   width: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
-    .lessThan(10000, 'Must be smaller than 10000')
+    .lessThan(9999, 'Must be smaller than 10000')
     .positive('Must be positive'),
   height: yup.number()
     .required('Required')
-    .min(1, 'Must be longer than 1 characters')
-    .max(5, 'Must be smaller than 6 characters')
-    .lessThan(10000, 'Must be smaller than 10000')
+    .lessThan(9999, 'Must be smaller than 10000')
     .positive('Must be positive'),
 });
 
-const AddWarehouse = ({ close, addWarehouse }: IAddWarehouseProps) => {
+const AddWarehouse = ({ close }: IAddWarehouseProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [loginError, setLoginError] = useState('');
   const [success, toggleSuccess] = useState<boolean>(false);
   if (success) {
     return <SuccessAddWarehouse close={close} />;
@@ -53,16 +50,24 @@ const AddWarehouse = ({ close, addWarehouse }: IAddWarehouseProps) => {
           name: '', length: '', width: '', height: '',
         }}
         onSubmit={async (values) => {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 500);
-          });
-          addWarehouse({ id: Date.now(), number: 1, ...values });
-          toggleSuccess(true);
+          setLoading(true);
+          try {
+            await api.post(API_ROUTES.WAREHOUSE, values);
+            setLoading(false);
+            toggleSuccess(true);
+          } catch (e: any) {
+            setLoading(false);
+            if (e.code === 'ERR_NETWORK') {
+              setLoginError('Unhandled error. Try later');
+            }
+            setLoginError(e.response.data.message);
+          }
         }}
         validationSchema={AddWarehouseSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
+            {loginError && <div className="modal-form__error">{loginError}</div>}
             <label htmlFor="name">
               Name of the warehouse
               <Field
@@ -123,7 +128,7 @@ const AddWarehouse = ({ close, addWarehouse }: IAddWarehouseProps) => {
                 className="modal-form__error"
               />
             </label>
-            <ModalButton>
+            <ModalButton loading={loading}>
               Add a warehouse
             </ModalButton>
           </Form>

@@ -1,15 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, {
+  Dispatch, SetStateAction, useRef, useState,
+} from 'react';
 
 import { useOutside } from '../../../../hooks/useClickOutside';
 
 import styles from './Select.module.scss';
 import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface ISelectProps {
-  list: any [],
+  list: IFilterItem [],
   name: string,
-  value: string,
-  click: (e: React.MouseEvent<HTMLInputElement>) => void,
+  value: IFilterItem,
+  click: Dispatch<SetStateAction<IFilterItem>>,
   className?: string,
 }
 
@@ -31,25 +34,25 @@ const Select = ({
       role="button"
       ref={wrappedRef}
     >
-      {value}
+      {value.text}
       <div
         className={`${styles.list} ${active ? styles.active : ''}`}
       >
         {list.map((elem) => (
           <label
-            key={elem}
-            htmlFor={elem + name}
+            key={elem.value}
+            htmlFor={elem.value}
             className={styles.option}
             onClick={clickOption}
           >
             <input
               name={name}
               type="radio"
-              id={elem + name}
-              value={elem}
-              onClick={click}
+              id={elem.value}
+              value={elem.value}
+              onClick={() => click(elem)}
             />
-            {elem}
+            {elem.text}
           </label>
         ))}
       </div>

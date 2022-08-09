@@ -51,4 +51,10 @@
   @include media($lg) {
     width: 90vw;
   }
+  &>span {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 24px 60px;
+  }
 }

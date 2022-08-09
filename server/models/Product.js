@@ -5,22 +5,33 @@ const ProductSchema = new Schema({
   name: {
     type: String,
     required: true,
+    min: [1, 'Must be at least 2 characters, got {VALUE}'],
+    max: [30, 'Must be less than 31 characters, got {VALUE}'],
   },
   manufacturer: {
     type: String,
-    default: 'undefined',
+    default: true,
+    min: [1, 'Must be at least 2 characters, got {VALUE}'],
+    max: [30, 'Must be less than 31 characters, got {VALUE}'],
   },
   number: {
     type: String,
-    required: 'undefined',
+    default: true,
+    min: [1, 'Must be at least 2 characters, got {VALUE}'],
+    max: [30, 'Must be less than 31 characters, got {VALUE}'],
   },
   purchasingTechnology: {
     type: String,
     required: true,
+    enum: {
+      values: ['A', 'S', 'D', 'F'],
+      message: '{VALUE} is not supported',
+    }
   },
   shippingMethod: {
     type: String,
     required: true,
+    enum: ['AIR', 'SEA', 'TRUCK'],
   },
   paymentMethod: {
     type: String,

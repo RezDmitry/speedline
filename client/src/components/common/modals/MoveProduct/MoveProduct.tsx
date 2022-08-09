@@ -8,8 +8,7 @@ import FormModal from '../FormModal/FormModal';
 import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
 import { helper, paymentOptions, shipmentOptions } from './helper';
 import Select from '../../inputs/Select/Select';
-import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
-import { replaceProduct } from '../../../../store/slices/WarehouseSlice';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 import styles from './MoveProduct.module.scss';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
@@ -26,19 +25,18 @@ const MoveProductSchema = yup.object().shape({
     .required('Required'),
 });
 
+// temp
+const warehouses: any [] = [];
+
 const MoveProduct = ({ close, products }: IMoveProductProps) => {
   const { id } = useParams();
-  const warehouses = useAppSelector((state) => state.warehouseReducer);
-  const dispatch = useAppDispatch();
   const baseWarehouse = useMemo(() => warehouses.find((item) => item.name === id)!.name, [warehouses, id]);
-  const [
-    warehouseFrom, setWarehouseFrom,
-  ] = useState<string>(baseWarehouse);
-  const [warehouseIn, setWarehouseIn] = useState<string>(warehouses[0].name);
+  const [warehouseFrom, setWarehouseFrom] = useState<IFilterItem>(baseWarehouse);
+  const [warehouseIn, setWarehouseIn] = useState<IFilterItem>(warehouses[0].name);
   const hasWarehouseFromProducts = useMemo(() => products.every((product) => (
     warehouses
       .find((item) => warehouseFrom === item.name)!.products
-      .some((item) => item.id === product.id))), [warehouses, warehouseFrom, products]);
+      .some((item: any) => item.id === product.id))), [warehouses, warehouseFrom, products]);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => helper(step), [step]);
@@ -66,8 +64,8 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             setTimeout(resolve, 500);
           });
           if (!hasWarehouseFromProducts) return;
-          const newItems = products.map((item) => ({ ...item, ...values }));
-          await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
+          // const newItems = products.map((item) => ({ ...item, ...values }));
+          // await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
           toggleSuccess(true);
         }}
         validationSchema={MoveProductSchema}
@@ -84,7 +82,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseFrom"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseFrom(e.currentTarget.value)}
+                      click={setWarehouseFrom}
                       value={warehouseFrom}
                       className={styles.select}
                     />
@@ -101,7 +99,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                     <Select
                       list={warehouses.map((elem) => elem.name)}
                       name="warehouseIn"
-                      click={(e: React.MouseEvent<HTMLInputElement>) => setWarehouseIn(e.currentTarget.value)}
+                      click={setWarehouseIn}
                       value={warehouseIn}
                       className={styles.select}
                     />

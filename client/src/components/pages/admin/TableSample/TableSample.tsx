@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
 
 import Button from '../../../common/Button/Button';
 import Select from '../../../common/inputs/Select/Select';
 import SnackBar from '../SnackBar/SnackBar';
 import { IModalType } from '../../../../typings/modalType';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 import styles from './TableSample.module.scss';
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
@@ -12,10 +13,10 @@ import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
 interface ITableSampleProps {
   children: React.ReactNode,
   title: string,
-  filterList: string [],
+  filterList: IFilterItem [],
   buttonText: string,
-  filterValue: string,
-  clickFilter: (e: React.MouseEvent<HTMLInputElement>) => void,
+  filterValue: IFilterItem,
+  clickFilter: Dispatch<SetStateAction<IFilterItem>>,
   addItemModal?: IModalType,
   moveItemModal?: IModalType,
   selected?: any [],
