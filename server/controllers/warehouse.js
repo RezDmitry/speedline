@@ -5,7 +5,7 @@ module.exports.getAll = async (req, res) => {
   try {
     const warehouses = await Warehouse
       .find({user: req.user.id})
-      .sort({'height': req.query.height})
+      .sort({'height': req.query.height === 'any' ? 0 : req.query.height})
     res.status(200).json(warehouses);
   } catch (e) {
     errorHandler(res, e);

@@ -4,7 +4,7 @@ export const tableHeaders = ['All Stores', 'Number of products', 'Length, m', 'W
 
 export const filterList: IFilterItem [] = [
   {
-    value: '',
+    value: 'any',
     text: 'Sort by',
   },
   {

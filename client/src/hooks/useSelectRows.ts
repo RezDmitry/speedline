@@ -1,27 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-export const useSelectRows = (array: any [], filter: string, prepareData: () => void): [
-  any [], (item: any) => void, (e: React.ChangeEvent<HTMLInputElement>) => void, (item: any) => boolean, () => void,
-] => {
+export const useSelectRows = (): [any [], (element: any) => void, () => void] => {
   const [selected, setSelected] = useState<any []>([]);
-  const changeSelect = (item: any) => {
-    if (selected.some((elem) => item.id === elem.id)) {
-      setSelected((prev) => prev.filter((elem) => item.id !== elem.id));
+  const toggleRow = (element: any) => {
+    if (selected.some((elem) => element._id === elem._id)) {
+      setSelected((prev) => prev.filter((elem) => element._id !== elem._id));
     } else {
-      setSelected((prev) => prev.concat(item));
+      setSelected((prev) => prev.concat(element));
     }
   };
-  const selectAllRows = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (!e.currentTarget.checked) {
-      setSelected([]);
-    } else {
-      setSelected(array);
-    }
+  const clearSelected = () => {
+    setSelected([]);
   };
-  const checkSelection = (item: any) => selected.some((elem: any) => item.id === elem.id);
-  const clearSelect = () => setSelected([]);
-  useEffect(() => {
-    prepareData();
-  }, [filter]);
-  return [selected, changeSelect, selectAllRows, checkSelection, clearSelect];
+  return [selected, toggleRow, clearSelected];
 };

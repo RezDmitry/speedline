@@ -6,7 +6,7 @@ export const tableHeaders = [
 
 export const filterList: IFilterItem [] = [
   {
-    value: '',
+    value: 'any',
     text: 'Filter by',
   },
   {
