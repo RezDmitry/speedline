@@ -24,9 +24,6 @@ const Warehouse = () => {
   const prepareRow = (product: IProduct) => Object.entries(product)
     .filter((item) => ((item[0] !== '_id') && (item[0] !== 'warehouse') && (item[0] !== '__v')))
     .map((elem) => elem[1]);
-  // const [
-  //   selected, changeSelect, selectAllRows, checkSelection, clearSelect,
-  // ] = useSelectRows(array, shipment, prepareData);
   useEffect(() => {
     dispatch(fetchProducts(id!));
     dispatch(fetchWarehouse(id!));
