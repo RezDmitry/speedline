@@ -35,3 +35,16 @@ module.exports.create = async (req, res) => {
     errorHandler(res, e);
   }
 }
+
+module.exports.update = async (req, res) => {
+  try {
+    const warehouse = await Warehouse.findOneAndUpdate(
+      {_id: req.params.id},
+      {$set: req.body},
+      {new: true},
+    );
+    res.status(200).json(warehouse)
+  } catch (e) {
+    errorHandler(res, e);
+  }
+}

@@ -11,6 +11,8 @@ router.get('/', passport.authenticate('jwt', {session: false}), controller.getAl
 router.get('/:id', passport.authenticate('jwt', {session: false}), controller.getById);
 //localhost:5200/api/warehouse
 router.post('/', passport.authenticate('jwt', {session: false}), controller.create);
+//localhost:5200/api/warehouse/id
+router.patch('/:id', passport.authenticate('jwt', {session: false}), controller.update);
 
 
 module.exports = router;

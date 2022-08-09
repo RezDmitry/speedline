@@ -53,9 +53,9 @@ module.exports.update = async (req, res) => {
 
 module.exports.remove = async (req, res) => {
   try {
-    await Product.remove({_id: req.params.id});
+    const product = await Product.findByIdAndRemove({_id: req.params.id});
     await Warehouse.findOneAndUpdate(
-      {_id: req.body.warehouse},
+      {_id: product.warehouse},
       {$pull: {products: req.params.id}},
     );
     res.status(200).json({

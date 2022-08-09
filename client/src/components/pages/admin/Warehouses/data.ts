@@ -4,16 +4,16 @@ export const tableHeaders = ['All Stores', 'Number of products', 'Length, m', 'W
 
 export const filterList: IFilterItem [] = [
   {
-    value: 'any',
-    text: 'Sort by',
+    _id: 'any',
+    name: 'Sort by',
   },
   {
-    value: '1',
-    text: 'Min height',
+    _id: '1',
+    name: 'Min height',
   },
   {
-    value: '-1',
-    text: 'Max height',
+    _id: '-1',
+    name: 'Max height',
   },
 ];
 

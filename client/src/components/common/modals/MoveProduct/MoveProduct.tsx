@@ -2,16 +2,18 @@ import React, { useMemo, useState } from 'react';
 import * as yup from 'yup';
 import { Field, Form, Formik } from 'formik';
 
-import { useParams } from 'react-router-dom';
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
-import { helper, paymentOptions, shipmentOptions } from './helper';
+import { setText, paymentOptions, shipmentOptions } from './helper';
 import Select from '../../inputs/Select/Select';
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
+import { useAppSelector } from '../../../../hooks/useStore';
+import { IWarehouse } from '../../../../typings/IWarehouse';
+import { api } from '../../../../api';
+import { API_ROUTES } from '../../../../api/routes';
 
 import styles from './MoveProduct.module.scss';
-import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
 
 interface IMoveProductProps {
   close: () => void,
@@ -19,31 +21,31 @@ interface IMoveProductProps {
 }
 
 const MoveProductSchema = yup.object().shape({
-  method: yup.string()
+  shipmentMethod: yup.string()
     .required('Required'),
-  payment: yup.string()
+  paymentMethod: yup.string()
     .required('Required'),
 });
 
-// temp
-const warehouses: any [] = [];
-
 const MoveProduct = ({ close, products }: IMoveProductProps) => {
-  const { id } = useParams();
-  const baseWarehouse = useMemo(() => warehouses.find((item) => item.name === id)!.name, [warehouses, id]);
-  const [warehouseFrom, setWarehouseFrom] = useState<IFilterItem>(baseWarehouse);
-  const [warehouseIn, setWarehouseIn] = useState<IFilterItem>(warehouses[0].name);
-  const hasWarehouseFromProducts = useMemo(() => products.every((product) => (
-    warehouses
-      .find((item) => warehouseFrom === item.name)!.products
-      .some((item: any) => item.id === product.id))), [warehouses, warehouseFrom, products]);
+  // hooks
+  const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
+  // useState
+  const [
+    warehouseFrom, setWarehouseFrom,
+  ] = useState<Pick<IWarehouse, '_id' | 'name'>>(warehouse!);
+  const [
+    warehouseIn, setWarehouseIn,
+  ] = useState<Pick<IWarehouse, '_id' | 'name'>>(warehouses[0]);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
-  const stage = useMemo(() => helper(step), [step]);
+  const stage = useMemo(() => setText(step), [step]);
+  // functions
   const changeWarehouses = () => {
     setWarehouseIn(warehouseFrom);
     setWarehouseFrom(warehouseIn);
   };
+  // effects
   if (success) {
     return <SuccessMoveProduct close={close} />;
   }
@@ -57,15 +59,34 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
     >
       <Formik
         initialValues={{
-          method: '', payment: '',
+          shipmentMethod: '', paymentMethod: '',
         }}
         onSubmit={async (values) => {
-          await new Promise((resolve) => {
-            setTimeout(resolve, 500);
-          });
-          if (!hasWarehouseFromProducts) return;
-          // const newItems = products.map((item) => ({ ...item, ...values }));
-          // await dispatch(replaceProduct({ warehouseFrom, warehouseIn, newItems }));
+          try {
+            await products.forEach((product) => {
+              const newProduct = {
+                ...product,
+                warehouse: warehouseIn._id,
+                shipmentMethod: values.shipmentMethod,
+                paymentMethod: values.paymentMethod,
+              };
+              api.patch(`${API_ROUTES.PRODUCT}/${product._id}`, newProduct);
+            });
+            const tempWarehouseFrom = warehouses.find((elem) => elem._id === warehouseFrom._id);
+            const newWarehouseFrom = {
+              ...tempWarehouseFrom,
+              products: tempWarehouseFrom?.products.filter((product) => !products.map((p) => p._id).includes(product)),
+            };
+            await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseFrom._id}`, newWarehouseFrom);
+            const tempWarehouseIn = warehouses.find((elem) => elem._id === warehouseIn._id);
+            const newWarehouseIn = {
+              ...tempWarehouseIn,
+              products: tempWarehouseIn?.products.concat(products.map((product) => product._id)),
+            };
+            await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseIn._id}`, newWarehouseIn);
+          } catch (e) {
+            console.log(e);
+          }
           toggleSuccess(true);
         }}
         validationSchema={MoveProductSchema}
@@ -76,15 +97,16 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             {step === 1
               && (
                 <div className={styles.warehouses}>
-                  {!hasWarehouseFromProducts && <div className="modal-form__error">No products on warehouse</div>}
+                  {'' && <div className="modal-form__error">No products on warehouse</div>}
                   <label htmlFor="warehouseFrom">
                     From
                     <Select
-                      list={warehouses.map((elem) => elem.name)}
+                      list={warehouses}
                       name="warehouseFrom"
                       click={setWarehouseFrom}
                       value={warehouseFrom}
                       className={styles.select}
+                      mod="BBB"
                     />
                   </label>
                   <button
@@ -97,23 +119,24 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                   <label htmlFor="warehouseIn">
                     In
                     <Select
-                      list={warehouses.map((elem) => elem.name)}
+                      list={warehouses}
                       name="warehouseIn"
                       click={setWarehouseIn}
                       value={warehouseIn}
                       className={styles.select}
+                      mod="AAA"
                     />
                   </label>
-                  <div>{errors.method}</div>
+                  <div>{errors.shipmentMethod}</div>
                 </div>
               )}
             {step === 2
               && (
                 <div className="modal-form__radio-group-planks">
-                  <div role="group" aria-labelledby="method">
+                  <div role="group" aria-labelledby="shipmentMethod">
                     {shipmentOptions.map((elem: any) => (
                       <div key={elem.value}>
-                        <Field id={elem.desc} type="radio" name="method" value={elem.value} />
+                        <Field id={elem.desc} type="radio" name="shipmentMethod" value={elem.value} />
                         <label htmlFor={elem.desc}>
                           <span>
                             {elem.logo}
@@ -128,10 +151,10 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             {step === 3
               && (
                 <div className="modal-form__radio-group-planks">
-                  <div role="group" aria-labelledby="payment">
+                  <div role="group" aria-labelledby="paymentMethod">
                     {paymentOptions.map((elem: any) => (
                       <div key={elem.value}>
-                        <Field id={elem.value} type="radio" name="payment" value={elem.value} />
+                        <Field id={elem.value} type="radio" name="paymentMethod" value={elem.value} />
                         <label htmlFor={elem.value}>
                           <span>
                             {elem.logo}

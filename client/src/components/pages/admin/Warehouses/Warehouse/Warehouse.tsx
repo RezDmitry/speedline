@@ -10,7 +10,7 @@ import MoveProduct from '../../../../common/modals/MoveProduct/MoveProduct';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/useStore';
 import { IProduct } from '../../../../../typings/IProduct';
 import { fetchProducts } from '../../../../../store/slices/actionCreators/product';
-import { fetchWarehouse } from '../../../../../store/slices/actionCreators/warehouse';
+import { fetchWarehouse, fetchWarehouses } from '../../../../../store/slices/actionCreators/warehouse';
 import { IFilterItem } from '../../../../../typings/IFilterItem';
 import { ignoredFields } from '../../../../../helpers/ignoredFields';
 import { useSelectRows } from '../../../../../hooks/useSelectRows';
@@ -23,7 +23,7 @@ const Warehouse = () => {
   const { id } = useParams();
   const { products, isLoading, error } = useAppSelector((state) => state.productReducer);
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
-  const [selected, toggleRow, clearSelected] = useSelectRows();
+  const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
   // useState
   const [shipmentMethod, setShipmentMethod] = useState<IFilterItem>(filterList[0]);
   // modals
@@ -36,16 +36,17 @@ const Warehouse = () => {
   const deleteProducts = () => {
     selected.forEach(async (product: IProduct) => {
       await api.delete(`${API_ROUTES.PRODUCT}/${product._id}`);
-      dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod.value }));
+      dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod._id }));
       clearSelected();
     });
   };
   // effects
   useEffect(() => {
     dispatch(fetchWarehouse(id!));
+    dispatch(fetchWarehouses({}));
   }, [id]);
   useEffect(() => {
-    dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod.value }));
+    dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod._id }));
   }, [shipmentMethod]);
   return (
     <TableSample
@@ -61,13 +62,17 @@ const Warehouse = () => {
       }}
       moveItemModal={{
         toggleOpened: toggleOpenedMove,
-        content: <MoveProduct close={toggleOpenedMove} products={['']} />,
+        content: <MoveProduct close={toggleOpenedMove} products={selected} />,
         isOpened: isOpenedMove,
       }}
       selected={selected}
       deleteItems={deleteProducts}
     >
-      <TableRow array={tableHeaders} id="-1" />
+      <TableRow
+        array={tableHeaders}
+        id="-1"
+        selectAllRows={(e) => toggleAllRows(e, products)}
+      />
       {isLoading && <span>Loading...</span>}
       {error && <span>{error}</span>}
       {products.length
@@ -77,6 +82,7 @@ const Warehouse = () => {
             key={product._id}
             id={product._id}
             selectRow={() => toggleRow(product)}
+            isSelected={selected.some((item) => item._id === product._id)}
           />
         ))
         : !isLoading && !error && <span>No products founded</span>}

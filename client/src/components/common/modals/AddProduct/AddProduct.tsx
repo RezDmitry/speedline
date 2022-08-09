@@ -38,12 +38,15 @@ const AddProductSchema = yup.object().shape({
 });
 
 const AddProduct = ({ close }: IAddProductProps) => {
+  // hooks
+  const { warehouse } = useAppSelector((state) => state.warehouseReducer);
+  // useState useMemo
   const [loading, setLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState('');
-  const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => setText(step), [step]);
+  // other
   if (success) {
     return <SuccessAddProduct close={close} />;
   }

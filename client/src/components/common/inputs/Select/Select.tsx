@@ -3,10 +3,10 @@ import React, {
 } from 'react';
 
 import { useOutside } from '../../../../hooks/useClickOutside';
+import { IFilterItem } from '../../../../typings/IFilterItem';
 
 import styles from './Select.module.scss';
 import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
-import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface ISelectProps {
   list: IFilterItem [],
@@ -14,10 +14,11 @@ interface ISelectProps {
   value: IFilterItem,
   click: Dispatch<SetStateAction<IFilterItem>>,
   className?: string,
+  mod?: string,
 }
 
 const Select = ({
-  list, name, value, click, className,
+  list, name, value, click, className, mod,
 }: ISelectProps) => {
   const [active, setActive] = useState<boolean>(false);
   const wrappedRef = useRef(null);
@@ -34,25 +35,25 @@ const Select = ({
       role="button"
       ref={wrappedRef}
     >
-      {value.text}
+      {value.name}
       <div
         className={`${styles.list} ${active ? styles.active : ''}`}
       >
         {list.map((elem) => (
           <label
-            key={elem.value}
-            htmlFor={elem.value}
+            key={elem.name}
+            htmlFor={elem._id + (mod || '')}
             className={styles.option}
             onClick={clickOption}
           >
             <input
               name={name}
               type="radio"
-              id={elem.value}
-              value={elem.value}
+              id={elem._id + (mod || '')}
+              value={elem.name}
               onClick={() => click(elem)}
             />
-            {elem.text}
+            {elem.name}
           </label>
         ))}
       </div>

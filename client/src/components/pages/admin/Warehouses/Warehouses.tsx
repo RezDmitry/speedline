@@ -25,8 +25,8 @@ const Warehouses = () => {
     .map((elem) => ((elem[0] === 'products') ? elem[1].length : elem[1]));
   // effects
   useEffect(() => {
-    dispatch(fetchWarehouses({ height: filter.value }));
-  }, [filter, isOpened]);
+    dispatch(fetchWarehouses({ height: filter._id }));
+  }, [filter]);
   return (
     <TableSample
       title="Warehouses"
