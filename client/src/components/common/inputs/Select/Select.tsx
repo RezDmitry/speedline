@@ -12,13 +12,12 @@ interface ISelectProps {
   list: IFilterItem [],
   name: string,
   value: IFilterItem,
-  click: Dispatch<SetStateAction<IFilterItem>>,
+  click: Dispatch<SetStateAction<any>>,
   className?: string,
-  mod?: string,
 }
 
 const Select = ({
-  list, name, value, click, className, mod,
+  list, name, value, click, className,
 }: ISelectProps) => {
   const [active, setActive] = useState<boolean>(false);
   const wrappedRef = useRef(null);
@@ -42,14 +41,14 @@ const Select = ({
         {list.map((elem) => (
           <label
             key={elem.name}
-            htmlFor={elem._id + (mod || '')}
+            htmlFor={elem._id + name}
             className={styles.option}
             onClick={clickOption}
           >
             <input
               name={name}
               type="radio"
-              id={elem._id + (mod || '')}
+              id={elem._id + name}
               value={elem.name}
               onClick={() => click(elem)}
             />

@@ -8,15 +8,21 @@ interface IModalButtonProps {
   children: React.ReactNode,
   action?: () => void,
   loading?: boolean,
+  blocked?: boolean,
 }
 
-const ModalButton = ({ children, action, loading }: IModalButtonProps) => (
+const ModalButton = (
+  {
+    children, action, loading, blocked,
+  }: IModalButtonProps,
+) => (
   <Button
     className={styles.button}
     click={action}
     type="submit"
     fullWidth
     loading={loading}
+    blocked={blocked}
   >
     {children}
   </Button>

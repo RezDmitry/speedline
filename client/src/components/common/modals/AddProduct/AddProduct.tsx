@@ -42,7 +42,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   // useState useMemo
   const [loading, setLoading] = useState<boolean>(false);
-  const [loginError, setLoginError] = useState('');
+  const [addingProductError, setAddingProductError] = useState('');
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => setText(step), [step]);
@@ -56,7 +56,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
       close={close}
       step={step}
       stepArray={[1, 2, 3]}
-      changeStep={changeStep}
+      changeStep={!addingProductError ? changeStep : () => null}
     >
       <Formik
         initialValues={{
@@ -71,16 +71,16 @@ const AddProduct = ({ close }: IAddProductProps) => {
           } catch (e: any) {
             setLoading(false);
             if (e.code === 'ERR_NETWORK') {
-              setLoginError('Unhandled error. Try later');
+              setAddingProductError('Unhandled error. Try later');
             }
-            setLoginError(e.response.data.message);
+            setAddingProductError(e.response.data.message);
           }
         }}
         validationSchema={AddProductSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
-            {loginError && <div className="modal-form__error">{loginError}</div>}
+            {addingProductError && <div className="modal-form__error">{addingProductError}</div>}
             <div className="modal-form__text">{stage.tip}</div>
             {step === 1
               && (
@@ -181,7 +181,8 @@ const AddProduct = ({ close }: IAddProductProps) => {
               )}
             <ModalButton
               loading={loading}
-              action={() => changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+              blocked={!!addingProductError}
+              action={() => !addingProductError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
             >
               {stage.buttonText}
             </ModalButton>

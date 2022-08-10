@@ -66,3 +66,16 @@
     }
   }
 }
+
+.blocked {
+  background-color: $input-border-gray;
+  border: 1px solid $input-border-gray;
+  user-select: none;
+  cursor: not-allowed;
+  &:hover {
+    background: $input-border-gray;
+  }
+  &:active {
+    background: $input-border-gray;
+  }
+}
