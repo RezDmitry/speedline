@@ -7,7 +7,7 @@ import {
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessAddProduct from './SuccessAddProduct/SuccessAddProduct';
-import { setText, paymentOptions, shipmentOptions } from './helper';
+import { setText, paymentOptions, shipmentOptions } from './stages';
 import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
 import { useAppSelector } from '../../../../hooks/useStore';
@@ -159,6 +159,11 @@ const AddProduct = ({ close }: IAddProductProps) => {
                     </div>
                   ))}
                 </div>
+                <ErrorMessage
+                  name="shipmentMethod"
+                  component="div"
+                  className="modal-form__error"
+                />
               </div>
               )}
             {step === 3
@@ -177,12 +182,18 @@ const AddProduct = ({ close }: IAddProductProps) => {
                       </div>
                     ))}
                   </div>
+                  <ErrorMessage
+                    name="paymentMethod"
+                    component="div"
+                    className="modal-form__error"
+                  />
                 </div>
               )}
             <ModalButton
               loading={loading}
               blocked={!!formError}
               action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+              type={step === 3 ? 'submit' : 'button'}
             >
               {stage.buttonText}
             </ModalButton>

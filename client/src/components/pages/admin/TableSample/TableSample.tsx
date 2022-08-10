@@ -21,11 +21,12 @@ interface ITableSampleProps {
   moveItemModal?: IModalType,
   selected?: any [],
   deleteItems?: () => void,
+  isBlocked?: boolean,
 }
 
 const TableSample = ({
   children, title, filterList, buttonText, filterValue,
-  clickFilter, addItemModal, moveItemModal, selected, deleteItems,
+  clickFilter, addItemModal, moveItemModal, selected, deleteItems, isBlocked,
 }: ITableSampleProps) => (
   <div className={styles.layout}>
     <div className={styles.header}>
@@ -48,8 +49,13 @@ const TableSample = ({
       moveItemModal.content,
       document.getElementById('root')!,
     )}
-    {!!selected?.length && createPortal(
-      <SnackBar selected={selected} deleteAction={deleteItems!} openModal={moveItemModal?.toggleOpened!} />,
+    {!!selected?.length && deleteItems && createPortal(
+      <SnackBar
+        selected={selected}
+        deleteAction={deleteItems}
+        openModal={moveItemModal?.toggleOpened!}
+        isBlocked={isBlocked}
+      />,
       document.getElementById('root')!,
     )}
   </div>

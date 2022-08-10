@@ -68,6 +68,7 @@ const Warehouses = () => {
             id={warehouse._id}
             link={warehouse._id}
             selectRow={() => toggleRow(warehouse)}
+            isSelected={selected.some((item) => item._id === warehouse._id)}
           />
         ))
         : <span>No warehouses founded</span>}

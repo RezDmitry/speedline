@@ -7,7 +7,7 @@ import {
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
 import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
-import { setText, paymentOptions, shipmentOptions } from './helper';
+import { setText, paymentOptions, shipmentOptions } from './stages';
 import Select from '../../inputs/Select/Select';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
 import { useAppSelector } from '../../../../hooks/useStore';
@@ -86,9 +86,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
       changeStep={!formError ? changeStep : () => null}
     >
       <Formik
-        initialValues={{
-          shipmentMethod: '', paymentMethod: '',
-        }}
+        initialValues={{ shipmentMethod: '', paymentMethod: '' }}
         onSubmit={async (values) => {
           setLoading(true);
           try {
@@ -208,6 +206,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                 </div>
               )}
             <ModalButton
+              type={step === 3 ? 'submit' : 'button'}
               loading={loading}
               blocked={!!formError}
               action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}

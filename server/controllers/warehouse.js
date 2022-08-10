@@ -26,6 +26,7 @@ module.exports.create = async (req, res) => {
   try {
     const warehouse = await new Warehouse({
       name: req.body.name,
+      products: [],
       length: req.body.length,
       width: req.body.width,
       height: req.body.height,

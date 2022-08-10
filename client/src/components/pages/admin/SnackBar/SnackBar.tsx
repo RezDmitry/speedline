@@ -10,9 +10,12 @@ interface ISnackBarProps {
   selected: any [],
   deleteAction: () => void
   openModal?: () => void,
+  isBlocked?: boolean,
 }
 
-const SnackBar = ({ selected, deleteAction, openModal }: ISnackBarProps) => (
+const SnackBar = ({
+  selected, deleteAction, openModal, isBlocked,
+}: ISnackBarProps) => (
   <div className={styles.snackBar}>
     <div className={styles.selected}>
       <ListIcon />
@@ -21,8 +24,24 @@ const SnackBar = ({ selected, deleteAction, openModal }: ISnackBarProps) => (
       {selected.length}
     </div>
     <div className={styles.buttons}>
-      <Button small outlined error click={deleteAction}>Delete</Button>
-      {openModal && <Button small icon={<ChangeIcon />} click={openModal}>Move</Button>}
+      <Button
+        small
+        outlined
+        error
+        click={deleteAction}
+      >
+        Delete
+      </Button>
+      {openModal && (
+        <Button
+          small
+          blocked={isBlocked}
+          icon={<ChangeIcon />}
+          click={isBlocked ? () => null : openModal}
+        >
+          Move
+        </Button>
+      )}
     </div>
   </div>
 );

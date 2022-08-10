@@ -22,7 +22,7 @@ const Warehouse = () => {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const { products, isLoading, error } = useAppSelector((state) => state.productReducer);
-  const { warehouse } = useAppSelector((state) => state.warehouseReducer);
+  const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
   const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
   // useState
   const [shipmentMethod, setShipmentMethod] = useState<IFilterItem>(filterList[0]);
@@ -67,6 +67,7 @@ const Warehouse = () => {
       }}
       selected={selected}
       deleteItems={deleteProducts}
+      isBlocked={warehouses.length === 1}
     >
       <TableRow
         array={tableHeaders}

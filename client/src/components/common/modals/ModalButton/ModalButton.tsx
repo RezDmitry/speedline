@@ -9,17 +9,18 @@ interface IModalButtonProps {
   action?: () => void,
   loading?: boolean,
   blocked?: boolean,
+  type?: 'submit' | 'button',
 }
 
 const ModalButton = (
   {
-    children, action, loading, blocked,
+    children, action, loading, blocked, type = 'submit',
   }: IModalButtonProps,
 ) => (
   <Button
     className={styles.button}
     click={action}
-    type="submit"
+    type={type}
     fullWidth
     loading={loading}
     blocked={blocked}

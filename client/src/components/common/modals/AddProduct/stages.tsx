@@ -1,3 +1,5 @@
+import { IStage } from '../../../../typings/IStage';
+
 import { ReactComponent as AirIcon } from '../../../../content/icons/air.svg';
 import { ReactComponent as SeaIcon } from '../../../../content/icons/sea.svg';
 import { ReactComponent as TruckIcon } from '../../../../content/icons/truck.svg';
@@ -5,31 +7,25 @@ import { ReactComponent as CardIcon } from '../../../../content/icons/card.svg';
 import { ReactComponent as PalypalIcon } from '../../../../content/icons/palypal.svg';
 import { ReactComponent as CashIcon } from '../../../../content/icons/cash.svg';
 
-interface IStage {
-  title: string,
-  buttonText: string,
-  tip: string,
-}
-
 export const setText = (step: number): IStage => {
   switch (step) {
     case (2): {
       return {
-        title: 'Move cargo',
+        title: 'Shipping method',
         buttonText: 'Next step',
         tip: 'Select delivery method',
       };
     }
     case (3): {
       return {
-        title: 'Move cargo',
-        buttonText: 'Next step',
+        title: 'Payment method',
+        buttonText: 'Choose',
         tip: 'Choose a payment method',
       };
     }
     default: {
       return {
-        title: 'Move cargo',
+        title: 'Adding a product',
         buttonText: 'Next step',
         tip: '',
       };
