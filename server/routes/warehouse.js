@@ -13,6 +13,8 @@ router.get('/:id', passport.authenticate('jwt', {session: false}), controller.ge
 router.post('/', passport.authenticate('jwt', {session: false}), controller.create);
 //localhost:5200/api/warehouse/id
 router.patch('/:id', passport.authenticate('jwt', {session: false}), controller.update);
+//localhost:5200/api/warehouse/id
+router.delete('/:id', passport.authenticate('jwt', {session: false}), controller.remove);
 
 
 module.exports = router;

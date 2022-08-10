@@ -30,7 +30,7 @@ module.exports.create = async (req, res) => {
     }).save();
     await Warehouse.findOneAndUpdate(
       {_id: req.body.warehouse},
-      {$push: {products: product._id}},
+      {$push: {products: product}},
     );
     res.status(201).json(product);
   } catch (e) {
@@ -56,7 +56,7 @@ module.exports.remove = async (req, res) => {
     const product = await Product.findByIdAndRemove({_id: req.params.id});
     await Warehouse.findOneAndUpdate(
       {_id: product.warehouse},
-      {$pull: {products: req.params.id}},
+      {$pull: {products: { _id: req.params.id }}},
     );
     res.status(200).json({
       message: 'Product deleted',

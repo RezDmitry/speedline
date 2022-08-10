@@ -9,7 +9,7 @@ import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.s
 interface ISnackBarProps {
   selected: any [],
   deleteAction: () => void
-  openModal: () => void,
+  openModal?: () => void,
 }
 
 const SnackBar = ({ selected, deleteAction, openModal }: ISnackBarProps) => (
@@ -22,7 +22,7 @@ const SnackBar = ({ selected, deleteAction, openModal }: ISnackBarProps) => (
     </div>
     <div className={styles.buttons}>
       <Button small outlined error click={deleteAction}>Delete</Button>
-      <Button small icon={<ChangeIcon />} click={openModal}>Move</Button>
+      {openModal && <Button small icon={<ChangeIcon />} click={openModal}>Move</Button>}
     </div>
   </div>
 );

@@ -42,7 +42,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   // useState useMemo
   const [loading, setLoading] = useState<boolean>(false);
-  const [addingProductError, setAddingProductError] = useState('');
+  const [formError, setFormError] = useState('');
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => setText(step), [step]);
@@ -56,13 +56,14 @@ const AddProduct = ({ close }: IAddProductProps) => {
       close={close}
       step={step}
       stepArray={[1, 2, 3]}
-      changeStep={!addingProductError ? changeStep : () => null}
+      changeStep={!formError ? changeStep : () => null}
     >
       <Formik
         initialValues={{
           name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shipmentMethod: 'AIR', paymentMethod: '',
         }}
         onSubmit={async (values) => {
+          if (step !== 3) return;
           setLoading(true);
           try {
             await api.post(API_ROUTES.PRODUCT, { warehouse: warehouse?._id, ...values });
@@ -70,17 +71,16 @@ const AddProduct = ({ close }: IAddProductProps) => {
             toggleSuccess(true);
           } catch (e: any) {
             setLoading(false);
-            if (e.code === 'ERR_NETWORK') {
-              setAddingProductError('Unhandled error. Try later');
-            }
-            setAddingProductError(e.response.data.message);
+            setFormError(e.code === 'ERR_NETWORK'
+              ? 'Unhandled error. Try later'
+              : e.response.data.message);
           }
         }}
         validationSchema={AddProductSchema}
       >
         {({ errors }) => (
           <Form className="modal-form">
-            {addingProductError && <div className="modal-form__error">{addingProductError}</div>}
+            {formError && <div className="modal-form__error">{formError}</div>}
             <div className="modal-form__text">{stage.tip}</div>
             {step === 1
               && (
@@ -181,8 +181,8 @@ const AddProduct = ({ close }: IAddProductProps) => {
               )}
             <ModalButton
               loading={loading}
-              blocked={!!addingProductError}
-              action={() => !addingProductError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+              blocked={!!formError}
+              action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
             >
               {stage.buttonText}
             </ModalButton>

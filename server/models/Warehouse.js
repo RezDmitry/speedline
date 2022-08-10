@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const Product = require('../models/Product');
 
 const WarehouseSchema = new Schema({
   name: {
@@ -8,7 +9,7 @@ const WarehouseSchema = new Schema({
     max: [20, 'Must be less than 21 characters, got {VALUE}'],
   },
   products: {
-    type: [Schema.Types.ObjectId],
+    type: [Product.schema],
     default: [],
   },
   length: {

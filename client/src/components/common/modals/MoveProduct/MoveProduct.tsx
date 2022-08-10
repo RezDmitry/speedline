@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import * as yup from 'yup';
-import { Field, Form, Formik } from 'formik';
+import {
+  ErrorMessage, Field, Form, Formik,
+} from 'formik';
 
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
@@ -14,6 +16,7 @@ import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
 
 import styles from './MoveProduct.module.scss';
+import { selectElementsFromArr } from '../../../../helpers/selectElementsFromArr';
 
 interface IMoveProductProps {
   close: () => void,
@@ -32,8 +35,7 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
   const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
   // useState
   const [loading, setLoading] = useState<boolean>(false);
-  const [moveError, setMoveError] = useState('');
-  const [noCargoError, setNoCargoError] = useState('');
+  const [formError, setFormError] = useState('');
   const [
     warehouseFrom, setWarehouseFrom,
   ] = useState<IWarehouse>(warehouse!);
@@ -52,21 +54,26 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
   };
   // effects
   useEffect(() => {
-    setMoveError((warehouseFrom._id === warehouseIn._id)
+    setFormError((warehouseFrom._id === warehouseIn._id)
       ? 'Moving is impossible. Warehouses have same number'
       : '');
   }, [warehouseFrom, warehouseIn]);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await api.get(`${API_ROUTES.WAREHOUSE}/${warehouseFrom._id}`);
-      setNoCargoError(
-        products.every((product) => response.data.products.some((prod: string) => product._id === prod))
-          ? ''
-          : 'Wrong product replacement. Not enough product',
-      );
+      try {
+        const response = await api.get(`${API_ROUTES.WAREHOUSE}/${warehouseFrom._id}`);
+        setFormError(selectElementsFromArr(response.data?.products, products)[2].length
+          ? 'Wrong product replacement. Not enough product'
+          : '');
+      } catch (e: any) {
+        setFormError(e.code === 'ERR_NETWORK'
+          ? 'Unhandled error. Try later'
+          : e.response.data.message);
+        setTimeout(() => setFormError(''), 3000);
+      }
     };
     fetchData();
-  }, [warehouseFrom]);
+  }, [warehouseFrom, warehouseIn]);
   if (success) {
     return <SuccessMoveProduct close={close} />;
   }
@@ -76,21 +83,19 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
       close={close}
       step={step}
       stepArray={[1, 2, 3]}
-      changeStep={!moveError ? changeStep : () => null}
+      changeStep={!formError ? changeStep : () => null}
     >
       <Formik
         initialValues={{
           shipmentMethod: '', paymentMethod: '',
         }}
         onSubmit={async (values) => {
-          if (warehouseFrom._id === warehouseIn._id) {
-            return;
-          }
           setLoading(true);
           try {
-            await products.forEach((product) => {
+            await selectElementsFromArr(warehouseFrom?.products, products)[1].forEach((product: any) => {
               const newProduct = {
                 ...product,
+                _id: product._id,
                 warehouse: warehouseIn._id,
                 shipmentMethod: values.shipmentMethod,
                 paymentMethod: values.paymentMethod,
@@ -99,26 +104,29 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             });
             const newWarehouseFrom = {
               ...warehouseFrom,
-              products: warehouseFrom?.products.filter((product) => !products.map((p) => p._id).includes(product)),
+              products: selectElementsFromArr(warehouseFrom?.products, products)[0],
             };
             await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseFrom._id}`, newWarehouseFrom);
             const newWarehouseIn = {
               ...warehouseIn,
-              products: warehouseIn?.products.concat(products.map((product) => product._id)),
+              products: warehouseIn?.products.concat(products),
             };
             await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseIn._id}`, newWarehouseIn);
             setLoading(false);
-          } catch (e) {
+            toggleSuccess(true);
+          } catch (e: any) {
             setLoading(false);
-            console.log(e);
+            setFormError(e.code === 'ERR_NETWORK'
+              ? 'Unhandled error. Try later'
+              : e.response.data.message);
+            setTimeout(() => setFormError(''), 3000);
           }
-          toggleSuccess(true);
         }}
         validationSchema={MoveProductSchema}
       >
-        {({ errors }) => (
+        {() => (
           <Form className="modal-form">
-            {(moveError || noCargoError) && <div className="modal-form__error">{moveError || noCargoError}</div>}
+            {formError && <div className="modal-form__error">{formError}</div>}
             <div className="modal-form__text">{stage.tip}</div>
             {step === 1
               && (
@@ -169,6 +177,11 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                       </div>
                     ))}
                   </div>
+                  <ErrorMessage
+                    name="shipmentMethod"
+                    component="div"
+                    className="modal-form__error"
+                  />
                 </div>
               )}
             {step === 3
@@ -187,14 +200,17 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                       </div>
                     ))}
                   </div>
+                  <ErrorMessage
+                    name="paymentMethod"
+                    component="div"
+                    className="modal-form__error"
+                  />
                 </div>
               )}
             <ModalButton
               loading={loading}
-              blocked={!!moveError || !!noCargoError}
-              action={() => !moveError
-                && !noCargoError
-                && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+              blocked={!!formError}
+              action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
             >
               {stage.buttonText}
             </ModalButton>
