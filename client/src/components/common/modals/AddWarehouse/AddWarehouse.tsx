@@ -12,6 +12,7 @@ import { API_ROUTES } from '../../../../api/routes';
 
 interface IAddWarehouseProps {
   close: () => void,
+  updateList: () => void,
 }
 
 const AddWarehouseSchema = yup.object().shape({
@@ -33,7 +34,7 @@ const AddWarehouseSchema = yup.object().shape({
     .positive('Must be positive'),
 });
 
-const AddWarehouse = ({ close }: IAddWarehouseProps) => {
+const AddWarehouse = ({ close, updateList }: IAddWarehouseProps) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [loginError, setLoginError] = useState('');
   const [success, toggleSuccess] = useState<boolean>(false);
@@ -54,6 +55,7 @@ const AddWarehouse = ({ close }: IAddWarehouseProps) => {
           try {
             await api.post(API_ROUTES.WAREHOUSE, values);
             setLoading(false);
+            updateList();
             toggleSuccess(true);
           } catch (e: any) {
             setLoading(false);

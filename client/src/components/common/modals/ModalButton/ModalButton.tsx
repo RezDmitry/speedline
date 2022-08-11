@@ -6,17 +6,24 @@ import styles from './ModalButton.module.scss';
 
 interface IModalButtonProps {
   children: React.ReactNode,
-  action?: () => void,
+  click?: (e: React.MouseEvent) => void,
   loading?: boolean,
+  blocked?: boolean,
+  type?: 'submit' | 'button' | 'reset',
 }
 
-const ModalButton = ({ children, action, loading }: IModalButtonProps) => (
+const ModalButton = (
+  {
+    children, click, loading, blocked, type = 'submit',
+  }: IModalButtonProps,
+) => (
   <Button
     className={styles.button}
-    click={action}
-    type="submit"
+    click={click}
+    type={type}
     fullWidth
     loading={loading}
+    blocked={blocked}
   >
     {children}
   </Button>

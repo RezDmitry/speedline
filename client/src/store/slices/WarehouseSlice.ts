@@ -3,14 +3,14 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IWarehouse } from '../../typings/IWarehouse';
 import { fetchWarehouse, fetchWarehouses } from './actionCreators/warehouse';
 
-interface IUserState {
+interface IWarehouseState {
   warehouses: IWarehouse [],
   isLoading: boolean,
   error: string,
   warehouse: IWarehouse | null,
 }
 
-export const initialState: IUserState = {
+export const initialState: IWarehouseState = {
   warehouses: [],
   isLoading: false,
   error: '',

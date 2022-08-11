@@ -8,19 +8,36 @@ import { useModal } from '../../../../hooks/useModal';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
 import { IWarehouse } from '../../../../typings/IWarehouse';
 import { fetchWarehouses } from '../../../../store/slices/actionCreators/warehouse';
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { ignoredFields } from '../../../../helpers/ignoredFields';
+import { useSelectRows } from '../../../../hooks/useSelectRows';
+import { api } from '../../../../api';
+import { API_ROUTES } from '../../../../api/routes';
+import { IEntity } from '../../../../typings/IEntity';
 
 const Warehouses = () => {
+  // hooks
   const dispatch = useAppDispatch();
-  const [filter, setFilter] = useState<IFilterItem>(filterList[0]);
   const { warehouses, isLoading, error } = useAppSelector((state) => state.warehouseReducer);
+  const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
+  // useState
+  const [filter, setFilter] = useState<IEntity>(filterList[0]);
+  // modals
   const [isOpened, toggleOpened] = useModal();
+  // functions
   const prepareRow = (warehouse: IWarehouse) => Object.entries(warehouse)
-    .filter((item) => ((item[0] !== '_id') && (item[0] !== 'user') && (item[0] !== '__v')))
+    .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => ((elem[0] === 'products') ? elem[1].length : elem[1]));
+  const deleteWarehouses = () => {
+    selected.forEach(async (warehouse) => {
+      await api.delete(`${API_ROUTES.WAREHOUSE}/${warehouse._id}`);
+      dispatch(fetchWarehouses({ height: filter._id }));
+      clearSelected();
+    });
+  };
+  // effects
   useEffect(() => {
-    dispatch(fetchWarehouses({ height: filter.value }));
-  }, [filter, isOpened]);
+    dispatch(fetchWarehouses({ height: filter._id }));
+  }, [filter]);
   return (
     <TableSample
       title="Warehouses"
@@ -30,11 +47,20 @@ const Warehouses = () => {
       clickFilter={setFilter}
       addItemModal={{
         toggleOpened,
-        content: <AddWarehouse close={toggleOpened} />,
+        content: <AddWarehouse
+          close={toggleOpened}
+          updateList={() => dispatch(fetchWarehouses({ height: filter._id }))}
+        />,
         isOpened,
       }}
+      selectedLength={selected.length}
+      deleteItems={deleteWarehouses}
     >
-      <TableRow array={tableHeaders} id="-1" />
+      <TableRow
+        array={tableHeaders}
+        id="-1"
+        selectAllRows={(e) => toggleAllRows(e, warehouses)}
+      />
       {isLoading && <span>Loading...</span>}
       {error && <span>{error}</span>}
       {warehouses.length
@@ -44,6 +70,8 @@ const Warehouses = () => {
             key={warehouse._id}
             id={warehouse._id}
             link={warehouse._id}
+            selectRow={() => toggleRow(warehouse)}
+            isSelected={selected.some((item) => item._id === warehouse._id)}
           />
         ))
         : <span>No warehouses founded</span>}

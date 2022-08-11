@@ -1,5 +1,5 @@
 export const setCookie = (name: string, value: string, options = {}) => {
-  const newOptions: { [key: string]: any } = {
+  const newOptions: { [key: string]: string | number } = {
     path: '/',
     'max-age': 64000,
     // при необходимости добавьте другие значения по умолчанию
@@ -11,7 +11,7 @@ export const setCookie = (name: string, value: string, options = {}) => {
     if (Object.prototype.hasOwnProperty.call(newOptions, optionKey)) {
       updatedCookie += `; ${optionKey}`;
       const optionValue = newOptions[optionKey];
-      if (optionValue !== true) {
+      if (!!optionValue !== true) {
         updatedCookie += `=${optionValue}`;
       }
     }

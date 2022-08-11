@@ -1,24 +1,24 @@
-import { IFilterItem } from '../../../../../typings/IFilterItem';
+import { IEntity } from '../../../../../typings/IEntity';
 
 export const tableHeaders = [
   'All products', 'Manufacturer', 'Item number', 'Purchasing technology', 'Shipment method', 'Payment method',
 ];
 
-export const filterList: IFilterItem [] = [
+export const filterList: IEntity [] = [
   {
-    value: '',
-    text: 'Filter by',
+    _id: 'any',
+    name: 'Filter by',
   },
   {
-    value: 'AIR',
-    text: 'AIR',
+    _id: 'AIR',
+    name: 'AIR',
   },
   {
-    value: 'SEA',
-    text: 'SEA',
+    _id: 'SEA',
+    name: 'SEA',
   },
   {
-    value: 'TRUCK',
-    text: 'TRUCK',
+    _id: 'TRUCK',
+    name: 'TRUCK',
   },
 ];

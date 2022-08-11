@@ -30,8 +30,8 @@ const TableRow = ({
       <label className={styles.row} style={{ gridTemplateColumns: `repeat(${array.length}, 1fr)` }} htmlFor={id}>
         {array.map((elem, i) => (
           (i === 0 && link)
-            ? <div key={elem + i} onClick={() => navigate(link)} className={styles.link}>{elem.toString()}</div>
-            : <div key={elem + i}>{addPic(elem)}</div>))}
+            ? <div key={elem + id + i} onClick={() => navigate(link)} className={styles.link}>{elem.toString()}</div>
+            : <div key={elem + id + i}>{addPic(elem)}</div>))}
       </label>
     </div>
   );

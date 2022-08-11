@@ -1,3 +1,7 @@
+import React from 'react';
+
+import { IStage } from '../../../../typings/IStage';
+
 import { ReactComponent as AirIcon } from '../../../../content/icons/air.svg';
 import { ReactComponent as SeaIcon } from '../../../../content/icons/sea.svg';
 import { ReactComponent as TruckIcon } from '../../../../content/icons/truck.svg';
@@ -5,13 +9,7 @@ import { ReactComponent as CardIcon } from '../../../../content/icons/card.svg';
 import { ReactComponent as PalypalIcon } from '../../../../content/icons/palypal.svg';
 import { ReactComponent as CashIcon } from '../../../../content/icons/cash.svg';
 
-interface IStage {
-  title: string,
-  buttonText: string,
-  tip: string,
-}
-
-export const helper = (step: number): IStage => {
+export const setText = (step: number): IStage => {
   switch (step) {
     case (2): {
       return {
@@ -37,7 +35,13 @@ export const helper = (step: number): IStage => {
   }
 };
 
-export const shipmentOptions = [
+interface IShipmentOptions {
+  value: string,
+  desc: string,
+  logo: React.ReactNode,
+}
+
+export const shipmentOptions : IShipmentOptions [] = [
   {
     value: 'AIR',
     desc: 'By air transport',
@@ -55,7 +59,12 @@ export const shipmentOptions = [
   },
 ];
 
-export const paymentOptions = [
+interface IPaymentOptions {
+  value: string,
+  logo: React.ReactNode,
+}
+
+export const paymentOptions: IPaymentOptions [] = [
   {
     value: 'Visa, Mastercard',
     logo: <CardIcon />,

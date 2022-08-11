@@ -1,19 +1,19 @@
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { IEntity } from '../../../../typings/IEntity';
 
 export const tableHeaders = ['All Stores', 'Number of products', 'Length, m', 'Width, m', 'Height, m'];
 
-export const filterList: IFilterItem [] = [
+export const filterList: IEntity [] = [
   {
-    value: '',
-    text: 'Sort by',
+    _id: 'any',
+    name: 'Sort by',
   },
   {
-    value: '1',
-    text: 'Min height',
+    _id: '1',
+    name: 'Min height',
   },
   {
-    value: '-1',
-    text: 'Max height',
+    _id: '-1',
+    name: 'Max height',
   },
 ];
 

@@ -3,16 +3,16 @@ import React, {
 } from 'react';
 
 import { useOutside } from '../../../../hooks/useClickOutside';
+import { IEntity } from '../../../../typings/IEntity';
 
 import styles from './Select.module.scss';
 import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
-import { IFilterItem } from '../../../../typings/IFilterItem';
 
 interface ISelectProps {
-  list: IFilterItem [],
+  list: IEntity [],
   name: string,
-  value: IFilterItem,
-  click: Dispatch<SetStateAction<IFilterItem>>,
+  value: IEntity,
+  click: Dispatch<SetStateAction<any>>,
   className?: string,
 }
 
@@ -34,25 +34,25 @@ const Select = ({
       role="button"
       ref={wrappedRef}
     >
-      {value.text}
+      {value.name}
       <div
         className={`${styles.list} ${active ? styles.active : ''}`}
       >
         {list.map((elem) => (
           <label
-            key={elem.value}
-            htmlFor={elem.value}
+            key={elem.name}
+            htmlFor={elem._id + name}
             className={styles.option}
             onClick={clickOption}
           >
             <input
               name={name}
               type="radio"
-              id={elem.value}
-              value={elem.value}
+              id={elem._id + name}
+              value={elem.name}
               onClick={() => click(elem)}
             />
-            {elem.text}
+            {elem.name}
           </label>
         ))}
       </div>

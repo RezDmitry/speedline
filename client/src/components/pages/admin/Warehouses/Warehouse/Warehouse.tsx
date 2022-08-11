@@ -10,43 +10,77 @@ import MoveProduct from '../../../../common/modals/MoveProduct/MoveProduct';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/useStore';
 import { IProduct } from '../../../../../typings/IProduct';
 import { fetchProducts } from '../../../../../store/slices/actionCreators/product';
-import { fetchWarehouse } from '../../../../../store/slices/actionCreators/warehouse';
-import { IFilterItem } from '../../../../../typings/IFilterItem';
+import { fetchWarehouse, fetchWarehouses } from '../../../../../store/slices/actionCreators/warehouse';
+import { ignoredFields } from '../../../../../helpers/ignoredFields';
+import { useSelectRows } from '../../../../../hooks/useSelectRows';
+import { api } from '../../../../../api';
+import { API_ROUTES } from '../../../../../api/routes';
+import { IEntity } from '../../../../../typings/IEntity';
 
 const Warehouse = () => {
+  // hooks
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const [shipment, setShipment] = useState<IFilterItem>(filterList[0]);
+  const { products, isLoading, error } = useAppSelector((state) => state.productReducer);
+  const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
+  const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
+  // useState
+  const [shipmentMethod, setShipmentMethod] = useState<IEntity>(filterList[0]);
+  // modals
   const [isOpened, toggleOpened] = useModal();
   const [isOpenedMove, toggleOpenedMove] = useModal();
-  const { products, isLoading, error } = useAppSelector((state) => state.productReducer);
-  const { warehouse } = useAppSelector((state) => state.warehouseReducer);
+  // functions
   const prepareRow = (product: IProduct) => Object.entries(product)
-    .filter((item) => ((item[0] !== '_id') && (item[0] !== 'warehouse') && (item[0] !== '__v')))
+    .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => elem[1]);
+  const deleteProducts = () => {
+    selected.forEach(async (product) => {
+      await api.delete(`${API_ROUTES.PRODUCT}/${product._id}`);
+      dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }));
+      clearSelected();
+    });
+  };
+  // effects
   useEffect(() => {
-    dispatch(fetchProducts(id!));
     dispatch(fetchWarehouse(id!));
-  }, [id, isOpened, isOpenedMove]);
+    dispatch(fetchWarehouses({}));
+  }, [id]);
+  useEffect(() => {
+    dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }));
+  }, [shipmentMethod]);
   return (
     <TableSample
       title={warehouse?.name || ''}
       filterList={filterList}
       buttonText="Add cargo"
-      filterValue={shipment}
-      clickFilter={setShipment}
+      filterValue={shipmentMethod}
+      clickFilter={setShipmentMethod}
       addItemModal={{
         toggleOpened,
-        content: <AddProduct close={toggleOpened} />,
+        content: <AddProduct
+          close={toggleOpened}
+          updateList={() => dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }))}
+        />,
         isOpened,
       }}
       moveItemModal={{
         toggleOpened: toggleOpenedMove,
-        content: <MoveProduct close={toggleOpenedMove} products={['']} />,
+        content: <MoveProduct
+          close={toggleOpenedMove}
+          updateList={() => dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }))}
+          products={selected}
+        />,
         isOpened: isOpenedMove,
       }}
+      selectedLength={selected.length}
+      deleteItems={deleteProducts}
+      isBlocked={warehouses.length === 1}
     >
-      <TableRow array={tableHeaders} id="-1" />
+      <TableRow
+        array={tableHeaders}
+        id="-1"
+        selectAllRows={(e) => toggleAllRows(e, products)}
+      />
       {isLoading && <span>Loading...</span>}
       {error && <span>{error}</span>}
       {products.length
@@ -55,6 +89,8 @@ const Warehouse = () => {
             array={prepareRow(product)}
             key={product._id}
             id={product._id}
+            selectRow={() => toggleRow(product)}
+            isSelected={selected.some((item) => item._id === product._id)}
           />
         ))
         : !isLoading && !error && <span>No products founded</span>}

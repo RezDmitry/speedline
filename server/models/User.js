@@ -20,6 +20,6 @@ const UserSchema = new Schema({
     required: true,
     min: [5, 'Must be at least 5, got {VALUE}'],
   },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('users', UserSchema);

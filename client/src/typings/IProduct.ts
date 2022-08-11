@@ -1,10 +1,10 @@
-export interface IProduct {
-  _id: string,
-  name: string,
+import { IEntity } from './IEntity';
+
+export interface IProduct extends IEntity {
   manufacturer: string,
   number: string,
   purchasingTechnology: 'A' | 'S' | 'D' | 'F',
-  shippingMethod: 'AIR' | 'SEA'| 'TRUCK',
+  shipmentMethod: 'AIR' | 'SEA'| 'TRUCK',
   paymentMethod: string,
   warehouse: string,
 }

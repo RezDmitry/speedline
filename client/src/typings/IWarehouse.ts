@@ -1,7 +1,8 @@
-export interface IWarehouse {
-  _id: string,
-  name: string,
-  products: string [],
+import { IProduct } from './IProduct';
+import { IEntity } from './IEntity';
+
+export interface IWarehouse extends IEntity {
+  products: IProduct [],
   length: number,
   width: number,
   height: number,
