@@ -47,7 +47,10 @@ const Warehouses = () => {
       clickFilter={setFilter}
       addItemModal={{
         toggleOpened,
-        content: <AddWarehouse close={toggleOpened} />,
+        content: <AddWarehouse
+          close={toggleOpened}
+          updateList={() => dispatch(fetchWarehouses({ height: filter._id }))}
+        />,
         isOpened,
       }}
       selectedLength={selected.length}

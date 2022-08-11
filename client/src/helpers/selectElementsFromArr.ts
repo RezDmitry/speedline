@@ -1,18 +1,18 @@
 import { IEntity } from '../typings/IEntity';
 
-export const selectElementsFromArr = (targetArray: IEntity [], filterArray: IEntity [])
+export const selectElementsFromArr = (itemsOnWarehouseFrom: IEntity [], movingItems: IEntity [])
   : [IEntity [], IEntity [], IEntity []] => {
-  const tempFilterArray = [...filterArray];
-  const result: IEntity [] = [];
-  const deleted: IEntity [] = [];
-  targetArray.forEach((item) => {
-    const index = tempFilterArray.findIndex((elem) => elem.name === item.name);
-    if (index !== -1) {
-      tempFilterArray.splice(index, 1);
-      deleted.push(item);
+  const remainingMovingItems = [...movingItems];
+  const itemsOnWarehouseFromResult: IEntity [] = [];
+  const foundedItemsInWarehouseFrom: IEntity [] = [];
+  itemsOnWarehouseFrom.forEach((item) => {
+    const foundedItemIndex = remainingMovingItems.findIndex((elem) => elem.name === item.name);
+    if (foundedItemIndex !== -1) {
+      remainingMovingItems.splice(foundedItemIndex, 1);
+      foundedItemsInWarehouseFrom.push(item);
     } else {
-      result.push(item);
+      itemsOnWarehouseFromResult.push(item);
     }
   });
-  return [result, deleted, tempFilterArray];
+  return [itemsOnWarehouseFromResult, foundedItemsInWarehouseFrom, remainingMovingItems];
 };

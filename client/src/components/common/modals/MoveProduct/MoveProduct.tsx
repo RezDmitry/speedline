@@ -7,7 +7,7 @@ import { AxiosError } from 'axios';
 
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
-import SuccessMoveProduct from './SuccessAddWarehouse/SuccessMoveProduct';
+import SuccessMoveProduct from './SuccessMoveProduct/SuccessMoveProduct';
 import { setText, paymentOptions, shipmentOptions } from './stages';
 import Select from '../../inputs/Select/Select';
 import { ReactComponent as ChangeIcon } from '../../../../content/icons/change.svg';
@@ -15,12 +15,15 @@ import { useAppSelector } from '../../../../hooks/useStore';
 import { IWarehouse } from '../../../../typings/IWarehouse';
 import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
+import { selectElementsFromArr } from '../../../../helpers/selectElementsFromArr';
+import { IEntity } from '../../../../typings/IEntity';
 
 import styles from './MoveProduct.module.scss';
-import { selectElementsFromArr } from '../../../../helpers/selectElementsFromArr';
+import { IProduct } from '../../../../typings/IProduct';
 
 interface IMoveProductProps {
   close: () => void,
+  updateList: () => void,
   products: any [],
 }
 
@@ -31,7 +34,7 @@ const MoveProductSchema = yup.object().shape({
     .required('Required'),
 });
 
-const MoveProduct = ({ close, products }: IMoveProductProps) => {
+const MoveProduct = ({ close, products, updateList }: IMoveProductProps) => {
   // hooks
   const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
   // useState
@@ -53,19 +56,22 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
     setWarehouseIn(warehouseFrom);
     setWarehouseFrom(warehouseIn);
   };
+  const setStep = (e: React.MouseEvent) => {
+    if (step !== 3) {
+      e.preventDefault();
+    }
+    changeStep((prev) => ((prev === 3) ? 3 : prev + 1));
+  };
   // effects
-  useEffect(() => {
-    setFormError((warehouseFrom._id === warehouseIn._id)
-      ? 'Moving is impossible. Warehouses have same number'
-      : '');
-  }, [warehouseFrom, warehouseIn]);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.get(`${API_ROUTES.WAREHOUSE}/${warehouseFrom._id}`);
         setFormError(selectElementsFromArr(response.data?.products, products)[2].length
           ? 'Wrong product replacement. Not enough product'
-          : '');
+          : (warehouseFrom._id === warehouseIn._id)
+            ? 'Moving is impossible. Warehouses have same number'
+            : '');
       } catch (e) {
         setLoading(false);
         if (e instanceof AxiosError) {
@@ -91,11 +97,12 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
       changeStep={!formError ? changeStep : () => null}
     >
       <Formik
-        initialValues={{ shipmentMethod: '', paymentMethod: '' }}
+        initialValues={{ shipmentMethod: 'AIR', paymentMethod: 'Visa, Mastercard' }}
         onSubmit={async (values) => {
           setLoading(true);
           try {
-            await selectElementsFromArr(warehouseFrom?.products, products)[1].forEach((product: any) => {
+            console.log(warehouseFrom?.products, products, warehouseIn);
+            await selectElementsFromArr(warehouseFrom?.products, products)[1].forEach((product: IEntity) => {
               const newProduct = {
                 ...product,
                 _id: product._id,
@@ -110,12 +117,14 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
               products: selectElementsFromArr(warehouseFrom?.products, products)[0],
             };
             await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseFrom._id}`, newWarehouseFrom);
+            const newProducts = selectElementsFromArr(warehouseFrom?.products, products)[1];
             const newWarehouseIn = {
               ...warehouseIn,
-              products: warehouseIn?.products.concat(products),
+              products: warehouseIn?.products.concat(newProducts as IProduct []),
             };
             await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseIn._id}`, newWarehouseIn);
             setLoading(false);
+            updateList();
             toggleSuccess(true);
           } catch (e) {
             setLoading(false);
@@ -214,10 +223,9 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
                 </div>
               )}
             <ModalButton
-              type={step === 3 ? 'submit' : 'button'}
               loading={loading}
               blocked={!!formError}
-              action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
+              click={(e: React.MouseEvent) => !formError && setStep(e)}
             >
               {stage.buttonText}
             </ModalButton>

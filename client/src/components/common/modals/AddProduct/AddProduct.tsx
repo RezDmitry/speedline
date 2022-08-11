@@ -15,6 +15,7 @@ import { useAppSelector } from '../../../../hooks/useStore';
 
 interface IAddProductProps {
   close: () => void,
+  updateList: () => void,
 }
 
 const AddProductSchema = yup.object().shape({
@@ -38,7 +39,7 @@ const AddProductSchema = yup.object().shape({
     .required('Required'),
 });
 
-const AddProduct = ({ close }: IAddProductProps) => {
+const AddProduct = ({ close, updateList }: IAddProductProps) => {
   // hooks
   const { warehouse } = useAppSelector((state) => state.warehouseReducer);
   // useState useMemo
@@ -47,6 +48,12 @@ const AddProduct = ({ close }: IAddProductProps) => {
   const [success, toggleSuccess] = useState<boolean>(false);
   const [step, changeStep] = useState<number>(1);
   const stage = useMemo(() => setText(step), [step]);
+  const setStep = (e: React.MouseEvent) => {
+    if (step !== 3) {
+      e.preventDefault();
+    }
+    changeStep((prev) => ((prev === 3) ? 3 : prev + 1));
+  };
   // other
   if (success) {
     return <SuccessAddProduct close={close} />;
@@ -61,15 +68,20 @@ const AddProduct = ({ close }: IAddProductProps) => {
     >
       <Formik
         initialValues={{
-          name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shipmentMethod: 'AIR', paymentMethod: '',
+          name: '',
+          manufacturer: '',
+          number: '',
+          purchasingTechnology: 'A',
+          shipmentMethod: 'AIR',
+          paymentMethod: 'Visa, Mastercard',
         }}
         onSubmit={async (values) => {
           setFormError('');
-          if (step !== 3) return;
           setLoading(true);
           try {
             await api.post(API_ROUTES.PRODUCT, { warehouse: warehouse?._id, ...values });
             setLoading(false);
+            updateList();
             toggleSuccess(true);
           } catch (e) {
             setLoading(false);
@@ -197,8 +209,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
               )}
             <ModalButton
               loading={loading}
-              action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
-              type={step === 3 ? 'submit' : 'button'}
+              click={(e: React.MouseEvent) => !formError && setStep(e)}
             >
               {stage.buttonText}
             </ModalButton>

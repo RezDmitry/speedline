@@ -15,7 +15,7 @@ interface IButtonProps {
   loading?: boolean,
   blocked?: boolean,
   error?: boolean,
-  click?: () => void,
+  click?: (e: React.MouseEvent) => void,
   keyDown?: (e: React.KeyboardEvent<HTMLButtonElement>) => void,
   type?: 'submit' | 'reset' | 'button',
   icon?: React.ReactNode,

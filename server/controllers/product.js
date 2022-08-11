@@ -9,7 +9,9 @@ module.exports.getAll = async (req, res) => {
       .find({
         user: req.user.id,
         warehouse: req.query.warehouse,
-        shipmentMethod: req.query.shipmentMethod === 'any' ? {$in: ['AIR', 'SEA', 'TRUCK']} : req.query.shipmentMethod,
+        shipmentMethod: (!req.query.shipmentMethod || req.query.shipmentMethod === 'any')
+          ? {$in: ['AIR', 'SEA', 'TRUCK']}
+          : req.query.shipmentMethod,
       })
     res.status(200).json(products);
   } catch (e) {

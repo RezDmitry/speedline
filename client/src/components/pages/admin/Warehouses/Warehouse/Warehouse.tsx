@@ -57,12 +57,19 @@ const Warehouse = () => {
       clickFilter={setShipmentMethod}
       addItemModal={{
         toggleOpened,
-        content: <AddProduct close={toggleOpened} />,
+        content: <AddProduct
+          close={toggleOpened}
+          updateList={() => dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }))}
+        />,
         isOpened,
       }}
       moveItemModal={{
         toggleOpened: toggleOpenedMove,
-        content: <MoveProduct close={toggleOpenedMove} products={selected} />,
+        content: <MoveProduct
+          close={toggleOpenedMove}
+          updateList={() => dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }))}
+          products={selected}
+        />,
         isOpened: isOpenedMove,
       }}
       selectedLength={selected.length}
