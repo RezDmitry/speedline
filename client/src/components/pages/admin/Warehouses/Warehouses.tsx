@@ -8,11 +8,11 @@ import { useModal } from '../../../../hooks/useModal';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/useStore';
 import { IWarehouse } from '../../../../typings/IWarehouse';
 import { fetchWarehouses } from '../../../../store/slices/actionCreators/warehouse';
-import { IFilterItem } from '../../../../typings/IFilterItem';
 import { ignoredFields } from '../../../../helpers/ignoredFields';
 import { useSelectRows } from '../../../../hooks/useSelectRows';
 import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
+import { IEntity } from '../../../../typings/IEntity';
 
 const Warehouses = () => {
   // hooks
@@ -20,7 +20,7 @@ const Warehouses = () => {
   const { warehouses, isLoading, error } = useAppSelector((state) => state.warehouseReducer);
   const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
   // useState
-  const [filter, setFilter] = useState<IFilterItem>(filterList[0]);
+  const [filter, setFilter] = useState<IEntity>(filterList[0]);
   // modals
   const [isOpened, toggleOpened] = useModal();
   // functions
@@ -28,7 +28,7 @@ const Warehouses = () => {
     .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => ((elem[0] === 'products') ? elem[1].length : elem[1]));
   const deleteWarehouses = () => {
-    selected.forEach(async (warehouse: IWarehouse) => {
+    selected.forEach(async (warehouse) => {
       await api.delete(`${API_ROUTES.WAREHOUSE}/${warehouse._id}`);
       dispatch(fetchWarehouses({ height: filter._id }));
       clearSelected();
@@ -50,7 +50,7 @@ const Warehouses = () => {
         content: <AddWarehouse close={toggleOpened} />,
         isOpened,
       }}
-      selected={selected}
+      selectedLength={selected.length}
       deleteItems={deleteWarehouses}
     >
       <TableRow

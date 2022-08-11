@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
+import { AxiosError } from 'axios';
 
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
@@ -65,11 +66,15 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
         setFormError(selectElementsFromArr(response.data?.products, products)[2].length
           ? 'Wrong product replacement. Not enough product'
           : '');
-      } catch (e: any) {
-        setFormError(e.code === 'ERR_NETWORK'
-          ? 'Unhandled error. Try later'
-          : e.response.data.message);
-        setTimeout(() => setFormError(''), 3000);
+      } catch (e) {
+        setLoading(false);
+        if (e instanceof AxiosError) {
+          setFormError(e.code === 'ERR_NETWORK'
+            ? 'Unhandled error. Try later'
+            : e.response?.data.message);
+        } else {
+          throw e;
+        }
       }
     };
     fetchData();
@@ -112,12 +117,15 @@ const MoveProduct = ({ close, products }: IMoveProductProps) => {
             await api.patch(`${API_ROUTES.WAREHOUSE}/${newWarehouseIn._id}`, newWarehouseIn);
             setLoading(false);
             toggleSuccess(true);
-          } catch (e: any) {
+          } catch (e) {
             setLoading(false);
-            setFormError(e.code === 'ERR_NETWORK'
-              ? 'Unhandled error. Try later'
-              : e.response.data.message);
-            setTimeout(() => setFormError(''), 3000);
+            if (e instanceof AxiosError) {
+              setFormError(e.code === 'ERR_NETWORK'
+                ? 'Unhandled error. Try later'
+                : e.response?.data.message);
+            } else {
+              throw e;
+            }
           }
         }}
         validationSchema={MoveProductSchema}

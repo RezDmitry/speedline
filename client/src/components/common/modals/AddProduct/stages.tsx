@@ -1,3 +1,5 @@
+import React from 'react';
+
 import { IStage } from '../../../../typings/IStage';
 
 import { ReactComponent as AirIcon } from '../../../../content/icons/air.svg';
@@ -33,7 +35,13 @@ export const setText = (step: number): IStage => {
   }
 };
 
-export const shipmentOptions = [
+interface IShipmentOptions {
+  value: string,
+  desc: string,
+  logo: React.ReactNode,
+}
+
+export const shipmentOptions : IShipmentOptions [] = [
   {
     value: 'AIR',
     desc: 'By air transport',
@@ -51,7 +59,12 @@ export const shipmentOptions = [
   },
 ];
 
-export const paymentOptions = [
+interface IPaymentOptions {
+  value: string,
+  logo: React.ReactNode,
+}
+
+export const paymentOptions: IPaymentOptions [] = [
   {
     value: 'Visa, Mastercard',
     logo: <CardIcon />,

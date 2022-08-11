@@ -5,7 +5,7 @@ import Button from '../../../common/Button/Button';
 import Select from '../../../common/inputs/Select/Select';
 import SnackBar from '../SnackBar/SnackBar';
 import { IModalType } from '../../../../typings/modalType';
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { IEntity } from '../../../../typings/IEntity';
 
 import styles from './TableSample.module.scss';
 import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
@@ -13,20 +13,20 @@ import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
 interface ITableSampleProps {
   children: React.ReactNode,
   title: string,
-  filterList: IFilterItem [],
+  filterList: IEntity [],
   buttonText: string,
-  filterValue: IFilterItem,
-  clickFilter: Dispatch<SetStateAction<IFilterItem>>,
+  filterValue: IEntity,
+  clickFilter: Dispatch<SetStateAction<IEntity>>,
   addItemModal?: IModalType,
   moveItemModal?: IModalType,
-  selected?: any [],
+  selectedLength?: number,
   deleteItems?: () => void,
   isBlocked?: boolean,
 }
 
 const TableSample = ({
   children, title, filterList, buttonText, filterValue,
-  clickFilter, addItemModal, moveItemModal, selected, deleteItems, isBlocked,
+  clickFilter, addItemModal, moveItemModal, selectedLength, deleteItems, isBlocked,
 }: ITableSampleProps) => (
   <div className={styles.layout}>
     <div className={styles.header}>
@@ -49,9 +49,9 @@ const TableSample = ({
       moveItemModal.content,
       document.getElementById('root')!,
     )}
-    {!!selected?.length && deleteItems && createPortal(
+    {!!selectedLength && deleteItems && createPortal(
       <SnackBar
-        selected={selected}
+        selectedLength={selectedLength}
         deleteAction={deleteItems}
         openModal={moveItemModal?.toggleOpened!}
         isBlocked={isBlocked}

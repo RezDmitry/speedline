@@ -1,8 +1,8 @@
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { IEntity } from '../../../../typings/IEntity';
 
 export const tableHeaders = ['All Stores', 'Number of products', 'Length, m', 'Width, m', 'Height, m'];
 
-export const filterList: IFilterItem [] = [
+export const filterList: IEntity [] = [
   {
     _id: 'any',
     name: 'Sort by',

@@ -11,11 +11,11 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/useStore';
 import { IProduct } from '../../../../../typings/IProduct';
 import { fetchProducts } from '../../../../../store/slices/actionCreators/product';
 import { fetchWarehouse, fetchWarehouses } from '../../../../../store/slices/actionCreators/warehouse';
-import { IFilterItem } from '../../../../../typings/IFilterItem';
 import { ignoredFields } from '../../../../../helpers/ignoredFields';
 import { useSelectRows } from '../../../../../hooks/useSelectRows';
 import { api } from '../../../../../api';
 import { API_ROUTES } from '../../../../../api/routes';
+import { IEntity } from '../../../../../typings/IEntity';
 
 const Warehouse = () => {
   // hooks
@@ -25,7 +25,7 @@ const Warehouse = () => {
   const { warehouses, warehouse } = useAppSelector((state) => state.warehouseReducer);
   const [selected, toggleRow, toggleAllRows, clearSelected] = useSelectRows();
   // useState
-  const [shipmentMethod, setShipmentMethod] = useState<IFilterItem>(filterList[0]);
+  const [shipmentMethod, setShipmentMethod] = useState<IEntity>(filterList[0]);
   // modals
   const [isOpened, toggleOpened] = useModal();
   const [isOpenedMove, toggleOpenedMove] = useModal();
@@ -34,9 +34,9 @@ const Warehouse = () => {
     .filter((item) => !ignoredFields.some((el) => el === item[0]))
     .map((elem) => elem[1]);
   const deleteProducts = () => {
-    selected.forEach(async (product: IProduct) => {
+    selected.forEach(async (product) => {
       await api.delete(`${API_ROUTES.PRODUCT}/${product._id}`);
-      dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod._id }));
+      dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }));
       clearSelected();
     });
   };
@@ -46,7 +46,7 @@ const Warehouse = () => {
     dispatch(fetchWarehouses({}));
   }, [id]);
   useEffect(() => {
-    dispatch(fetchProducts({ warehouse: id, shipmentMethod: shipmentMethod._id }));
+    dispatch(fetchProducts({ warehouse: id!, shipmentMethod: shipmentMethod._id }));
   }, [shipmentMethod]);
   return (
     <TableSample
@@ -65,7 +65,7 @@ const Warehouse = () => {
         content: <MoveProduct close={toggleOpenedMove} products={selected} />,
         isOpened: isOpenedMove,
       }}
-      selected={selected}
+      selectedLength={selected.length}
       deleteItems={deleteProducts}
       isBlocked={warehouses.length === 1}
     >

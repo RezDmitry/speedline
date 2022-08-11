@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import {
   ErrorMessage, Field, Form, Formik,
 } from 'formik';
+import { AxiosError } from 'axios';
 
 import ModalButton from '../ModalButton/ModalButton';
 import FormModal from '../FormModal/FormModal';
@@ -63,17 +64,22 @@ const AddProduct = ({ close }: IAddProductProps) => {
           name: '', manufacturer: '', number: '', purchasingTechnology: 'A', shipmentMethod: 'AIR', paymentMethod: '',
         }}
         onSubmit={async (values) => {
+          setFormError('');
           if (step !== 3) return;
           setLoading(true);
           try {
             await api.post(API_ROUTES.PRODUCT, { warehouse: warehouse?._id, ...values });
             setLoading(false);
             toggleSuccess(true);
-          } catch (e: any) {
+          } catch (e) {
             setLoading(false);
-            setFormError(e.code === 'ERR_NETWORK'
-              ? 'Unhandled error. Try later'
-              : e.response.data.message);
+            if (e instanceof AxiosError) {
+              setFormError(e.code === 'ERR_NETWORK'
+                ? 'Unhandled error. Try later'
+                : e.response?.data.message);
+            } else {
+              throw e;
+            }
           }
         }}
         validationSchema={AddProductSchema}
@@ -147,7 +153,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
               && (
               <div className="modal-form__radio-group-planks">
                 <div role="group" aria-labelledby="shipmentMethod">
-                  {shipmentOptions.map((elem: any) => (
+                  {shipmentOptions.map((elem) => (
                     <div key={elem.value}>
                       <Field id={elem.desc} type="radio" name="shipmentMethod" value={elem.value} />
                       <label htmlFor={elem.desc}>
@@ -170,7 +176,7 @@ const AddProduct = ({ close }: IAddProductProps) => {
               && (
                 <div className="modal-form__radio-group-planks">
                   <div role="group" aria-labelledby="paymentMethod">
-                    {paymentOptions.map((elem: any) => (
+                    {paymentOptions.map((elem) => (
                       <div key={elem.value}>
                         <Field id={elem.value} type="radio" name="paymentMethod" value={elem.value} />
                         <label htmlFor={elem.value}>
@@ -191,7 +197,6 @@ const AddProduct = ({ close }: IAddProductProps) => {
               )}
             <ModalButton
               loading={loading}
-              blocked={!!formError}
               action={() => !formError && changeStep((prev) => ((prev === 3) ? 3 : prev + 1))}
               type={step === 3 ? 'submit' : 'button'}
             >

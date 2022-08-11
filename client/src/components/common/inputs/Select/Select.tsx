@@ -3,15 +3,15 @@ import React, {
 } from 'react';
 
 import { useOutside } from '../../../../hooks/useClickOutside';
-import { IFilterItem } from '../../../../typings/IFilterItem';
+import { IEntity } from '../../../../typings/IEntity';
 
 import styles from './Select.module.scss';
 import { ReactComponent as ArrowIcon } from '../../../../content/icons/arrow-down.svg';
 
 interface ISelectProps {
-  list: IFilterItem [],
+  list: IEntity [],
   name: string,
-  value: IFilterItem,
+  value: IEntity,
   click: Dispatch<SetStateAction<any>>,
   className?: string,
 }

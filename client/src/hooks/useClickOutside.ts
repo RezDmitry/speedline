@@ -1,18 +1,22 @@
-import React, { useEffect } from 'react';
+import { useEffect, RefObject } from 'react';
 
-export const useOutside = (
-  ref: React.RefObject<HTMLDivElement>,
+export const useOutside = <T extends HTMLElement = HTMLElement>(
+  ref: RefObject<T>,
   close: () => void,
 ) => {
   useEffect(() => {
+    // not found typing for event
+    // https://stackoverflow.com/questions/70758654/
+    // how-can-i-type-an-event-with-mouseevent-and-event-target-react-project-with-typ
+    // not work
     const handleClickOutside = (e: any) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+      const el = ref.current;
+      if (el && !el.contains(e.target as Node)) {
         close();
         e.stopPropagation();
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    // eslint-disable-next-line consistent-return
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };

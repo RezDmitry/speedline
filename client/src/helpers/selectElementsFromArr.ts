@@ -1,7 +1,10 @@
-export const selectElementsFromArr = (targetArray: any [], filterArray: any []): any [] => {
+import { IEntity } from '../typings/IEntity';
+
+export const selectElementsFromArr = (targetArray: IEntity [], filterArray: IEntity [])
+  : [IEntity [], IEntity [], IEntity []] => {
   const tempFilterArray = [...filterArray];
-  const result: any [] = [];
-  const deleted: any [] = [];
+  const result: IEntity [] = [];
+  const deleted: IEntity [] = [];
   targetArray.forEach((item) => {
     const index = tempFilterArray.findIndex((elem) => elem.name === item.name);
     if (index !== -1) {
