@@ -4,14 +4,19 @@ const Warehouse = require('../models/Warehouse');
 
 module.exports.getAll = async (req, res) => {
   try {
-
+    const params = {
+      warehouse: req.query.warehouse,
+      shipmentMethod: (req.query.shipmentMethod === 'any' && req.query.shipmentMethod)
+        ? {$in: ['AIR', 'SEA', 'TRUCK']}
+        : req.query.shipmentMethod,
+    }
+    for (const key in params) {
+      if (!params[key]) delete params[key];
+    }
     const products = await Product
       .find({
         user: req.user.id,
-        warehouse: req.query.warehouse,
-        shipmentMethod: (!req.query.shipmentMethod || req.query.shipmentMethod === 'any')
-          ? {$in: ['AIR', 'SEA', 'TRUCK']}
-          : req.query.shipmentMethod,
+        ...params,
       })
     res.status(200).json(products);
   } catch (e) {

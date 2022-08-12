@@ -1,10 +1,11 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import AdminLayout from '../layouts/AdminLayout/AdminLayout';
 import HomeLayout from '../layouts/HomeLayout/HomeLayout';
+import AdminLayout from '../layouts/AdminLayout/AdminLayout';
+import DashboardLayout from '../layouts/DashboardLayout/DashboardLayout';
 import RequireAuth from '../common/RequireAuth/RequireAuth';
-import { adminRoutes, homeRoutes } from './routes';
+import { adminRoutes, dashboardRoutes, homeRoutes } from './routes';
 
 import styles from './App.module.scss';
 
@@ -29,6 +30,10 @@ const App = () => (
           route.path
             ? <Route key={route.path} path={route.path} element={route.component} />
             : <Route key={route.path} index element={route.component} />))}
+        <Route path="dashboard" element={<DashboardLayout />}>
+          {dashboardRoutes.map((route) => (
+            <Route key={route.path} path={route.path} element={route.component} />))}
+        </Route>
       </Route>
     </Routes>
   </div>

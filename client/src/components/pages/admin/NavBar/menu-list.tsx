@@ -36,4 +36,9 @@ export const menuList: {icon: React.ReactNode, text: string, path: string} [] = 
     text: 'Chat',
     path: 'chat',
   },
+  {
+    icon: <Cards />,
+    text: 'Dashboard',
+    path: 'dashboard/workload',
+  },
 ];

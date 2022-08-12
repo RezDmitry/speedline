@@ -6,4 +6,6 @@ export interface IWarehouse extends IEntity {
   length: number,
   width: number,
   height: number,
+  createdAt: string,
+  updatedAt: string,
 }

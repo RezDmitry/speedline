@@ -13,10 +13,10 @@ import { ReactComponent as PlusIcon } from '../../../../content/icons/plus.svg';
 interface ITableSampleProps {
   children: React.ReactNode,
   title: string,
-  filterList: IEntity [],
-  buttonText: string,
-  filterValue: IEntity,
-  clickFilter: Dispatch<SetStateAction<IEntity>>,
+  filterList?: IEntity [],
+  buttonText?: string,
+  filterValue?: IEntity,
+  clickFilter?: Dispatch<SetStateAction<IEntity>>,
   addItemModal?: IModalType,
   moveItemModal?: IModalType,
   selectedLength?: number,
@@ -31,12 +31,15 @@ const TableSample = ({
   <div className={styles.layout}>
     <div className={styles.header}>
       <h1>{title}</h1>
-      <div className={styles.control}>
-        <Select list={filterList} value={filterValue} click={clickFilter} name="filter" />
-        <Button small icon={<PlusIcon />} click={addItemModal?.toggleOpened}>
-          {buttonText}
-        </Button>
-      </div>
+      {filterList && filterValue && clickFilter
+        && (
+        <div className={styles.control}>
+          <Select list={filterList} value={filterValue} click={clickFilter} name="filter" />
+          <Button small icon={<PlusIcon />} click={addItemModal?.toggleOpened}>
+            {buttonText}
+          </Button>
+        </div>
+        )}
     </div>
     <div className={styles.table}>
       {children}

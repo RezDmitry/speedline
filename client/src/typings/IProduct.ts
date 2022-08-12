@@ -7,4 +7,6 @@ export interface IProduct extends IEntity {
   shipmentMethod: 'AIR' | 'SEA'| 'TRUCK',
   paymentMethod: string,
   warehouse: string,
+  createdAt: string,
+  updatedAt: string,
 }

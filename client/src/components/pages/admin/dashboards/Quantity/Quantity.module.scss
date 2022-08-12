@@ -1,0 +1,7 @@
+@use '../../../../../styles/tools/index' as *;
+
+.dimensions {
+  @include flexbox();
+  flex: 1 1 auto;
+}
+
