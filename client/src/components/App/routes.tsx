@@ -11,6 +11,8 @@ import Warehouses from '../pages/admin/Warehouses/Warehouses';
 import Accounts from '../pages/admin/Accounts/Accounts';
 import Cards from '../pages/admin/Cards/Cards';
 import Warehouse from '../pages/admin/Warehouses/Warehouse/Warehouse';
+import Workload from '../pages/admin/dashboards/Workload/Workload';
+import Quantity from '../pages/admin/dashboards/Quantity/Quantity';
 
 interface IRoute {
   component: React.ReactNode,
@@ -64,5 +66,16 @@ export const adminRoutes: IRoute [] = [
   {
     component: <Chat />,
     path: 'chat',
+  },
+];
+
+export const dashboardRoutes: IRoute [] = [
+  {
+    component: <Workload />,
+    path: 'workload',
+  },
+  {
+    component: <Quantity />,
+    path: 'quantity',
   },
 ];
