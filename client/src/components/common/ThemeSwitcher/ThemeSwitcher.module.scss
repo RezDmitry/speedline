@@ -3,9 +3,9 @@
 .switcher {
   width: 46px;
   height: 24px;
-  background-color: $workplace-gray;
+  background-color: var(--primary);
   border-radius: 12px;
-  box-shadow: 0 0 4px 0 $checkbox-border inset;
+  box-shadow: 0 0 4px 0 var(--input-border) inset;
   position: relative;
 }
 
@@ -16,8 +16,8 @@
   width: 22px;
   height: 22px;
   border-radius: 50%;
-  background-color: $white;
-  box-shadow: 0px 0px 4px 0px $checkbox-border ;
+  background-color: var(--white);
+  box-shadow: 0px 0px 4px 0px var(--input-border) ;
   cursor: pointer;
   @include transition(0.3s,0s);
   &.isActive {

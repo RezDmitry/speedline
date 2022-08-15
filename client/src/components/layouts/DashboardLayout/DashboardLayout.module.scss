@@ -1,7 +1,7 @@
 @use '../../../styles/tools/index' as *;
 
 .menu {
-  border-bottom: 1px solid $admin-blocks-gray;
+  border-bottom: 1px solid var(--border-gray);
   & ul {
     @include flexbox();
   }

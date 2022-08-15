@@ -5,7 +5,7 @@ interface IThemeState {
 }
 
 export const initialState: IThemeState = {
-  theme: 'light',
+  theme: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
 };
 
 export const themeSlice = createSlice({

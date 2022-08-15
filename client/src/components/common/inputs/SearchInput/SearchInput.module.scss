@@ -7,12 +7,13 @@
 .input {
   padding-left: 41px;
   width: 281px;
-  border: 1px solid $input-border-gray;
+  border: 1px solid var(--input-border);
   border-radius: 3px;
   font-size: 12px;
   line-height: 12px;
+  background-color: transparent;
   &::placeholder {
-    color: $text40;
+    color: rgba(var(--text-rgb), 0.3);
     font-size: 12px;
     line-height: 12px;
   }
@@ -30,4 +31,7 @@
   position: absolute;
   top: calc(50% - 8px);
   left: 18px;
+  & * {
+    stroke: var(--text);
+  }
 }

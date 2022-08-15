@@ -9,7 +9,7 @@
   flex: 1 1 auto;
   @include flexbox(_, _, column);
   & main {
-    background-color: $workplace-gray;
+    background-color: var(--background-secondary);
     flex: 1 1 auto;
     @include flexbox();
   }

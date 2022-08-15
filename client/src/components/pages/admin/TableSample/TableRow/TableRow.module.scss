@@ -13,11 +13,11 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 12px;
-  border-bottom: 1px solid $admin-blocks-gray;
+  border-bottom: 1px solid var(--border-gray);
   cursor: pointer;
 
   &:hover {
-    background-color: $option-gray;
+    background-color: var(--background-secondary);
   }
   & div {
     @include flexbox(_, center);
@@ -48,22 +48,25 @@
 }
 
 input:checked + .row::before {
-  background-color: $main;
-  border: 1px solid $main;
-  background: url('../../../../../content/icons/done.svg') $main center center no-repeat;
+  background-color: var(--main);
+  border: 1px solid var(--main);
+  background: url('../../../../../content/icons/done.svg') var(--main) center center no-repeat;
 }
 
 input:checked + .row {
-  background-color: $option-gray;
+  background-color: var(--background-secondary);
 }
 
 .link {
   &:hover, &:active, &:focus {
-    color: $main;
+    color: var(--main);
   }
 }
 
 .withPic {
   @include flexbox(center, center);
   column-gap: 9px;
+  & * {
+    stroke: var(--text);
+  }
 }
