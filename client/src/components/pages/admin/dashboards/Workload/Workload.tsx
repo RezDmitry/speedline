@@ -22,13 +22,26 @@ const Workload = () => {
       trigger: 'item',
       formatter: '{a} <br/>{b} : {c} ({d}%)',
     },
+    dataset: [
+      {
+        source: [
+          ['Warehouse', 'Quantity'], ...warehouses.map((warehouse) => [warehouse.name, warehouse.products.length]),
+        ],
+      },
+      {
+        transform: {
+          type: 'filter',
+          config: { dimension: 'Quantity', '!=': 0 },
+        },
+      },
+    ],
     series: [
       {
         name: 'Warehouses workload',
         type: 'pie',
+        datasetIndex: 1,
         radius: '50%',
         center: ['50%', '50%'],
-        data: warehouses.map((warehouse) => ({ value: warehouse.products.length || 0.01, name: warehouse.name })),
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
