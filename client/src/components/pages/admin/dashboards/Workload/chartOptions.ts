@@ -1,10 +1,10 @@
 export const pieOption = {
+  backgroundColor: '#FFFFFF',
   title: {
     text: 'Workload',
     x: 'center',
     textStyle: {
       fontFamily: 'Inter',
-      color: '#3E4C59',
     },
   },
   tooltip: {

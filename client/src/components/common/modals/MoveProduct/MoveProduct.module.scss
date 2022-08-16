@@ -18,16 +18,16 @@
 
 .changeButton {
   display: block;
-  background-color: $white;
+  background-color: var(--background-primary);
   margin: 32px auto 0 auto;
   cursor: pointer;
   transform: scale(1.1);
   & * {
-    stroke: $text;
+    stroke: var(--text);
   }
   &:hover {
     & * {
-      stroke: $main;
+      stroke: var(--text);
     }
   }
 }

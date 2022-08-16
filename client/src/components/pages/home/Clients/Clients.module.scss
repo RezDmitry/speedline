@@ -44,7 +44,7 @@
   font-weight: 700;
   font-size: 72px;
   line-height: 87px;
-  color: $text;
+  color: var(--text);
   @include media($md) {
     font-size: 52px;
     line-height: 52px;
@@ -59,7 +59,7 @@
   margin-top: 32px;
   font-size: 16px;
   line-height: 24px;
-  color: $text40;
+  color: rgba(var(--text-rgb), 0.6);
   width: 58%;
   @include media($lg) {
     margin: 32px auto 0 auto;

@@ -18,15 +18,24 @@
   &__input {
     margin-top: 8px;
     width: 300px;
+    background-color: var(--background-primary);
+    border: 1px solid var(--input-border);
+    font-size: 14px;
+    line-height: 14px;
+    &::placeholder {
+      color: rgba(var(--text-rgb), 0.4);
+      font-size: 14px;
+      line-height: 14px;
+    }
     @include media($sm) {
       width: 100%;
     }
     &_error {
-      border: 1px solid $error;
+      border: 1px solid var(--error);
     }
   }
   &__error {
-    color: $error;
+    color: var(--error);
     margin-top: 8px;
     font-size: 12px;
     line-height: 12px;
@@ -54,14 +63,14 @@
         width: 28px;
         height: 28px;
         border-radius: 50%;
-        border: 1px solid $input-border-gray;
+        border: 1px solid var(--input-border);
       }
     }
     & input:checked + label::after {
       @include transition(0.2s, 0s);
-      outline: 8px solid $white;
+      outline: 8px solid var(--white);
       outline-offset: -8px;
-      background-color: $main;
+      background-color: var(--main);
     }
   }
   &__radio-group-planks {
@@ -72,9 +81,9 @@
         display: none;
       }
       label {
-        background: $radio-button;
+        background: var(--plank-grey);
         padding: 18px 18px 18px 13px;
-        color: $text40;
+        color: rgba(var(--text-rgb), 0.4);
         font-weight: 500;
         font-size: 14px;
         line-height: 14px;
@@ -85,23 +94,23 @@
           column-gap: 8px;
         }
         & * {
-          stroke: $text40;
-          fill: $text40;
+          stroke: rgba(var(--text-rgb), 0.4);
+          fill: rgba(var(--text-rgb), 0.4);
         }
       }
       & input:checked + label {
-        background: $with-orange;
-        color: $main;
+        background: var(--plank-orange);
+        color: var(--main);
         &::after {
           content: '';
           width: 24px;
           height: 24px;
           border-radius: 50%;
-          background: url('../content/icons/done.svg') $main center center no-repeat;
+          background: url('../content/icons/done.svg') var(--main) center center no-repeat;
         }
         & * {
-          stroke: $main;
-          fill: $main;
+          stroke: var(--main);
+          fill: var(--main);
         }
       }
     }

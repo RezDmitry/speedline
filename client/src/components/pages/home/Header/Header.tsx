@@ -11,6 +11,7 @@ import { useModal } from '../../../../hooks/useModal';
 import { useMenu } from '../../../../hooks/useMenu';
 
 import styles from './Header.module.scss';
+import ThemeSwitcher from '../../../common/ThemeSwitcher/ThemeSwitcher';
 
 const Header = () => {
   const [isLoginModalOpened, toggleLoginModal] = useModal();
@@ -56,6 +57,7 @@ const Header = () => {
           </li>
         </nav>
         <div className={styles.buttonGroup}>
+          <ThemeSwitcher />
           <Button
             transparent
             click={toggleLoginModal}

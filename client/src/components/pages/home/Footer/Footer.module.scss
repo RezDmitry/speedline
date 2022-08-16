@@ -9,7 +9,7 @@
     font-size: 14px;
     line-height: 14px;
     &:hover {
-      color: $main;
+      color: var(--main);
       @include transition(0.2s, 0s);
     }
   }
@@ -23,5 +23,8 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: $light-gray;
+  background-color: var(--input-border);
+  & * {
+    stroke: var(--text);
+  }
 }

@@ -1,6 +1,6 @@
 @use '../../../../styles/tools/index' as *;
 
 .signUp {
-  color: $main;
+  color: var(--main);
   cursor: pointer;
 }
