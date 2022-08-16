@@ -6,12 +6,19 @@ import AdminLayout from '../layouts/AdminLayout/AdminLayout';
 import DashboardLayout from '../layouts/DashboardLayout/DashboardLayout';
 import RequireAuth from '../common/RequireAuth/RequireAuth';
 import { adminRoutes, dashboardRoutes, homeRoutes } from './routes';
-import { useAppSelector } from '../../hooks/useStore';
+import { useAppDispatch, useAppSelector } from '../../hooks/useStore';
 
 import styles from './App.module.scss';
+import { setTheme } from '../../store/slices/ThemeSlice';
 
 const App = () => {
+  const dispatch = useAppDispatch();
   const { theme } = useAppSelector((state) => state.themeReducer);
+  useEffect(() => {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      dispatch(setTheme());
+    });
+  }, []);
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);

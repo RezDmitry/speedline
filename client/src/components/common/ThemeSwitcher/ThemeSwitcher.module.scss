@@ -5,19 +5,20 @@
   height: 24px;
   background-color: var(--primary);
   border-radius: 12px;
-  box-shadow: 0 0 4px 0 var(--input-border) inset;
+  border: 1px solid var(--input-border);
+  box-shadow: 0 0 2px 0 var(--input-border) inset;
   position: relative;
 }
 
 .toggler {
   position: absolute;
   top: calc(50% - 11px);
-  left: 2px;
+  left: 1px;
   width: 22px;
   height: 22px;
   border-radius: 50%;
   background-color: var(--white);
-  box-shadow: 0px 0px 4px 0px var(--input-border) ;
+  box-shadow: 0 0 4px 0 var(--input-border) ;
   cursor: pointer;
   @include transition(0.3s,0s);
   &.isActive {

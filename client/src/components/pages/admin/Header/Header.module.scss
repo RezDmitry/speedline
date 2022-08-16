@@ -11,10 +11,8 @@
   column-gap: 16px;
   @include flexbox(space-between, center);
   & ul {
-    @include flexbox(space-between, center);
-    column-gap: 40px;
     @include media($md) {
-      column-gap: 24px;
+      display: none;
     }
   }
 }
@@ -37,25 +35,4 @@
   @include media($lg) {
     display: block;
   }
-}
-
-.controlPanel {
-  & li {
-    position: relative;
-    cursor: pointer;
-    & * {
-      stroke: var(--text);
-    }
-    &:hover, &:active, &:focus {
-      & * {
-        stroke: var(--main);
-      }
-    }
-  }
-}
-
-.sticker {
-  position: absolute;
-  top: 0;
-  right: 4px;
 }

@@ -17,9 +17,9 @@ import { api } from '../../../../api';
 import { API_ROUTES } from '../../../../api/routes';
 import { selectElementsFromArr } from '../../../../helpers/selectElementsFromArr';
 import { IEntity } from '../../../../typings/IEntity';
+import { IProduct } from '../../../../typings/IProduct';
 
 import styles from './MoveProduct.module.scss';
-import { IProduct } from '../../../../typings/IProduct';
 
 interface IMoveProductProps {
   close: () => void,
@@ -101,7 +101,6 @@ const MoveProduct = ({ close, products, updateList }: IMoveProductProps) => {
         onSubmit={async (values) => {
           setLoading(true);
           try {
-            console.log(warehouseFrom?.products, products, warehouseIn);
             await selectElementsFromArr(warehouseFrom?.products, products)[1].forEach((product: IEntity) => {
               const newProduct = {
                 ...product,
@@ -226,6 +225,7 @@ const MoveProduct = ({ close, products, updateList }: IMoveProductProps) => {
               loading={loading}
               blocked={!!formError}
               click={(e: React.MouseEvent) => !formError && setStep(e)}
+              type={step !== 3 ? 'button' : 'submit'}
             >
               {stage.buttonText}
             </ModalButton>

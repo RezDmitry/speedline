@@ -74,6 +74,9 @@
   right: 26px;
   cursor: pointer;
   @include transition(0.2s, 0s);
+  & * {
+    fill: var(--text);
+  }
   &:hover, &:active, &:focus {
     & * {
       fill: var(--main);

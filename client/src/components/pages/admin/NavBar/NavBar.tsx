@@ -6,6 +6,7 @@ import { useOutside } from '../../../../hooks/useClickOutside';
 import { menuList } from './menu-list';
 
 import styles from './NavBar.module.scss';
+import Controls from '../Controls/Controls';
 
 interface INavBarProps {
   isOpened: boolean,
@@ -39,6 +40,7 @@ const NavBar = ({ isOpened, toggleMenu, toggleMenuByKey }: INavBarProps) => {
           </li>
         ))}
       </ul>
+      <Controls />
     </div>
   );
 };

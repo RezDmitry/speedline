@@ -11,7 +11,7 @@
   border-radius: 3px;
   cursor: pointer;
   &:hover, &:active {
-    border: 1px solid $main;
+    border: 1px solid var(--main);
   }
 }
 
@@ -73,7 +73,7 @@
     @include transition();
     transform: rotateX(-180deg);
     & * {
-      stroke: $main;
+      stroke: var(--main);
     }
   }
 }

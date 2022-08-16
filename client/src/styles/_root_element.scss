@@ -5,21 +5,21 @@
   min-height: 100%;
   font-family: 'Inter', sans-serif;
   color: var(--text);
-  background-color: $white;
+  background-color: var(--white);
 }
 
 input, select {
   padding: 18px;
-  border: 1px solid $input-border-gray;
+  border: 1px solid var(--input-border);
   border-radius: 3px;
   color: var(--text);
   &::placeholder {
-    color: $text40;
+    color: rgba(var(--text-rgb), 0.6);
     font-size: 14px;
     line-height: 14px;
   }
   &:hover, &:active, &:focus {
-    border: 1px solid $main;
+    border: 1px solid var(--main);
   }
 }
 

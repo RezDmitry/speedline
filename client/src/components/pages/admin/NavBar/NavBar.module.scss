@@ -6,11 +6,23 @@
   background-color: var(--background-primary);
   @include flexbox(_,_,column);
   & ul {
-    margin-top: 166px;
-    @include flexbox(_,_,column);
-    row-gap: 18px;
-    @include media($lg) {
+    &:first-of-type {
+      margin-top: 166px;
+      @include flexbox(_,_,column);
+      row-gap: 18px;
+      @include media($lg) {
+        margin-top: 64px;
+      }
+    }
+    &:last-of-type {
       margin-top: 64px;
+      padding: 8px 32px 8px 32px;
+      column-gap: 8px;
+      flex-wrap: wrap;
+      display: none;
+      @include media($md) {
+        @include flexbox(space-between, center);
+      }
     }
   }
   @include media($lg) {
@@ -27,7 +39,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     transform: translateX(0);
     @include transition(0.2s, 0s);
   }

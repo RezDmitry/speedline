@@ -10,18 +10,17 @@
     margin-left: 120px;
     column-gap: 40px;
     & li {
-      color: $text70;
+      color: rgba(var(--text-rgb), 0.7);
       font-size: 14px;
       line-height: 14px;
       cursor: pointer;
       &:hover, &:active {
-        color: $main;
+        color: var(--main);
         @include transition(0.2s, 0s);
       }
       @include media($lg) {
         font-size: 32px;
         line-height: 32px;
-        color: $white;
       }
     }
     @include media($lg) {
@@ -36,11 +35,6 @@
 .logo {
   z-index: 3;
   @include transition(0.5s, 0s);
-  &.active {
-    @include media($lg) {
-      color: $white;
-    }
-  }
 }
 
 .menu {
@@ -54,7 +48,7 @@
     height: 100vh;
     transform: translateY(-100%);
     overflow: auto;
-    background-color: $text;
+    background-color: var(--background-primary);
     z-index: 2;
     @include transition(0.5s, 0s);
     &.active {
@@ -69,7 +63,7 @@
 }
 
 .buttonGroup {
-  @include flexbox();
+  @include flexbox(_, center);
   @include media($lg) {
     margin-top: 64px;
     @include flexbox(_, _, column);
@@ -85,7 +79,7 @@
 }
 
 .activeLink {
-  color: $main;
+  color: var(--main);
   text-decoration: none;
 }
 

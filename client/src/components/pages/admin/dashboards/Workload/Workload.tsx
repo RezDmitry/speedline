@@ -10,6 +10,7 @@ import styles from './Workload.module.scss';
 const Workload = () => {
   const dispatch = useAppDispatch();
   const { warehouses } = useAppSelector((state) => state.warehouseReducer);
+  const { theme } = useAppSelector((state) => state.themeReducer);
   const option = { ...pieOption };
   option.dataset = [
     {
@@ -24,6 +25,7 @@ const Workload = () => {
       },
     },
   ];
+  option.backgroundColor = theme === 'dark' ? '#001E3C' : '#FFF';
   useEffect(() => {
     dispatch(fetchWarehouses({}));
   }, []);
@@ -33,6 +35,7 @@ const Workload = () => {
         key={option.title.text}
         option={option}
         style={{ width: '100%', height: 400 }}
+        theme={theme}
       />
     </div>
   );

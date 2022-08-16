@@ -13,6 +13,7 @@ import styles from './Quantity.module.scss';
 const Quantity = () => {
   const dispatch = useAppDispatch();
   const { products } = useAppSelector((state) => state.productReducer);
+  const { theme } = useAppSelector((state) => state.themeReducer);
   const [timeInterval, setTimeInterval] = useState('week');
   const option = { ...lineChartOption };
   option.dataset = [
@@ -26,6 +27,7 @@ const Quantity = () => {
       ],
     },
   ];
+  option.backgroundColor = theme === 'dark' ? '#001E3C' : '#FFF';
   useEffect(() => {
     dispatch(fetchProducts({}));
   }, []);
@@ -46,6 +48,7 @@ const Quantity = () => {
         key={option.title.text}
         option={option}
         style={{ width: '100%', height: 400 }}
+        theme={theme}
       />
     </div>
   );

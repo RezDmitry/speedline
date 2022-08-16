@@ -3,12 +3,12 @@ import { setMonthArray, setWeekArray, setYearArray } from '../../../../../helper
 import { IProduct } from '../../../../../typings/IProduct';
 
 export const lineChartOption = {
+  backgroundColor: '#FFFFFF',
   title: {
     text: 'Products quantity',
     x: 'center',
     textStyle: {
       fontFamily: 'Inter',
-      color: '#3E4C59',
     },
   },
   tooltip: {

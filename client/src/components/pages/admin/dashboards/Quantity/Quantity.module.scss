@@ -12,16 +12,18 @@
   right: 10%;
   z-index: 5;
   border-radius: 3px;
-  box-shadow: 0 0 4px 0 $checkbox-border inset;
+  border: 1px solid var(--input-border);
+  box-shadow: 0 0 2px 0 var(--input-border) inset;
   & button {
     font-weight: 500;
     font-size: 12px;
     line-height: 12px;
     padding: 8px;
     background-color: transparent;
+    color: var(--text);
     &.active {
-      background-color: $main;
-      color: $white;
+      background-color: var(--main);
+      color: var(--white);
     }
     &:first-of-type {
       border-radius: 3px 0 0 3px;

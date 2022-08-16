@@ -3,13 +3,9 @@ import React from 'react';
 import AdminContainer from '../AdminContainer/AdminContainer';
 import SearchInput from '../../../common/inputs/SearchInput/SearchInput';
 import BurgerButton from '../../../common/BurgerButton/BurgerButton';
+import Controls from '../Controls/Controls';
 
 import styles from './Header.module.scss';
-import { ReactComponent as ProfileIcon } from '../../../../content/icons/profile.svg';
-import { ReactComponent as SettingsIcon } from '../../../../content/icons/settings.svg';
-import { ReactComponent as NotificationIcon } from '../../../../content/icons/notification.svg';
-import { ReactComponent as StickerIcon } from '../../../../content/icons/sticker.svg';
-import ThemeSwitcher from '../../../common/ThemeSwitcher/ThemeSwitcher';
 
 interface IHeaderProps {
   toggleMenu: () => void,
@@ -28,19 +24,7 @@ const Header = ({ toggleMenu, toggleMenuByKey }: IHeaderProps) => (
           />
           <SearchInput className={styles.input} />
         </div>
-        <ul className={styles.controlPanel}>
-          <ThemeSwitcher />
-          <li>
-            <ProfileIcon />
-          </li>
-          <li>
-            <SettingsIcon />
-          </li>
-          <li>
-            <NotificationIcon />
-            <StickerIcon className={styles.sticker} />
-          </li>
-        </ul>
+        <Controls />
       </div>
     </AdminContainer>
   </header>
