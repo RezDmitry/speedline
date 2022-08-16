@@ -1,0 +1,38 @@
+@use '../../../../styles/tools/index' as *;
+
+.header {
+  border-bottom: 1px solid var(--border-gray);
+  background-color: var(--background-primary);
+}
+
+.content {
+  flex: 1 1 auto;
+  margin: 32px 0;
+  column-gap: 16px;
+  @include flexbox(space-between, center);
+  & ul {
+    @include media($md) {
+      display: none;
+    }
+  }
+}
+
+.left {
+  @include flexbox(_, center);
+  column-gap: 16px;
+}
+
+.input {
+  & input {
+    @include media($md) {
+      width: 100%;
+    }
+  }
+}
+
+.burger {
+  display: none;
+  @include media($lg) {
+    display: block;
+  }
+}

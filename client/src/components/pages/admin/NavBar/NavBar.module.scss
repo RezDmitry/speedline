@@ -1,0 +1,96 @@
+@use '../../../../styles/tools/index' as *;
+
+.navBar {
+  width: 240px;
+  border-right: 1px solid var(--border-gray);
+  background-color: var(--background-primary);
+  @include flexbox(_,_,column);
+  & ul {
+    &:first-of-type {
+      margin-top: 166px;
+      @include flexbox(_,_,column);
+      row-gap: 18px;
+      @include media($lg) {
+        margin-top: 64px;
+      }
+    }
+    &:last-of-type {
+      margin-top: 64px;
+      padding: 8px 32px 8px 32px;
+      column-gap: 8px;
+      flex-wrap: wrap;
+      display: none;
+      @include media($md) {
+        @include flexbox(space-between, center);
+      }
+    }
+  }
+  @include media($lg) {
+    position: absolute;
+    transform: translateX(-100%);
+    z-index: 3;
+    @include transition(0.2s, 0s);
+  }
+}
+
+.isOpened {
+  @include media($lg) {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    transform: translateX(0);
+    @include transition(0.2s, 0s);
+  }
+}
+
+.logo {
+  margin-top: 32px;
+  padding: 0 32px 8px 32px;
+}
+
+.item {
+  & a {
+    @include flexbox(_, center);
+    column-gap: 18px;
+    padding: 8px 8px 8px 32px;
+  }
+  & * {
+    stroke: var(--text);
+  }
+  &:hover {
+    & * {
+      stroke: var(--main);
+      color: var(--main);
+    }
+  }
+}
+
+.activeLink {
+  color: var(--main);
+  text-decoration: none;
+  @include transition(0.2s, 0s);
+  & * {
+    stroke: var(--main);
+  }
+  position: relative;
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background-color: var(--main);
+  }
+}
+
+.inActiveLink {
+  text-decoration: none;
+  color: var(--text);
+  & * {
+    stroke: var(--text);
+  }
+}

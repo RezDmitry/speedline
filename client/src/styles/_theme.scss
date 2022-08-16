@@ -1,0 +1,46 @@
+@use "tools/index" as *;
+
+:root {
+  //text
+  --text: #3E4C59;
+  --text-rgb: 62, 76, 89;
+  //main
+  --main-h: 36;
+  --main-s: 88%;
+  --main-l: 50%;
+  --main: hsl(var(--main-h), var(--main-s), var(--main-l));
+  --main-darker: hsl(var(--main-h), var(--main-s), calc(var(--main-l) - 10%));
+  --main-darkest: hsl(var(--main-h), var(--main-s), calc(var(--main-l) - 20%));
+  //error
+  --error-h: 11;
+  --error-s: 78%;
+  --error-l: 55%;
+  --error: hsl(var(--error-h), var(--error-s), var(--error-l));
+  --error-darker: hsl(var(--error-h), var(--error-s), calc(var(--error-l) - 10%));
+  --error-darkest: hsl(var(--error-h), var(--error-s), calc(var(--error-l) - 20%));
+  //other
+  --background-primary: #FFF;
+  --background-secondary: #FBFBFB;
+  --input-border: #E6E8EA;
+  //grey
+  --border-gray: #ECEFF2;
+  --plank-grey: #F8F9F9;
+  //constants
+  --black: #000000;
+  --black-rgb: 0, 0, 0;
+  --white: #FFFFFF;
+  --plank-orange: #FEF5E7;
+}
+
+[data-theme='dark'] {
+  //text
+  --text: #f3f3f3;
+  --text-rgb: 243, 243, 243;
+  //other
+  --background-primary: #001E3C;
+  --background-secondary: #19344F;
+  --input-border: #324A62;
+  //grey
+  --border-gray: #001E3C;
+  --plank-grey: #19344F;
+}

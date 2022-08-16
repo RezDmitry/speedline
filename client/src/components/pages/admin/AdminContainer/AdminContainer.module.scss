@@ -1,0 +1,10 @@
+@use '../../../../styles/tools/index' as *;
+
+.container {
+  @include flexbox();
+  flex: 1 1 auto;
+  padding: 0 64px 0 48px;
+  @include media($md) {
+    padding: 0 16px
+  }
+}

@@ -1,0 +1,60 @@
+@use '../../../../styles/tools/index' as *;
+
+.layout {
+  flex: 1 1 auto;
+  @include flexbox(_,center,column);
+  row-gap: 32px;
+}
+
+.header {
+  @include flexbox(space-between, center);
+  flex-wrap: wrap;
+  row-gap: 16px;
+  width: 100%;
+  & h1 {
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 36px;
+  }
+  @include media($lg) {
+    @include flexbox(center, center, column);
+  }
+}
+
+.control {
+  @include flexbox();
+  column-gap: 24px;
+  row-gap: 24px;
+  & select {
+    width: 190px;
+  }
+  @include media($sm) {
+    @include flexbox(center, center, column);
+    width: 100%;
+    button, &>div {
+      width: 100%;
+    }
+  }
+}
+
+.table {
+  background-color: var(--background-primary);
+  flex: 1 1 100px;
+  overflow: auto;
+  width: 100%;
+  &>div:nth-of-type(1) {
+    background-color: var(--background-primary);
+    z-index: 2;
+    position: sticky;
+    top: 0;
+  }
+  @include media($lg) {
+    width: 90vw;
+  }
+  &>span {
+    display: block;
+    text-align: center;
+    width: 100%;
+    padding: 24px 60px;
+  }
+}
